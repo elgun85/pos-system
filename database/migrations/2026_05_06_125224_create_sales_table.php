@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('customer_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('payment_method_id')->nullable()->constrained()->nullOnDelete();
+            $table->decimal('total', 10, 2);                        //toplam satış tutarı
+            $table->decimal('paid_amount', 10, 2);                   //ödenen miktar
+            $table->decimal('discount', 8, 2)->default(0.00);      //endirim
             $table->timestamps();
         });
     }

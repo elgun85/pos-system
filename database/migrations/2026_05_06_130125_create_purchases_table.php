@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
+            $table->string('photo')->nullable();
+            $table->string('invoice_number')->nullable();
+            $table->foreignId('supplier_id')->constrained()->cascadeOnDelete();
+            $table->decimal('total_price', 10, 2)->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

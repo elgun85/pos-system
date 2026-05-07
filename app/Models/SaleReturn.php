@@ -2,22 +2,25 @@
 
 namespace App\Models;
 
+use App\Models\ReturnItem;
 use Illuminate\Database\Eloquent\Model;
 
-class SalesItem extends Model
+class SaleReturn extends Model
 {
+    protected $table = 'returns'; // Cədvəl adı returns qala bilər
     protected $fillable = [
         'sale_id',
-        'product_id',
         'quantity',
-        'price',
+        'total',
     ];
+
     public function sale()
     {
         return $this->belongsTo(Sale::class);
     }
-    public function product()
+
+    public function returnItems()
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasMany(ReturnItem::class);
     }
 }

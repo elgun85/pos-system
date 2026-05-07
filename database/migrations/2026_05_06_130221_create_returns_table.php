@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('returns', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('sale_id')->constrained()->cascadeOnDelete();
+            $table->decimal('quantity', 10, 2)->nullable();
+            $table->decimal('total', 10, 2)->nullable();
             $table->timestamps();
         });
     }

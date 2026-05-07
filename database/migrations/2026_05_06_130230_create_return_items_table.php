@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('return_items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('return_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
+            $table->decimal('quantity', 10, 2)->nullable();
+            $table->decimal('refund_amount', 10, 2)->nullable();
             $table->timestamps();
         });
     }

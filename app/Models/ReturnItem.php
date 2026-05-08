@@ -15,7 +15,7 @@ class ReturnItem extends Model
 
     public function saleReturn()
     {
-        return $this->belongsTo(SaleReturn::class);
+        return $this->belongsTo(SaleReturn::class, 'return_id');
     }
 
     public function product()

@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->index();
+            $table->string('image')->nullable();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->foreignId('supplier_id')->constrained()->cascadeOnDelete();
-            $table->string('sku')->unique();
+            $table->string('sku')->unique()->nullable();
             $table->string('barcode')->unique();
             $table->decimal('cost_price', 10, 2);    // alis qiymeti
             $table->decimal('sale_price', 10, 2);    // satis qiymeti
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -17,12 +17,20 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use UnitEnum;
 
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $navigationLabel = 'Kategoriyalar';
+    protected static string | UnitEnum | null $navigationGroup = 'Mağaza';
+    protected static ?string $modelLabel = 'Kategoriya';
+    protected static ?string $pluralModelLabel = 'Kategoriyalar';
+    protected static ?int $navigationSort = 1;
+
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedSquares2x2;
 
     protected static ?string $recordTitleAttribute = 'name';
 

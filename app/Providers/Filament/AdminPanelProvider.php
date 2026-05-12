@@ -28,6 +28,12 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+                    ->navigationGroups([
+            'Mağaza',
+            'Satış',
+            'Təchizat',
+            'Sistem',
+        ])
             ->colors([
                 'primary' => Color::Amber,
             ])

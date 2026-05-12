@@ -17,12 +17,21 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use UnitEnum;
 
 class ProductResource extends Resource
 {
+
     protected static ?string $model = Product::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $navigationLabel = 'Məhsullar';
+    protected static string | UnitEnum | null $navigationGroup = 'Mağaza';
+    protected static ?string $modelLabel = 'Məhsul';
+    protected static ?string $pluralModelLabel = 'Məhsul';
+    protected static ?int $navigationSort = 3;
+
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCube;
 
     protected static ?string $recordTitleAttribute = 'name';
 

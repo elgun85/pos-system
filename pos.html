@@ -18,11 +18,18 @@ php artisan filament:install --panels
 3.
 php artisan make:filament-user
 4.
+    protected static ?string $navigationLabel = 'Məhsullar';                 // navigationLabel - menyuda görünəcək ad
+    protected static string | UnitEnum | null $navigationGroup = 'Mağaza';  // navigationGroup - menyuda görünəcək qrup adı
+    protected static ?string $modelLabel = 'Məhsul';            // modelLabel - resursun təkil adı  
+    protected static ?string $pluralModelLabel = 'Məhsul';      // pluralModelLabel - resursun cəmi adı
+    protected static ?int $navigationSort = 1;           // navigationSort - menyuda görünmə sırası (aşağıdakı nümunədə 1, 2, 3, ... olaraq sıralanır)
+
 php artisan make:filament-resource Supplier
 php artisan make:filament-resource Category
 php artisan make:filament-resource Product
 php artisan make:filament-resource Customer
-
+php artisan make:filament-resource User
+php artisan make:filament-resource Brand
 
 
 php artisan make:filament-resource PaymentMethod
@@ -34,6 +41,24 @@ php artisan make:filament-resource Return
 php artisan make:filament-resource ReturnItem
 php artisan make:filament-resource Settings
 php artisan make:filament-resource Inventory
+
+| Resource      | Icon                             |
+| ------------- | -------------------------------- |
+| Supplier      | `OutlinedTruck`                  |
+| Category      | `OutlinedSquares2x2`             |
+| Product       | `OutlinedCube`                   |
+| Customer      | `OutlinedUserCircle`             |
+| User          | `OutlinedUsers`                  |
+| PaymentMethod | `OutlinedCreditCard`             |
+| Sale          | `OutlinedShoppingCart`           |
+| SalesItem     | `OutlinedQueueList`              |
+| Purchase      | `OutlinedShoppingBag`            |
+| PurchaseItem  | `OutlinedClipboardDocumentList`  |
+| Return        | `OutlinedArrowUturnLeft`         |
+| ReturnItem    | `OutlinedArrowPathRoundedSquare` |
+| Settings      | `OutlinedCog6Tooth`              |
+| Inventory     | `OutlinedArchiveBox`             |
+
 
 
 

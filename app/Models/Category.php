@@ -14,9 +14,13 @@ class Category extends Model
         'status'
     ];
 
+
+    protected $casts = [
+    'status' => 'boolean',
+];
     public function parent()
     {
-        return $this->belongsTo(Category::class, 'parent_id');
+        return $this->belongsTo(Category::class, 'parent_id')->where('status', true)->where('parent_id', null);
     }
 
     public function children()

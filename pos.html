@@ -13,11 +13,22 @@ php artisan make:model Return -m
 php artisan make:model ReturnItem -m
 php artisan make:model Settings -m
 
-2. composer require filament/filament:"^5.0"
+2. 
+composer require filament/filament:"^5.0"
 php artisan filament:install --panels  
 3.
 php artisan make:filament-user
 4.
+    protected function getRedirectUrl(): string         
+{
+    return $this->getResource()::getUrl('index');
+}                                                                   // getRedirectUrl - resursun hansı URL-ə yönləndiriləcəyini təyin edir
+
+                    ->live()
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        $set('name', mb_convert_case($state, MB_CASE_TITLE, 'UTF-8'));
+                    }),
+
     protected static ?string $navigationLabel = 'Məhsullar';                 // navigationLabel - menyuda görünəcək ad
     protected static string | UnitEnum | null $navigationGroup = 'Mağaza';  // navigationGroup - menyuda görünəcək qrup adı
     protected static ?string $modelLabel = 'Məhsul';            // modelLabel - resursun təkil adı  

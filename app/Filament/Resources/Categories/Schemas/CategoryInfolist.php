@@ -13,18 +13,12 @@ class CategoryInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
-                TextEntry::make('parent_id')
-                    ->numeric()
+                TextEntry::make('name')->label('Kateqoriya Adı'),
+                TextEntry::make('parent.name')->label('Üst Kateqoriya')->badge()->color('danger')
                     ->placeholder('-'),
                 IconEntry::make('status')
                     ->boolean(),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+
                 TextEntry::make('deleted_at')
                     ->dateTime()
                     ->visible(fn (Category $record): bool => $record->trashed()),

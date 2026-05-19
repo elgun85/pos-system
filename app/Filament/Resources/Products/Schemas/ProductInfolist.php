@@ -33,6 +33,11 @@ class ProductInfolist
                     ->weight(FontWeight::Bold)
                     ->size('md'),
 
+                    TextEntry::make('brand.name')
+                    ->label('Brend')
+                    ->weight(FontWeight::Bold)
+                    ->size('md'),
+
                 TextEntry::make('sku')
                     ->label('Barkod')
                     ->weight(FontWeight::Bold)

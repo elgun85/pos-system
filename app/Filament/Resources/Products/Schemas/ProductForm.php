@@ -13,6 +13,12 @@ class ProductForm
     {
         return $schema
             ->components([
+                TextInput::make('sku')
+                    ->label('Barkod')
+                    ->placeholder('Məhsulun Barkod-unu daxil edin')
+                    ->unique()
+                    ->maxLength(255)
+                    ->required(),
                 TextInput::make('name')
                     ->label('Məhsul Adı')
                     ->placeholder('Məhsul adını daxil edin')
@@ -42,20 +48,24 @@ class ProductForm
                     ->searchable()
                     ->required(),
 
-                TextInput::make('sku')
-                    ->label('Barkod')
-                    ->placeholder('Məhsulun Barkod-unu daxil edin')
-                    ->unique()
-                    ->maxLength(255)
-                    ->required(),
-/*                 TextInput::make('barcode')
+
+                    Select::make('brand_id')
+                    ->label('Brend')
+                    ->relationship('brand', 'name')
+                    ->preload()
+                    ->native(false)
+                    ->searchable()
+                   , 
+
+
+                /*                 TextInput::make('barcode')
                     ->label('Barkod')
                     ->required(), */
-               TextInput::make('cost_price')
+                TextInput::make('cost_price')
                     ->label('Alış Qiyməti')
                     ->required()
                     ->numeric()
-                    ->prefix('$'), 
+                    ->prefix('$'),
                 TextInput::make('sale_price')
                     ->label('Satış Qiyməti')
                     ->required()

@@ -21,41 +21,48 @@ class ProductsTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                ->limit(20)
-                    ->sortable()
-                    ->searchable(),
-
-
-                    ImageColumn::make('image')
-                    ->label('Şəkil')
-                    ->disk('public')
-                    ->circular()
-                    ->size(50)
-                    ,
-                TextColumn::make('category.name')
-                    ->label('Kateqoriya')
-                    ->limit(15)
-                    ->sortable(),
-                TextColumn::make('supplier.name')
-                    ->label('Təchizatçı')
-                    ->limit(15)
-                    ->sortable(),
                 TextColumn::make('sku')
                     ->label('Barkod')
                     ->searchable()
                     ->sortable(),
-/*                 TextColumn::make('barcode')
+                TextColumn::make('name')
+                    ->limit(20)
+                    ->sortable()
+                    ->searchable(),
+
+
+                ImageColumn::make('image')
+                    ->label('Şəkil')
+                    ->disk('public')
+                    ->circular()
+                    ->size(50),
+                TextColumn::make('category.name')
+                    ->label('Kateqoriya')
+                    ->limit(15)
+                    ->sortable(),
+                        TextColumn::make('brand.name')  
+                    ->label('Brend')
+                    ->limit(15)
+                    ->sortable(),
+                    
+
+
+                /*                 TextColumn::make('barcode')
                     ->label('Barkod')
                     ->searchable(), */
-             TextColumn::make('cost_price')
+                TextColumn::make('cost_price')
                     ->label('Alış Qiyməti')
                     ->money()
                     ->sortable(),
                 TextColumn::make('sale_price')
                     ->label('Satış Qiyməti')
                     ->money()
+                    ->color('success')
                     ->sortable(),
+/*                 TextColumn::make('supplier.name')
+                    ->label('Təchizatçı')
+                    ->limit(15)
+                    ->sortable(), */
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge(),

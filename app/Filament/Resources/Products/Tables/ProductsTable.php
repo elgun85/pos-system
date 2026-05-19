@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Products\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
@@ -15,42 +16,61 @@ use Filament\Tables\Table;
 
 class ProductsTable
 {
-    
+
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
                 TextColumn::make('name')
+                ->limit(20)
+                    ->sortable()
                     ->searchable(),
-                ImageColumn::make('image'),
-                TextColumn::make('category_id')
-                    ->numeric()
+
+
+                    ImageColumn::make('image')
+                    ->label('Şəkil')
+                    ->disk('public')
+                    ->circular()
+                    ->size(50)
+                    ,
+                TextColumn::make('category.name')
+                    ->label('Kateqoriya')
+                    ->limit(15)
                     ->sortable(),
-                TextColumn::make('supplier_id')
-                    ->numeric()
+                TextColumn::make('supplier.name')
+                    ->label('Təchizatçı')
+                    ->limit(15)
                     ->sortable(),
                 TextColumn::make('sku')
-                    ->label('SKU')
-                    ->searchable(),
-                TextColumn::make('barcode')
-                    ->searchable(),
-                TextColumn::make('cost_price')
+                    ->label('Barkod')
+                    ->searchable()
+                    ->sortable(),
+/*                 TextColumn::make('barcode')
+                    ->label('Barkod')
+                    ->searchable(), */
+             TextColumn::make('cost_price')
+                    ->label('Alış Qiyməti')
                     ->money()
                     ->sortable(),
                 TextColumn::make('sale_price')
+                    ->label('Satış Qiyməti')
                     ->money()
                     ->sortable(),
                 TextColumn::make('status')
+                    ->label('Status')
                     ->badge(),
                 TextColumn::make('created_at')
+                    ->label('Yaradılma Tarixi')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label('Yenilənmə Tarixi')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deleted_at')
+                    ->label('Silinmə Tarixi')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -61,6 +81,7 @@ class ProductsTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

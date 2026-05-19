@@ -19,31 +19,36 @@ class CustomersTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('email')
-                    ->label('Email address')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
+
                 TextColumn::make('phone')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('address')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
+/*                 TextColumn::make('email')
+                    ->label('Email address')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('points')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable(), */
                 IconColumn::make('status')
                     ->boolean(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
+/*                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true), */
             ])
             ->filters([
                 TrashedFilter::make(),

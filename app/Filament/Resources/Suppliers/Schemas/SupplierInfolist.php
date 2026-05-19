@@ -13,22 +13,20 @@ class SupplierInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
+                TextEntry::make('name')
+                    ->label('Təchizatçının adı'),
                 TextEntry::make('phone')
+                    ->label('Telefon nömrəsi')
                     ->placeholder('-'),
                 TextEntry::make('email')
                     ->label('Email address')
                     ->placeholder('-'),
                 TextEntry::make('address')
+                    ->label('Ünvan')
                     ->placeholder('-'),
                 IconEntry::make('status')
                     ->boolean(),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+
                 TextEntry::make('deleted_at')
                     ->dateTime()
                     ->visible(fn (Supplier $record): bool => $record->trashed()),

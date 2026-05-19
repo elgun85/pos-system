@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -14,7 +15,7 @@ class Product extends Model
         'category_id',
         'supplier_id',
         'sku',
-        'barcode',
+       // 'barcode',
         'cost_price',
         'sale_price',
         'status',
@@ -22,7 +23,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class)->where('status', true)->where('parent_id', '!=', null);
     }
 
     public function supplier()
@@ -52,5 +53,23 @@ class Product extends Model
     public function brand()
     {
         return $this->belongsTo(Brand::class);
+    }
+
+
+            protected static function booted(): void
+    {
+        static::updating(function ($model) {
+
+            if ($model->isDirty('image') && $model->getOriginal('image')) {
+
+                Storage::disk('public')->delete($model->getOriginal('image'));
+            }
+        });
+
+        static::deleting(function ($model) {
+            if ($model->image) {
+                Storage::disk('public')->delete($model->image);
+            }
+        });
     }
 }

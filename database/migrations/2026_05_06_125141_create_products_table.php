@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name')->index();
             $table->string('image')->nullable();
-            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('supplier_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('category_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('supplier_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('sku')->unique()->nullable();
-            $table->string('barcode')->unique();
-            $table->decimal('cost_price', 10, 2);    // alis qiymeti
-            $table->decimal('sale_price', 10, 2);    // satis qiymeti
+            $table->string('barcode')->unique()->nullable();
+            $table->decimal('cost_price', 10, 2)->nullable();    // alis qiymeti
+            $table->decimal('sale_price', 10, 2)->nullable()    ;    // satis qiymeti
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
             $table->softDeletes();

@@ -16,6 +16,7 @@ class CategoryForm
                 TextInput::make('name')
                     ->label('Kateqoriya Adı')
                     ->required()
+                    ->placeholder('Kateqoriya adını daxil edin')
                     ->live()
                     ->afterStateUpdated(function ($state, callable $set) {
                         $set('name', mb_convert_case($state, MB_CASE_TITLE, 'UTF-8'));

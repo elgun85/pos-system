@@ -16,6 +16,7 @@ class BrandForm
                 TextInput::make('name')
                     ->label('Brand Adı')
                     ->required()
+                    ->placeholder('Brand adını daxil edin')
                     ->live()
                     ->afterStateUpdated(function ($state, callable $set) {
                         $set('name', mb_convert_case($state, MB_CASE_TITLE, 'UTF-8'));
@@ -26,15 +27,15 @@ class BrandForm
                     ->image()
                     ->disk('public')
                     ->directory('brands')
+                    ->maxSize(4096) 
                     ->imageEditor()
-                    // Redaktə zamanı köhnə şəkli silib yenisini qoymaq imkanı yaradır:
                     ->reorderable()
                     ->openable()
                     ->deletable(true)
-                    // Bu sətir vacibdir: əgər yükləmə zamanı problem olarsa, köhnəni göstərməyə davam etsin
                     ->placeholder('Şəkil seçilməyib')
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp']),
                 Toggle::make('status')
+                    ->label('Status')
                     ->default(true),
             ]);
     }

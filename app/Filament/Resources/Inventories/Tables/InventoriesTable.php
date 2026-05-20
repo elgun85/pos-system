@@ -14,11 +14,25 @@ class InventoriesTable
     {
         return $table
             ->columns([
-                TextColumn::make('product_id')
+                TextColumn::make('product.name')
+                    ->label('Məhsul adı')
+                    ->sortable(),
+
+                TextColumn::make('product.sale_price')
+                    ->label('Satış Qiyməti')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('quantity')
-                    ->numeric()
+                    ->label('Stok Miqdarı')
+                    ->badge()
+                    ->color(fn($state) => match (true) {
+
+                        $state == 0 => 'danger',
+
+                        $state <= 5 => 'warning',
+
+                        default => 'success',
+                    })
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()

@@ -24,7 +24,7 @@ class CategoriesTable
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('parent.name')
-                    ->label('Ust Kateqoriya')
+                    ->label('Üst Kateqoriya')
                     ->numeric()
                     ->sortable(),
                 IconColumn::make('status')

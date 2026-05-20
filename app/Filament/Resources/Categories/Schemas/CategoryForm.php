@@ -15,6 +15,7 @@ class CategoryForm
             ->components([
                 TextInput::make('name')
                     ->label('Kateqoriya Adı')
+                    ->unique(ignoreRecord: true) // Bazada təkrarlanmasın
                     ->required()
                     ->placeholder('Kateqoriya adını daxil edin')
                     ->live()
@@ -22,7 +23,7 @@ class CategoryForm
                         $set('name', mb_convert_case($state, MB_CASE_TITLE, 'UTF-8'));
                     }),
                 Select::make('parent_id')
-                    ->label('Alt Kateqoriya')
+                    ->label('Üst Kateqoriya')
                     ->relationship('parent', 'name')
                     ->nullable()
                     ->preload()

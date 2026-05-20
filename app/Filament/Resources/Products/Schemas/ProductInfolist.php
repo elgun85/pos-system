@@ -56,6 +56,12 @@ class ProductInfolist
                     ->weight(FontWeight::Bold)
                     ->size('md')
                     ->money(),
+
+                    TextEntry::make('inventory.quantity')
+                    ->label('Stok Miqdarı')
+                    ->weight(FontWeight::Bold)
+                    ->size('md')
+                    ->numeric(),
                 TextEntry::make('supplier.name')
                     ->label('Təchizatçı')
                     ->weight(FontWeight::Bold)

@@ -40,11 +40,11 @@ class ProductsTable
                     ->label('Kateqoriya')
                     ->limit(15)
                     ->sortable(),
-                        TextColumn::make('brand.name')  
+                TextColumn::make('brand.name')
                     ->label('Brend')
                     ->limit(15)
                     ->sortable(),
-                    
+
 
 
                 /*                 TextColumn::make('barcode')
@@ -52,14 +52,26 @@ class ProductsTable
                     ->searchable(), */
                 TextColumn::make('cost_price')
                     ->label('Alış Qiyməti')
-                    ->money()
                     ->sortable(),
                 TextColumn::make('sale_price')
                     ->label('Satış Qiyməti')
-                    ->money()
                     ->color('success')
                     ->sortable(),
-/*                 TextColumn::make('supplier.name')
+
+                TextColumn::make('inventory.quantity')
+                    ->label('Stok Miqdarı')
+                    ->badge()
+                    ->color(fn($state) => match (true) {
+
+                        $state == 0 => 'danger',
+
+                        $state <= 5 => 'warning',
+
+                        default => 'success',
+                    })
+                    ->numeric()
+                    ->sortable(),
+                /*                 TextColumn::make('supplier.name')
                     ->label('Təchizatçı')
                     ->limit(15)
                     ->sortable(), */
@@ -81,7 +93,7 @@ class ProductsTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ])->defaultSort('created_at', 'desc')
             ->filters([
                 TrashedFilter::make(),
             ])

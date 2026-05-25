@@ -25,6 +25,7 @@ class ProductForm
                         TextInput::make('sku')
                             ->label('Barkod')
                             ->unique(ignoreRecord: true) // Bazada təkrarlanmasın
+                            ->autofocus()
                             ->required()
                             ->suffixAction(
                                 Action::make('generateBarcode')
@@ -49,11 +50,11 @@ class ProductForm
                             })
                             ->maxLength(255)
                             ->required(),
-                        TextInput::make('cost_price')
+                        /*                         TextInput::make('cost_price')
                             ->label('Alış Qiyməti')
                             ->required()
                             ->numeric()
-                            ->prefix('₼'),
+                            ->prefix('₼'), */
                         TextInput::make('sale_price')
                             ->label('Satış Qiyməti')
                             ->required()
@@ -117,7 +118,7 @@ class ProductForm
                                     ->label('Status')
                                     ->default(true)
                             ]),
-                        Select::make('supplier_id')
+                        /*                         Select::make('supplier_id')
                             ->label('Təchizatçı')
                             ->relationship('supplier', 'name')
                             ->preload()
@@ -139,7 +140,7 @@ class ProductForm
                                 Toggle::make('status')
                                     ->default(true),
 
-                            ]),
+                            ]), */
                         Select::make('status')
                             ->label('Status')
                             ->options(['active' => 'Active', 'inactive' => 'Inactive'])

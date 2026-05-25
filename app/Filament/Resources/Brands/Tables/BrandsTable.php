@@ -18,16 +18,17 @@ class BrandsTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                ->label('Ad')
-                     ->sortable()
+                    ->label('Ad')
+                    ->sortable()
                     ->searchable(),
 
                 ImageColumn::make('logo')
-                ->label('Logo')
-                ->disk('public')
-                ->square()
-               ->size(50)
-                    ,
+                    ->label('Logo')
+                    ->disk('public')
+                    ->square()
+                    ->size(50)
+                    ->url(fn($record) => $record->logo ? asset('storage/' . $record->logo) : null)
+                    ->openUrlInNewTab(),
 
 
                 IconColumn::make('status')
@@ -36,7 +37,7 @@ class BrandsTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-               
+
             ])
             ->filters([
                 //

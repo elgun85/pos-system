@@ -33,6 +33,16 @@ class BrandResource extends Resource
         return BrandForm::configure($schema);
     }
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', true)->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
+    }
+
     public static function table(Table $table): Table
     {
         return BrandsTable::configure($table);

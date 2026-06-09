@@ -37,6 +37,16 @@ class PurchaseResource extends Resource
         return PurchasesTable::configure($table);
     }
 
+        public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', true)->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
+    }
+
     public static function getRelations(): array
     {
         return [

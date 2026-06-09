@@ -40,6 +40,16 @@ class ProductResource extends Resource
         return ProductForm::configure($schema);
     }
 
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', true)->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
+    }
     public static function infolist(Schema $schema): Schema
     {
         return ProductInfolist::configure($schema);

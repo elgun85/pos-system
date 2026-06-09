@@ -26,7 +26,7 @@ class CustomerResource extends Resource
     protected static string | UnitEnum | null $navigationGroup = 'Satış';
     protected static ?string $modelLabel = 'Müştəri';
     protected static ?string $pluralModelLabel = 'Müştərilər';
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 5;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserCircle;
 

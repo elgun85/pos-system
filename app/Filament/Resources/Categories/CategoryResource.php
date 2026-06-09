@@ -39,6 +39,16 @@ class CategoryResource extends Resource
         return CategoryForm::configure($schema);
     }
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', true)->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
+    }
+
     public static function infolist(Schema $schema): Schema
     {
         return CategoryInfolist::configure($schema);

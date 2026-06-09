@@ -10,6 +10,7 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Width;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -25,15 +26,27 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+           ->maxContentWidth(Width::Full)
+          ->sidebarCollapsibleOnDesktop()
+           
+
             ->id('admin')
             ->path('admin')
             ->login()
-                    ->navigationGroups([
-            'Mağaza',
-            'Satış',
-            'Təchizat',
-            'Sistem',
-        ])
+            ->assets([
+                // Sizin əsas Tailwind CSS buildinizi Filament daxilinə yükləyir
+                \Filament\Support\Assets\Css::make('custom-styles', \Illuminate\Support\Facades\Vite::asset('resources/css/app.css')),
+                // Və ya Vite birbaşa istifadə olunursa:
+                // \Filament\Support\Assets\Css::make('custom-styles', \Illuminate\Support\Facades\Vite::asset('resources/css/app.css')),
+            ])
+            ->navigationGroups([
+                'Satış',
+                'Kassa',
+                'Mağaza',
+                
+                'Təchizat',
+                'Sistem',
+            ])
             ->colors([
                 'primary' => Color::Amber,
             ])

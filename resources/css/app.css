@@ -6,6 +6,13 @@
 @source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
 @source '../../vendor/livewire/flux/stubs/**/*.blade.php';
 
+/* Filament qovluqlarını Tailwind-ə tanıtdırırıq */
+@source "../../app/Filament/**/*.php";
+@source "../../resources/views/filament/**/*.blade.php";
+@source "../../resources/views/livewire/**/*.blade.php"; /* Əgər custom livewire istifadə edirsinizsə *
+
+
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {

@@ -29,11 +29,32 @@ php artisan make:filament-user
                         $set('name', mb_convert_case($state, MB_CASE_TITLE, 'UTF-8'));
                     }),
 
+
+
+                        public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', true)->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
+    }
+
     protected static ?string $navigationLabel = 'Məhsullar';                           // navigationLabel - menyuda görünəcək ad
     protected static string | UnitEnum | null $navigationGroup = 'Mağaza';             // navigationGroup - menyuda görünəcək qrup adı
     protected static ?string $modelLabel = 'Məhsul';                                   // modelLabel - resursun təkil adı  
     protected static ?string $pluralModelLabel = 'Məhsul';                             // pluralModelLabel - resursun cəmi adı
     protected static ?int $navigationSort = 1;                                         // navigationSort - menyuda görünmə sırası (aşağıdakı nümunədə 1, 2, 3, ... olaraq sıralanır)
+
+    sidebar siralamani adminPanelProviderde 
+                ->navigationGroups([
+                'Kassa',
+                'Mağaza',
+                'Satış',
+                'Təchizat',
+                'Sistem',
+            ])
 
 php artisan make:filament-resource Supplier
 php artisan make:filament-resource Category
@@ -70,6 +91,12 @@ php artisan make:filament-resource Inventory
 | Settings      | `OutlinedCog6Tooth`              |
 | Inventory     | `OutlinedArchiveBox`             |
 
+
+5.
+php artisan make:observer ProductObserver --model=Product
+php artisan make:observer PurchaseItemObserver --model=PurchaseItem
+6.
+php artisan make:filament-page POS
 
 
 

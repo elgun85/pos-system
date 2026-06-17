@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\SalesItem;
 use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\ReturnItem;
 use Illuminate\Database\Eloquent\Model;
 
 class SaleReturn extends Model

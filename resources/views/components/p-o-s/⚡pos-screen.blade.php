@@ -5,6 +5,10 @@ use App\Models\Product;
 use App\Models\Inventory;
 use Livewire\Attributes\Computed;
 use Filament\Notifications\Notification;
+use App\Models\PaymentMethod;
+use App\Models\Sale;
+use App\Models\SalesItem;
+use Illuminate\Support\Facades\DB;
 
 new class extends Component {
     public $search = '';
@@ -15,13 +19,15 @@ new class extends Component {
 
     //properties for checkout
     public $customer_id = null;
-    public $payment_method_id = null;
+    public $payment_method_id;
     public $paid_amount = 0;
     public $discount_amount = 0;
 
     public function mount()
     {
         $this->products = Product::where('status', true)->get();
+        $this->paymentMethods = PaymentMethod::where('status', true)->orderByRaw("CASE WHEN name = 'Nəğd' THEN 0 ELSE 1 END")->orderBy('name')->get();
+        $this->payment_method_id = $this->paymentMethods->first()?->id;
     }
 
     #[Computed]
@@ -40,17 +46,17 @@ new class extends Component {
             ->get();
     }
 
-        public function updatedSearch()
+    public function updatedSearch()
     {
-       $search=trim($this->search);
-       if(blank($search)){
-        return;
-       }
-       $product = Product::where('sku', $search)->first();
-       if($product){
-        $this->addToCart($product->id);
-        $this->search = '';
-       }
+        $search = trim($this->search);
+        if (blank($search)) {
+            return;
+        }
+        $product = Product::where('sku', $search)->first();
+        if ($product) {
+            $this->addToCart($product->id);
+            $this->search = '';
+        }
     }
 
     public function addToCart($productId)
@@ -124,7 +130,68 @@ new class extends Component {
         return 0;
     }
 
+    public function checkout()
+    {
+        // dd($this->cart, $this->total, $this->paid_amount, $this->payment_method_id, $this->discount_amount);
+        $this->validate(['payment_method_id' => 'required|exists:payment_methods,id'], ['payment_method_id.required' => 'Ödəniş növü seçimi vacibdir.']);
 
+        //mehsulun elave edilmesi yoxlanilir
+        if (empty($this->cart)) {
+            Notification::make()->title('Səbət boşdur. Satış üçün ən azı bir məhsul əlavə edin.')->danger()->send();
+            return;
+        }
+        try {
+            DB::beginTransaction();
+            $sale = Sale::create([
+                //'customer_id' => $this->customer_id,
+                'sale_number' => 'SALE-' . now()->format('YmdHis') . '-' . rand(1000, 9999),
+                'total' => $this->total,
+                'paid_amount' => $this->paid_amount,
+                'payment_method_id' => $this->payment_method_id,
+                'discount' => $this->discount_amount,
+                'user_id' => auth()->id(),
+                'status' => 'completed',
+            ]);
+
+            foreach ($this->cart as $cartItem) {
+                $inventory = Inventory::where('product_id', $cartItem['product_id'])
+                    ->lockForUpdate() // Lock the row for update to prevent race conditions
+                    ->first();
+                if (!$inventory || $inventory->quantity < $cartItem['quantity']) {
+                    DB::rollBack();
+                    Notification::make()->title('Bu məhsulun stokda kifayət qədər miqdarı yoxdur.')->danger()->send();
+                    return;
+                }
+                SalesItem::create([
+                    'sale_id' => $sale->id,
+                    'product_id' => $cartItem['product_id'],
+                    'quantity' => $cartItem['quantity'],
+                    'price' => $cartItem['sale_price'],
+                    'total' => $cartItem['quantity'] * $cartItem['sale_price'],
+                    //'cost_price' => $cartItem['cost_price'],
+                ]);
+                $inventory->decrement('quantity', $cartItem['quantity']);
+            }
+            DB::commit();
+            $this->cart = [];
+            $this->search = '';
+
+            $this->paid_amount = 0;
+            $this->discount_amount = 0;
+            $this->discount_amount = 0;
+            Notification::make()->title('Satış uğurla tamamlandı.')->success()->send();
+
+       //     $this->js('window.dispatchEvent(new CustomEvent("print-receipt", { detail: { url: "' . route('sales.print', ['sale' => $sale->id]) . '" } }))');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Notification::make()
+                ->title('Satış zamanı xəta baş verdi: ' . $e->getMessage())
+                ->danger()
+                ->send();
+            return;
+        }
+    }
 };
 ?>
 <div>
@@ -158,7 +225,7 @@ new class extends Component {
                      border-gray-200 bg-gray-50 p-3">
 
                             <div class="flex-1 font-medium truncate">
-                                {{ $cartItem['name'] }}                     
+                                {{ $cartItem['name'] }}
                                 <span class="text-xs text-zinc-500">
                                     (SKU: {{ $cartItem['sku'] }})
                                 </span>
@@ -174,7 +241,7 @@ new class extends Component {
                                 {{ $cartItem['quantity'] }} x
                                 ₼{{ number_format($cartItem['sale_price'], 2) }} =
 
-                                ₼{{ number_format($cartItem['quantity'] * $cartItem['sale_price'], 2) }}
+                                ₼{{ number_format(((int) ($cartItem['quantity'] ?: 0)) * ((float) ($cartItem['sale_price'] ?: 0)), 2) }}
 
                             </div>
 
@@ -212,6 +279,23 @@ new class extends Component {
 
                     </div>
 
+                    <div class="flex justify-between  ">
+                        <span>Ödəniş növü</span>
+
+
+                        <flux:select wire:model="payment_method_id" placeholder="Ödəniş növü seçin" class="w-48">
+                            @foreach ($this->paymentMethods as $method)
+                                <flux:select.option :value="$method->id">
+                                    {{ $method->name }}
+                                </flux:select.option>
+                            @endforeach
+                        </flux:select>
+                        @error('payment_method_id')
+                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+
                     <div class="flex justify-between border-t pt-3 text-xl font-bold">
 
                         <span>Yekun</span>
@@ -229,7 +313,7 @@ new class extends Component {
                     <flux:input placeholder="Ödənilən məbləğ" wire:model.live.debounce.500ms="paid_amount"
                         type="number" step="0.01" min="0" />
 
-                    <flux:button variant="primary" class="w-full">
+                    <flux:button wire:click="checkout" wire:loading.attr="disabled" variant="primary" class="w-full">
                         Satışı Tamamla
                     </flux:button>
 
@@ -262,17 +346,16 @@ new class extends Component {
 
 
 
-                 {{-- PRODUCT LIST --}}
+                {{-- PRODUCT LIST --}}
                 <div class="mt-4 overflow-y-auto h-[700px]">
 
                     <div class="grid grid-cols-4 gap-4 content-start">
 
                         @forelse($this->filteredProducts as $product)
                             <div wire:click="addToCart({{ $product->id }})"
-                               class="cursor-pointer overflow-hidden rounded-lg border bg-zinc-100 hover:shadow-md min-h-[80px]"
-                            >
+                                class="cursor-pointer overflow-hidden rounded-lg border bg-zinc-100 hover:shadow-md min-h-[80px]">
 
-{{--                                 @if ($product->image)
+                                {{--                                 @if ($product->image)
                                     <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
                                         class="h-12 w-full object-cover"
                                                                      loading="lazy">
@@ -319,6 +402,15 @@ new class extends Component {
 
         </div>
     </div>
+
+    <script>
+        window.addEventListener('print-receipt', event => {
+            const printUrl = event.detail.url;
+            const printWindow = window.open(printUrl, '_blank', 'width=800,height=600');
+            printWindow.focus();
+            printWindow.print();
+        });
+    </script>
 
 
 </div>

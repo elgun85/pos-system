@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained()->restrictOnDelete();
             $table->decimal('quantity', 10, 2);
             $table->decimal('price', 8, 2);       // Satış qiyməti
-            $table->decimal('cost_price', 8, 2);  // Xalis mənfəəti hesablamaq üçün (Alış qiyməti)
-            $table->decimal('total', 10, 2);      // quantity * price            $table->timestamps();
+            $table->decimal('cost_price', 8, 2)->nullable();  // Xalis mənfəəti hesablamaq üçün (Alış qiyməti)
+            $table->decimal('total', 10, 2)->nullable();      // quantity * price            $table->timestamps();
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ class CustomersTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('name')
                     ->searchable()
@@ -28,7 +29,7 @@ class CustomersTable
                 TextColumn::make('address')
                     ->searchable()
                     ->sortable(),
-/*                 TextColumn::make('email')
+                /*                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable()
                     ->sortable(),
@@ -41,7 +42,7 @@ class CustomersTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-/*                 TextColumn::make('updated_at')
+                /*                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Sales\Schemas;
 
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -11,20 +12,29 @@ class SaleForm
     {
         return $schema
             ->components([
-                TextInput::make('customer_id')
-                    ->numeric(),
-                TextInput::make('payment_method_id')
-                    ->numeric(),
+                TextInput::make('sale_number')
+                    ->label('Satış nömrəsi'),
+
+                Select::make('payment_method_id')
+                    ->label('Ödəmə üsulu')
+                    ->relationship('paymentMethod', 'name'),
+
+
                 TextInput::make('total')
-                    ->required()
-                    ->numeric(),
-                TextInput::make('paid_amount')
-                    ->required()
-                    ->numeric(),
-                TextInput::make('discount')
-                    ->required()
+                    ->label('Cəmi')
                     ->numeric()
-                    ->default(0.0),
+                    ->suffix('₼')
+                    ->readOnly()
+                    ->disabled(),
+
+                Select::make('status')
+                    ->label('Status')
+                    ->options([
+                        'draft' => 'Gözləmədə',
+                        'completed' => 'Tamamlanıb',
+                        'cancelled' => 'Ləğv edilib',
+                    ]),
+
             ]);
     }
 }

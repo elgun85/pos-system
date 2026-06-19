@@ -18,6 +18,7 @@ class CategoriesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('name')
                     ->label('Kateqoriya Adı')
@@ -42,7 +43,7 @@ class CategoriesTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-             ->defaultSort('id', 'desc')
+            ->defaultSort('id', 'desc')
             ->filters([
                 TrashedFilter::make(),
             ])

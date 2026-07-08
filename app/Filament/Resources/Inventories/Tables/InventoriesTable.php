@@ -18,14 +18,17 @@ class InventoriesTable
             ->columns([
                 TextColumn::make('product.name')
                     ->label('Məhsul adı')
+                    ->searchable()
                     ->sortable(),
 
                 TextColumn::make('product.sale_price')
                     ->label('Satış Qiyməti')
-                    ->numeric()
+                    ->prefix('₼')
                     ->sortable(),
+
                 TextColumn::make('quantity')
                     ->label('Stok Miqdarı')
+                    ->numeric()
                     ->badge()
                     ->color(fn($state) => match (true) {
 
@@ -35,7 +38,8 @@ class InventoriesTable
 
                         default => 'success',
                     })
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

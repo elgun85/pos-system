@@ -56,6 +56,12 @@ php artisan make:filament-user
                 'Sistem',
             ])
 
+// edit sehifede eger title id gorsense onu ada gore cagirmaq 
+                public function getTitle(): string
+    {
+        return 'Məhsul: ' . $this->record->product?->name;
+    }
+
 php artisan make:filament-resource Supplier
 php artisan make:filament-resource Category
 php artisan make:filament-resource Product
@@ -123,6 +129,8 @@ php artisan make:observer ProductObserver --model=Product
 php artisan make:observer PurchaseItemObserver --model=PurchaseItem
 6.
 php artisan make:filament-page POS
+
+
 
 
 

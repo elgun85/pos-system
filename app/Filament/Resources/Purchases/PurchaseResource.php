@@ -27,6 +27,9 @@ class PurchaseResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShoppingBag;
 
+        protected static ?string $recordTitleAttribute = 'invoice_number';
+
+
     public static function form(Schema $schema): Schema
     {
         return PurchaseForm::configure($schema);
@@ -41,6 +44,8 @@ class PurchaseResource extends Resource
     {
         return static::getModel()::where('status', true)->count();
     }
+
+
 
     public static function getNavigationBadgeColor(): ?string
     {

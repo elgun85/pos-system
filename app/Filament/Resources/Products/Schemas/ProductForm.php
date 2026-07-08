@@ -11,6 +11,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Filament\Tables\Columns\ToggleColumn;
 
 
 class ProductForm
@@ -146,6 +147,11 @@ class ProductForm
                             ->options(['active' => 'Active', 'inactive' => 'Inactive'])
                             ->default('active')
                             ->required(),
+
+                            Toggle::make('is_favorite')
+                            ->label('Sevimli Məhsul')
+                            ->onIcon('heroicon-s-star')
+                            ,
                     ]),
             ]);
     }

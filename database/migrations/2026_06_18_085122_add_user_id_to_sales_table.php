@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    /*     public function up(): void
     {
         Schema::table('sales', function (Blueprint $table) {
             $table->foreignId('user_id')
@@ -18,6 +18,18 @@ return new class extends Migration
             ->nullable()
             ->nullOnDelete();
         });
+    } */
+
+    public function up(): void
+    {
+        if (! Schema::hasColumn('sales', 'user_id')) {
+            Schema::table('sales', function (Blueprint $table) {
+                $table->foreignId('user_id')
+                    ->nullable()
+                    ->constrained()
+                    ->nullOnDelete();
+            });
+        }
     }
 
     /**

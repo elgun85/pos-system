@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class Product extends Model
 {
@@ -16,9 +19,10 @@ class Product extends Model
         'brand_id',
         'supplier_id',
         'sku',
-       // 'barcode',
+        // 'barcode',
         'cost_price',
         'sale_price',
+        'is_favorite',
         'status',
     ];
 
@@ -57,7 +61,7 @@ class Product extends Model
     }
 
 
-            protected static function booted(): void
+    protected static function booted(): void
     {
         static::updating(function ($model) {
 
@@ -72,5 +76,21 @@ class Product extends Model
                 Storage::disk('public')->delete($model->image);
             }
         });
+    }
+
+    protected $casts = [
+        'is_favorite' => 'boolean',
+    ];
+
+    #[Scope]
+    protected function activeProduct(Builder $query): void
+    {
+        $query->where('status', 'active');
+    }
+
+    #[Scope]
+    protected function favoriteProduct(Builder $query): void
+    {
+        $query->where('is_favorite', true);
     }
 }

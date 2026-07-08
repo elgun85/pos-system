@@ -34,14 +34,19 @@ new class extends Component {
     public function filteredProducts()
     {
         if (blank($this->search)) {
-            return Product::query()->latest()->limit(20)->get();
+            return Product::query()->latest()
+            ->with('brand:id,name')
+            ->activeProduct()->favoriteProduct()->limit(30)->get();
         }
 
         return Product::query()
-            ->select(['id', 'name', 'sku', 'sale_price'])
+            ->with('brand:id,name')
+
+           ->select(['id','brand_id','name', 'sku', 'sale_price'])
             ->where(function ($query) {
                 $query->where('name', 'like', $this->search . '%');
             })
+            ->activeProduct()
             ->limit(50)
             ->get();
     }
@@ -81,6 +86,7 @@ new class extends Component {
             $this->cart[$productId] = [
                 'product_id' => $productId,
                 'name' => $product->name,
+                'brand' => $product->brand?->name,
                 'sku' => $product->sku,
                 'sale_price' => $product->sale_price,
                 'quantity' => 1,
@@ -181,8 +187,7 @@ new class extends Component {
             $this->discount_amount = 0;
             Notification::make()->title('Satış uğurla tamamlandı.')->success()->send();
 
-       //     $this->js('window.dispatchEvent(new CustomEvent("print-receipt", { detail: { url: "' . route('sales.print', ['sale' => $sale->id]) . '" } }))');
-
+            //     $this->js('window.dispatchEvent(new CustomEvent("print-receipt", { detail: { url: "' . route('sales.print', ['sale' => $sale->id]) . '" } }))');
         } catch (\Exception $e) {
             DB::rollBack();
             Notification::make()
@@ -225,7 +230,7 @@ new class extends Component {
                      border-gray-200 bg-gray-50 p-3">
 
                             <div class="flex-1 font-medium truncate">
-                                {{ $cartItem['name'] }}
+                                {{ $cartItem['name'] }} / {{ $cartItem['brand'] }}
                                 <span class="text-xs text-zinc-500">
                                     (SKU: {{ $cartItem['sku'] }})
                                 </span>
@@ -349,22 +354,11 @@ new class extends Component {
                 {{-- PRODUCT LIST --}}
                 <div class="mt-4 overflow-y-auto h-[700px]">
 
-                    <div class="grid grid-cols-4 gap-4 content-start">
+                    <div class="grid grid-cols-3 gap-4 content-start">
 
                         @forelse($this->filteredProducts as $product)
                             <div wire:click="addToCart({{ $product->id }})"
                                 class="cursor-pointer overflow-hidden rounded-lg border bg-zinc-100 hover:shadow-md min-h-[80px]">
-
-                                {{--                                 @if ($product->image)
-                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
-                                        class="h-12 w-full object-cover"
-                                                                     loading="lazy">
-
-                                @else
-                                    <div class="h-12 bg-zinc-200 flex items-center justify-center">
-                                        Şəkil yoxdur
-                                    </div>
-                                @endif --}}
 
                                 <div class="p-1 flex-1 flex flex-col justify-between ">
 
@@ -373,11 +367,14 @@ new class extends Component {
                                     </div>
 
                                     <div class="text-xs text-zinc-500">
-                                        SKU: {{ $product->sku }}
+                                        {{ $product->brand?->name }}
                                     </div>
 
                                     <div class="mt-1 text-xs text-zinc-500">
                                         Stok: {{ $product->inventory ? $product->inventory->quantity : 'Yoxdur' }}
+                                    </div>
+                                    <div class="text-xs text-zinc-500">
+                                        {{ $product->sku }}
                                     </div>
 
                                     <div class="mt-1 text-xm font-bold">

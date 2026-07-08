@@ -11,6 +11,7 @@ use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
@@ -82,6 +83,12 @@ class ProductsTable
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge(),
+
+                ToggleColumn::make('is_favorite')
+                    ->label('Sevimli Məhsul')
+                    ->onIcon('heroicon-s-star')
+                    ->sortable(),
+
                 TextColumn::make('created_at')
                     ->label('Yaradılma Tarixi')
                     ->dateTime()

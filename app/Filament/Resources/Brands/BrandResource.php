@@ -37,6 +37,7 @@ class BrandResource extends Resource
     {
         return static::getModel()::where('status', true)->count();
     }
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function getNavigationBadgeColor(): ?string
     {

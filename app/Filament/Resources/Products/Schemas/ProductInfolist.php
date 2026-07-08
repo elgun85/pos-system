@@ -33,7 +33,7 @@ class ProductInfolist
                     ->weight(FontWeight::Bold)
                     ->size('md'),
 
-                    TextEntry::make('brand.name')
+                TextEntry::make('brand.name')
                     ->label('Brend')
                     ->weight(FontWeight::Bold)
                     ->size('md'),
@@ -57,7 +57,7 @@ class ProductInfolist
                     ->size('md')
                     ->money(),
 
-                    TextEntry::make('inventory.quantity')
+                TextEntry::make('inventory.quantity')
                     ->label('Stok Miqdarı')
                     ->weight(FontWeight::Bold)
                     ->size('md')
@@ -69,6 +69,11 @@ class ProductInfolist
                 TextEntry::make('status')
                     ->label('Status')
                     ->badge(),
+                TextEntry::make('is_favorite')
+                    ->label('Sevimli Məhsul')
+                    ->badge()
+                    ->formatStateUsing(fn($state) => $state ? 'Favori' : 'Adi')
+                    ->color(fn($state) => $state ? 'warning' : 'gray'),
                 /*                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),

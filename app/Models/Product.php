@@ -93,4 +93,12 @@ class Product extends Model
     {
         $query->where('is_favorite', true);
     }
+
+    #[Scope]
+    protected function minimumStock(Builder $query): void
+    {
+        $query->whereHas('inventory', function ($q) {
+            $q->where('quantity', '>', 0);
+        });
+    }
 }

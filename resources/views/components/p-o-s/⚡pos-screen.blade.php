@@ -38,7 +38,10 @@ new class extends Component {
         if (blank($this->search)) {
             return Product::query()->latest()
             ->with('brand:id,name')
-            ->activeProduct()->favoriteProduct()->limit(30)->get();
+            ->activeProduct()->favoriteProduct()
+            ->minimumStock()
+            ->limit(30)
+            ->get();
         }
 
         return Product::query()

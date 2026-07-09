@@ -14,11 +14,15 @@ class InventoriesTable
     public static function configure(Table $table): Table
     {
         return $table
-        ->defaultSort('created_at', 'desc')
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('product.name')
                     ->label('Məhsul adı')
                     ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('product.brand.name')
+                    ->label('Marka')
                     ->sortable(),
 
                 TextColumn::make('product.sale_price')

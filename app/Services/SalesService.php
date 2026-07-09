@@ -25,7 +25,6 @@ class SalesService
             throw new Exception('Səbət boşdur. Satış üçün ən azı bir məhsul əlavə edin.');
         }
 
-        // DB::transaction məlumatların bütövlüyünü qoruyur (Atomicity)
         return DB::transaction(function () use ($cart, $data) {
 
             // 1. Satış qeydini yaradırıq

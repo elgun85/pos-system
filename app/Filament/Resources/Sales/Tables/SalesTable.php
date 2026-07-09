@@ -65,6 +65,11 @@ class SalesTable
                         'cancelled' => 'danger',
                     }),
 
+                    TextColumn::make('user.name')
+                    ->label('Satışı edən')
+                    ->getStateUsing(fn($record) => $record->user?->name)
+                    ->sortable(),
+
 
                 TextColumn::make('created_at')
                     ->label('Yaradılma tarixi')

@@ -62,6 +62,11 @@ php artisan make:filament-user
         return 'Məhsul: ' . $this->record->product?->name;
     }
 
+    php artisan config:cache   // config fayllarini kechleyir
+php artisan route:cache  // route fayllarini kechleyir
+php artisan view:cache     // view fayllarini kechleyir
+php artisan optimize:clear  // kechlenmis fayllari silir
+
 php artisan make:filament-resource Supplier
 php artisan make:filament-resource Category
 php artisan make:filament-resource Product

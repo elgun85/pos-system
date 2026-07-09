@@ -8,7 +8,7 @@ class SalePrintController extends Controller
 {
     public function __invoke(Sale $sale)
     {
-        $sale->load('items.product');
+        $sale->load(['user','items.product.brand']);
 
         return view('sales.print', compact('sale'));
     }

@@ -32,6 +32,7 @@ class AdminPanelProvider extends PanelProvider
 
             ->id('admin')
             ->path('admin')
+            ->spa()
             ->login()
             ->assets([
                 // Sizin əsas Tailwind CSS buildinizi Filament daxilinə yükləyir

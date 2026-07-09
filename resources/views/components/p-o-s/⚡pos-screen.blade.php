@@ -9,6 +9,8 @@ use App\Models\PaymentMethod;
 use App\Models\Sale;
 use App\Models\SalesItem;
 use Illuminate\Support\Facades\DB;
+use App\Services\SalesService;
+
 
 new class extends Component {
     public $search = '';
@@ -136,60 +138,43 @@ new class extends Component {
         return 0;
     }
 
-    public function checkout()
+    public function checkout(SalesService $salesService)
     {
-        // dd($this->cart, $this->total, $this->paid_amount, $this->payment_method_id, $this->discount_amount);
-        $this->validate(['payment_method_id' => 'required|exists:payment_methods,id'], ['payment_method_id.required' => 'Ödəniş növü seçimi vacibdir.']);
+// 1. Validasiya
+    $this->validate([
+        'payment_method_id' => 'required|exists:payment_methods,id'
+    ], [
+        'payment_method_id.required' => 'Ödəniş növü seçimi vacibdir.'
+    ]);
 
-        //mehsulun elave edilmesi yoxlanilir
-        if (empty($this->cart)) {
-            Notification::make()->title('Səbət boşdur. Satış üçün ən azı bir məhsul əlavə edin.')->danger()->send();
-            return;
-        }
-        try {
-            DB::beginTransaction();
-            $sale = Sale::create([
-                //'customer_id' => $this->customer_id,
-                'sale_number' => 'SALE-' . now()->format('YmdHis') . '-' . rand(1000, 9999),
-                'total' => $this->total,
-                'paid_amount' => $this->paid_amount,
-                'payment_method_id' => $this->payment_method_id,
-                'discount' => $this->discount_amount,
-                'user_id' => auth()->id(),
-                'status' => 'completed',
-            ]);
+try {
+        // 2. Satış servisini çağırırıq (Bütün DB və Stok işlərini o həll edir)
+        $sale = $salesService->createSale($this->cart, [
+            'total'           => $this->total,
+            'paid_amount'     => $this->paid_amount,
+            'payment_method_id'=> $this->payment_method_id,
+            'discount_amount' => $this->discount_amount,
+        ]);
 
-            foreach ($this->cart as $cartItem) {
-                $inventory = Inventory::where('product_id', $cartItem['product_id'])
-                    ->lockForUpdate() // Lock the row for update to prevent race conditions
-                    ->first();
-                if (!$inventory || $inventory->quantity < $cartItem['quantity']) {
-                    DB::rollBack();
-                    Notification::make()->title('Bu məhsulun stokda kifayət qədər miqdarı yoxdur.')->danger()->send();
-                    return;
-                }
-                SalesItem::create([
-                    'sale_id' => $sale->id,
-                    'product_id' => $cartItem['product_id'],
-                    'quantity' => $cartItem['quantity'],
-                    'price' => $cartItem['sale_price'],
-                    'total' => $cartItem['quantity'] * $cartItem['sale_price'],
-                    //'cost_price' => $cartItem['cost_price'],
-                ]);
-                $inventory->decrement('quantity', $cartItem['quantity']);
-            }
-            DB::commit();
+
+
+            
+          
             $this->cart = [];
             $this->search = '';
-
             $this->paid_amount = 0;
             $this->discount_amount = 0;
             $this->discount_amount = 0;
-            Notification::make()->title('Satış uğurla tamamlandı.')->success()->send();
+
+// 4. Uğurlu bildiriş göndərilir
+        Notification::make()->title('Satış uğurla tamamlandı.')->success()->send();
+
+// 5. Çap pəncərəsi açılır
+        $printUrl = route('sales.print', ['sale' => $sale->id]);
+        $this->js("window.open('{$printUrl}', '_blank', 'width=400,height=600');");
 
             //     $this->js('window.dispatchEvent(new CustomEvent("print-receipt", { detail: { url: "' . route('sales.print', ['sale' => $sale->id]) . '" } }))');
         } catch (\Exception $e) {
-            DB::rollBack();
             Notification::make()
                 ->title('Satış zamanı xəta baş verdi: ' . $e->getMessage())
                 ->danger()

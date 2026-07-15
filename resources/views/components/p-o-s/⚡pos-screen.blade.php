@@ -225,7 +225,7 @@ new class extends Component {
     public function openCustomerModal()
     {
         // PHP tərəfindən birbaşa "add-customer-modal" adlı modalı ekranda açırıq
-        Flux::modal('add-customer-modal')->show();
+        $this->dispatch('open-customer-modal');
     }
 
     public function quickCreateCustomer()
@@ -246,7 +246,7 @@ new class extends Component {
             $this->new_customer_name = '';
             $this->new_customer_phone = '';
 
-            Flux::modal('add-customer-modal')->close();
+            $this->dispatch('close-customer-modal');
             session()->flash('success', 'Yeni müştəri uğurla əlavə edildi.');
             //Notification::make()->title('Yeni müştəri uğurla əlavə edildi.')->success()->send();
         } catch (\Exception $e) {
@@ -259,9 +259,8 @@ new class extends Component {
     }
 };
 ?>
-<div x-data="{ openModal: false }" 
-     x-on:open-customer-modal.window="openModal = true"
-     x-on:close-customer-modal.window="openModal = false">
+<div x-data="{ openModal: false }" x-on:open-customer-modal.window="openModal = true"
+    x-on:close-customer-modal.window="openModal = false">
 
     <div class="h-[calc(100vh-120px)]">
         <div class="grid h-full grid-cols-[1fr_450px] gap-4">
@@ -302,7 +301,8 @@ new class extends Component {
                             </div>
 
                             <div class="ml-8">
-                                <flux:button size="sm" variant="danger" wire:click="removeFromCart({{ $cartItem['product_id'] }})">
+                                <flux:button size="sm" variant="danger"
+                                    wire:click="removeFromCart({{ $cartItem['product_id'] }})">
                                     ✕
                                 </flux:button>
                             </div>
@@ -320,12 +320,14 @@ new class extends Component {
                         <div class="flex items-center justify-between gap-2">
                             <span class="text-sm font-medium">Müştəri (Nisyə üçün vacibdir)</span>
                             <!-- Alpine.js ilə modalı tetikleyen düymə -->
-                            <flux:button size="sm" variant="subtle" icon="plus" class="text-xs" x-on:click="openModal = true">
+                            <flux:button size="sm" variant="subtle" icon="plus" class="text-xs"
+                                x-on:click="openModal = true">
                                 Yeni Müştəri
                             </flux:button>
                         </div>
 
-                        <flux:select wire:model="customer_id" placeholder="Müştəri seçin (Nisyə üçün mütləqdir)" class="w-full">
+                        <flux:select wire:model="customer_id" placeholder="Müştəri seçin (Nisyə üçün mütləqdir)"
+                            class="w-full">
                             <flux:select.option :value="null">Seçilməyib (Nağd Satış)</flux:select.option>
                             @foreach ($this->customers as $customer)
                                 <flux:select.option :value="$customer->id">
@@ -392,12 +394,14 @@ new class extends Component {
                     <h2 class="text-2xl font-bold">Məhsullar</h2>
                     <flux:input autofocus wire:model.live="search" placeholder="Məhsul axtar..." />
                     @if (session()->has('error'))
-                        <div class="mt-2 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-lg shadow-md">
+                        <div
+                            class="mt-2 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-lg shadow-md">
                             {{ session('error') }}
                         </div>
                     @endif
                     @if (session()->has('success'))
-                        <div class="mt-2 p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-lg shadow-md">
+                        <div
+                            class="mt-2 p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-lg shadow-md">
                             {{ session('success') }}
                         </div>
                     @endif
@@ -416,7 +420,8 @@ new class extends Component {
                                         Stok: {{ $product->inventory ? $product->inventory->quantity : 'Yoxdur' }}
                                     </div>
                                     <div class="text-xs text-zinc-500">{{ $product->sku }}</div>
-                                    <div class="mt-1 text-xm font-bold">₼ {{ number_format($product->sale_price, 2) }}</div>
+                                    <div class="mt-1 text-xm font-bold">₼ {{ number_format($product->sale_price, 2) }}
+                                    </div>
                                 </div>
                             </div>
                         @empty
@@ -432,7 +437,8 @@ new class extends Component {
     <!-- SÜRƏTLİ MÜŞTƏRİ YARATMA MODALI (GRID VƏ CARD-LARIN XARİCİNDƏ, ƏN ALTDA) -->
     <!-- Alpine.js x-show ilə idarə olunur ki, Filament daxilində tam stabil işləsin -->
     <div x-show="openModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" x-cloak>
-        <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-xl w-full max-w-[450px] space-y-6 border border-zinc-200 dark:border-zinc-800">
+        <div
+            class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-xl w-full max-w-[450px] space-y-6 border border-zinc-200 dark:border-zinc-800">
             <div>
                 <h3 class="text-lg font-bold">Yeni Müştəri Əlavə Et</h3>
                 <p class="text-sm text-zinc-500">Səhifədən ayrılmadan müştərini sürətlə qeydiyyata alın.</p>
@@ -444,7 +450,8 @@ new class extends Component {
                     <span class="text-red-500 text-xs">{{ $message }}</span>
                 @enderror
 
-                <flux:input label="Telefon Nömrəsi" wire:model="new_customer_phone" placeholder="Məs. +994 50 123 45 67" />
+                <flux:input label="Telefon Nömrəsi" wire:model="new_customer_phone"
+                    placeholder="Məs. +994 50 123 45 67" />
                 @error('new_customer_phone')
                     <span class="text-red-500 text-xs">{{ $message }}</span>
                 @enderror

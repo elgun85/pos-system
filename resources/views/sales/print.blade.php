@@ -86,7 +86,8 @@
         @endif
         <p class="bold">Yekun: ₼{{ number_format($sale->total, 2) }}</p>
         <p>Ödənilən: ₼{{ number_format($sale->paid_amount, 2) }}</p>
-        <p>Qalıq: ₼{{ number_format(max($sale->paid_amount - $sale->total, 0), 2) }}</p>
+        <p>Qalıq: ₼{{ number_format($sale->due_amount, 2) }}</p>
+        <p>Qaytarılan: ₼{{ number_format($sale->change_amount, 2) }}</p>
     </div>
 
     <div class="divider"></div>

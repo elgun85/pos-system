@@ -14,7 +14,7 @@ class SaleInfolist
             ->components([
                 TextEntry::make('sale_number')
                     ->placeholder('-'),
-                TextEntry::make('paymentMethod.name')
+                TextEntry::make('payments.paymentMethod.name')
                     ->label('Ödəmə üsulu')
                     ->placeholder('-'),
                 TextEntry::make('total')

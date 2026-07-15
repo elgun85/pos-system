@@ -9,9 +9,9 @@ class Sale extends Model
     protected $fillable = [
         'sale_number',
         'customer_id',
-        'payment_method_id',
+        //  'payment_method_id',
         'total',
-        'paid_amount',
+        //    'paid_amount',
         'discount',
         'status',
         'user_id',
@@ -35,5 +35,21 @@ class Sale extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getDueAmountAttribute(): float
+    {
+        $paid = $this->payments()->sum('amount');
+        return max($this->total - $paid, 0);
+    }
+
+    public function getTotalPaidAttribute(): float
+    {
+        return $this->payments()->sum('amount');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(SalesPayment::class);
     }
 }

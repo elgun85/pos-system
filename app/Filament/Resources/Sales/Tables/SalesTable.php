@@ -43,9 +43,11 @@ class SalesTable
                     ->wrap(),
 
 
-                TextColumn::make('paymentMethod.name')
+                TextColumn::make('payments.paymentMethod.name')
                     ->label('Ödəmə üsulu')
                     ->sortable(),
+
+
                 TextColumn::make('total')
                     ->label('Cəmi')
                     ->money('azn')

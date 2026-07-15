@@ -44,6 +44,7 @@ class ProductForm
                             ),
                         TextInput::make('name')
                             ->label('Məhsul Adı')
+                            ->unique(ignoreRecord: true) // Bazada təkrarlanmasın
                             ->placeholder('Məhsul adını daxil edin')
                             ->live()
                             ->afterStateUpdated(function ($state, callable $set) {

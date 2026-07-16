@@ -22,10 +22,13 @@ new class extends Component {
 
     //properties for checkout
     public $customer_id = null;
+    public $customer_search = '';
+    public $customerList = [];
+
     public $new_customer_name = '';
     public $new_customer_phone = '';
     public $payment_method_id;
-    public $paid_amount = 0;
+    public $paid_amount = '';
     public $discount_amount = 0;
 
     public function mount()
@@ -33,7 +36,33 @@ new class extends Component {
         $this->products = Product::where('status', true)->get();
         $this->paymentMethods = PaymentMethod::where('status', true)->orderByRaw("CASE WHEN name = 'Nəğd' THEN 0 ELSE 1 END")->orderBy('name')->get();
         $this->payment_method_id = $this->paymentMethods->first()?->id;
-        $this->customers = Customer::orderBy('name')->get();
+        // $this->customers = Customer::orderBy('name')->get();
+    }
+
+    public function updatedCustomerSearch()
+    {
+        if (strlen($this->customer_search) < 2) {
+            $this->customerList = [];
+            return;
+        }
+
+        $this->customerList = Customer::query()
+            ->select('id', 'name', 'phone')
+            ->where('name', 'like', "%{$this->customer_search}%")
+            ->orWhere('phone', 'like', "%{$this->customer_search}%")
+            ->where('status', true)
+            ->limit(20)
+            ->get();
+    }
+  
+    public function selectCustomer($id)
+    {
+        $customer = Customer::find($id);
+
+        $this->customer_id = $customer->id;
+        $this->customer_search = $customer->name;
+
+        $this->customerList = [];
     }
 
     #[Computed]
@@ -127,9 +156,12 @@ new class extends Component {
     #[Computed]
     public function actualPaidAmount(): float
     {
-        if (blank($this->paid_amount) || (float) $this->paid_amount === 0.0) {
+        // Əgər input tamamilə boşdursa (null və ya boş string), deməli tam ödənişdir
+        if ($this->paid_amount === '' || $this->paid_amount === null) {
             return (float) $this->total;
         }
+
+        // Əgər kassir əllə "0" yazıbsa və ya hər hansı rəqəm daxil edibsə, onu qaytarırıq
         return (float) $this->paid_amount;
     }
 
@@ -160,7 +192,15 @@ new class extends Component {
 
     public function checkout(SalesService $salesService)
     {
-        // 1. Validasiya
+        // Yaranan nisyə borc məbləği
+        $deuAmount = $this->deuAmount();
+
+        // Əgər nisyə borc yaranırsa və müştəri seçilməyibsə, satışı dayandırırıq
+        if ($deuAmount > 0 && !$this->customer_id) {
+            Notification::make()->title('Nisyə satış üçün mütləq müştəri seçilməlidir!')->danger()->send();
+            return;
+        }
+
         $this->validate(
             [
                 'payment_method_id' => 'required|exists:payment_methods,id',
@@ -199,11 +239,12 @@ new class extends Component {
 
             $this->cart = [];
             $this->search = '';
-            $this->paid_amount = 0;
+            $this->paid_amount = '';
             $this->discount_amount = 0;
             $this->customer_id = null;
             $this->total = 0;
             $this->subtotal = 0;
+            $this->customer_search = '';
 
             // 4. Uğurlu bildiriş göndərilir
             Notification::make()->title('Satış uğurla tamamlandı.')->success()->send();
@@ -224,7 +265,6 @@ new class extends Component {
 
     public function openCustomerModal()
     {
-        // PHP tərəfindən birbaşa "add-customer-modal" adlı modalı ekranda açırıq
         $this->dispatch('open-customer-modal');
     }
 
@@ -240,21 +280,15 @@ new class extends Component {
                 'name' => $this->new_customer_name,
                 'phone' => $this->new_customer_phone,
             ]);
-            $this->customers = Customer::orderBy('name')->get();
-            $this->customer_id = $customer->id;
 
             $this->new_customer_name = '';
             $this->new_customer_phone = '';
 
             $this->dispatch('close-customer-modal');
             session()->flash('success', 'Yeni müştəri uğurla əlavə edildi.');
-            //Notification::make()->title('Yeni müştəri uğurla əlavə edildi.')->success()->send();
         } catch (\Exception $e) {
             session()->flash('error', 'Xəta baş verdi: ' . $e->getMessage());
-            /*             Notification::make()
-                ->title('Müştəri əlavə edilərkən xəta: ' . $e->getMessage())
-                ->danger()
-                ->send(); */
+
         }
     }
 };
@@ -319,22 +353,44 @@ new class extends Component {
                     <div class="space-y-1">
                         <div class="flex items-center justify-between gap-2">
                             <span class="text-sm font-medium">Müştəri (Nisyə üçün vacibdir)</span>
-                            <!-- Alpine.js ilə modalı tetikleyen düymə -->
                             <flux:button size="sm" variant="subtle" icon="plus" class="text-xs"
                                 x-on:click="openModal = true">
                                 Yeni Müştəri
                             </flux:button>
                         </div>
 
-                        <flux:select wire:model="customer_id" placeholder="Müştəri seçin (Nisyə üçün mütləqdir)"
-                            class="w-full">
-                            <flux:select.option :value="null">Seçilməyib (Nağd Satış)</flux:select.option>
-                            @foreach ($this->customers as $customer)
-                                <flux:select.option :value="$customer->id">
-                                    {{ $customer->name }} {{ $customer->phone ? '(' . $customer->phone . ')' : '' }}
-                                </flux:select.option>
-                            @endforeach
-                        </flux:select>
+                        <div class="relative">
+
+                            <input type="text" wire:model.live.debounce.300ms="customer_search"
+                                placeholder="Müştəri axtarın..." class="w-full border rounded px-3 py-2">
+
+                            @if (count($customerList))
+
+                                <div class="absolute z-50 w-full bg-white border rounded shadow mt-1">
+
+                                    @foreach ($customerList as $customer)
+                                        <div wire:click="selectCustomer({{ $customer->id }})"
+                                            class="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+
+                                            {{ $customer->name }}
+
+                                            @if ($customer->phone)
+                                                ({{ $customer->phone }})
+                                            @endif
+
+                                        </div>
+                                    @endforeach
+
+                                </div>
+
+                            @endif
+
+                        </div>
+
+
+
+
+
                     </div>
 
                     <hr class="border-zinc-200 my-2" />
@@ -435,7 +491,6 @@ new class extends Component {
     </div>
 
     <!-- SÜRƏTLİ MÜŞTƏRİ YARATMA MODALI (GRID VƏ CARD-LARIN XARİCİNDƏ, ƏN ALTDA) -->
-    <!-- Alpine.js x-show ilə idarə olunur ki, Filament daxilində tam stabil işləsin -->
     <div x-show="openModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" x-cloak>
         <div
             class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-xl w-full max-w-[450px] space-y-6 border border-zinc-200 dark:border-zinc-800">

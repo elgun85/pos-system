@@ -60,11 +60,15 @@ class SalesTable
                         'draft' => 'Gözləmədə',
                         'completed' => 'Tamamlanıb',
                         'cancelled' => 'Ləğv edilib',
+                        'partial' => 'Qismən ödənilib',
+                        'unpaid' => 'Ödənilməyib',
                     })
                     ->color(fn($state) => match ($state) {
                         'draft' => 'warning',
                         'completed' => 'success',
                         'cancelled' => 'danger',
+                        'partial' => 'info',
+                        'unpaid' => 'primary',
                     }),
 
                     TextColumn::make('user.name')

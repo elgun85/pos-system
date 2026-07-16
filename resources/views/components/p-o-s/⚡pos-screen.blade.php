@@ -27,6 +27,7 @@ new class extends Component {
 
     public $new_customer_name = '';
     public $new_customer_phone = '';
+    public $new_customer_address = '';
     public $payment_method_id;
     public $paid_amount = '';
     public $discount_amount = 0;
@@ -47,14 +48,15 @@ new class extends Component {
         }
 
         $this->customerList = Customer::query()
-            ->select('id', 'name', 'phone')
+            ->select('id', 'name', 'phone', 'address')
             ->where('name', 'like', "%{$this->customer_search}%")
             ->orWhere('phone', 'like', "%{$this->customer_search}%")
+            ->orWhere('address', 'like', "%{$this->customer_search}%")
             ->where('status', true)
             ->limit(20)
             ->get();
     }
-  
+
     public function selectCustomer($id)
     {
         $customer = Customer::find($id);
@@ -270,25 +272,37 @@ new class extends Component {
 
     public function quickCreateCustomer()
     {
-        $this->validate([
-            'new_customer_name' => 'required|string|max:255',
-            'new_customer_phone' => 'nullable|string|max:20',
-        ]);
+        $this->new_customer_phone = preg_replace('/\D/', '', $this->new_customer_phone);
+
+        $this->validate(
+            [
+                'new_customer_name' => 'required|string|max:255',
+                'new_customer_address' => 'nullable|string|max:255',
+                'new_customer_phone' => ['nullable', 'regex:/^[0-9\s\-]+$/'],
+            ],
+            [
+                'new_customer_name.required' => 'Müştərinin adı mütləq daxil edilməlidir.',
+                'new_customer_name.max'      => 'Ad maksimum 255 simvol ola bilər.',
+                'new_customer_address.max' =>   'Ünvan maksimum 255 simvol ola bilər.',
+                'new_customer_phone.regex' =>   'Telefon nömrəsi yalnız rəqəmlərdən, boşluq və "-" işarəsindən ibarət ola bilər.',
+            ],
+        );
 
         try {
             $customer = Customer::create([
                 'name' => $this->new_customer_name,
                 'phone' => $this->new_customer_phone,
+                'address' => $this->new_customer_address,
             ]);
 
             $this->new_customer_name = '';
             $this->new_customer_phone = '';
+            $this->new_customer_address = '';
 
             $this->dispatch('close-customer-modal');
             session()->flash('success', 'Yeni müştəri uğurla əlavə edildi.');
         } catch (\Exception $e) {
             session()->flash('error', 'Xəta baş verdi: ' . $e->getMessage());
-
         }
     }
 };
@@ -352,44 +366,45 @@ new class extends Component {
                     <!-- MÜŞTƏRİ SEÇİMİ VƏ SÜRƏTLİ ƏLAVƏ ET DÜYMƏSİ -->
                     <div class="space-y-1">
                         <div class="flex items-center justify-between gap-2">
-                            <span class="text-sm font-medium">Müştəri (Nisyə üçün vacibdir)</span>
+                            <span class="text-sm font-medium">Müştəri</span>
+                            <div class="relative flex-1">
+
+                                <input type="text" wire:model.live.debounce.300ms="customer_search"
+                                    placeholder="Müştəri axtarın..."
+                                    class="w-full border-accent-foreground border-0 rounded px-3 py-2 ">
+
+                                @if (count($customerList))
+
+                                    <div
+                                        class="absolute left-0 top-full z-50 w-full bg-white border-0 rounded shadow max-h-64 overflow-y-auto">
+
+                                        @foreach ($customerList as $customer)
+                                            <div wire:click="selectCustomer({{ $customer->id }})"
+                                                class="px-3 py-2 hover:bg-gray-100 border-0 cursor-pointer">
+
+                                                {{ $customer->name }}
+
+                                                @if ($customer->phone)
+                                                    ( {{ $customer->phone }} )
+                                                @endif
+
+                                                @if ($customer->address)
+                                                    - {{ $customer->address }}
+                                                @endif
+
+                                            </div>
+                                        @endforeach
+
+                                    </div>
+
+                                @endif
+                            </div>
+
                             <flux:button size="sm" variant="subtle" icon="plus" class="text-xs"
                                 x-on:click="openModal = true">
                                 Yeni Müştəri
                             </flux:button>
                         </div>
-
-                        <div class="relative">
-
-                            <input type="text" wire:model.live.debounce.300ms="customer_search"
-                                placeholder="Müştəri axtarın..." class="w-full border rounded px-3 py-2">
-
-                            @if (count($customerList))
-
-                                <div class="absolute z-50 w-full bg-white border rounded shadow mt-1">
-
-                                    @foreach ($customerList as $customer)
-                                        <div wire:click="selectCustomer({{ $customer->id }})"
-                                            class="px-3 py-2 hover:bg-gray-100 cursor-pointer">
-
-                                            {{ $customer->name }}
-
-                                            @if ($customer->phone)
-                                                ({{ $customer->phone }})
-                                            @endif
-
-                                        </div>
-                                    @endforeach
-
-                                </div>
-
-                            @endif
-
-                        </div>
-
-
-
-
 
                     </div>
 
@@ -508,6 +523,11 @@ new class extends Component {
                 <flux:input label="Telefon Nömrəsi" wire:model="new_customer_phone"
                     placeholder="Məs. +994 50 123 45 67" />
                 @error('new_customer_phone')
+                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                @enderror
+
+                <flux:input label="Ünvan" wire:model="new_customer_address" placeholder="Məs. Bakı, Nizami küçəsi 10" />
+                @error('new_customer_address')
                     <span class="text-red-500 text-xs">{{ $message }}</span>
                 @enderror
             </div>

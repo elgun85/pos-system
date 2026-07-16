@@ -81,6 +81,7 @@ class SalesService
                     'payment_method_id' => $data['payment_method_id'] ?? null,
                     'amount'      => $remainingDebt,
                     'type'        => 'debt',
+                    'user_id'     => auth()->id(),
                     'notes'       => "Sale #{$sale->sale_number} üzrə nisyə qalıq borc.",
                 ]);
             }

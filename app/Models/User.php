@@ -43,4 +43,14 @@ class User extends Authenticatable
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
     }
+
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
+
+    public function customerTransactions()
+    {
+        return $this->hasMany(CustomerTransaction::class);
+    }
 }

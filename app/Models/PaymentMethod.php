@@ -31,4 +31,10 @@ class PaymentMethod extends Model
             }
         });
     }
+
+    public function customerTransactions()
+    {
+        return $this->hasMany(CustomerTransaction::class);
+    }
+    
 }

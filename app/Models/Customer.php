@@ -9,4 +9,11 @@ class Customer extends Model
 {
     use SoftDeletes;
     protected $fillable = ['name', 'email', 'phone', 'address', 'points', 'status'];
+
+    public function transactions()
+    {
+        return $this->hasMany(CustomerTransaction::class);
+    }
+
+    
 }

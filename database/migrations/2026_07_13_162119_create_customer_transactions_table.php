@@ -41,9 +41,6 @@ return new class extends Migration
             ]);
             $table->decimal('amount', 10, 2);
             $table->text('notes')->nullable();
-
-
-
             $table->timestamps();
         });
     }

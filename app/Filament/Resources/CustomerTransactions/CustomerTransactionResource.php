@@ -20,9 +20,9 @@ use UnitEnum;
 class CustomerTransactionResource extends Resource
 {
 
-    protected static ?string $navigationLabel = 'Borclar';
+    protected static ?string $navigationLabel = 'Əməliyyatlar';
     protected static string | UnitEnum | null $navigationGroup = 'Satış';
-    protected static ?string $pluralModelLabel = 'Borc Qeydiyyatı';
+    protected static ?string $pluralModelLabel = 'Qaliq əməliyyatlar';
     protected static ?int $navigationSort = 6;
     protected static ?string $model = CustomerTransaction::class;
 

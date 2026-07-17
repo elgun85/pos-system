@@ -10,17 +10,8 @@ use App\Models\SalesPayment;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
-
-
 class SalesService
 {
-
-    public function __construct()
-    {
-        //
-    }
-
-
     public function createSale(array $cart, array $data): Sale
     {
         if (empty($cart)) {
@@ -85,11 +76,6 @@ class SalesService
                     'notes'       => "Sale #{$sale->sale_number} üzrə nisyə qalıq borc.",
                 ]);
             }
-
-
-
-
-
 
             // 2. Səbətdəki məhsulları dövr edirik
             foreach ($cart as $cartItem) {

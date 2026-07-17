@@ -41,7 +41,7 @@ class CustomerTransactionForm
                     ->preload(),
 
                 Select::make('type')
-                    ->options(['debt' => 'Debt', 'payment' => 'Payment', 'refund' => 'Refund', 'adjustment' => 'Adjustment'])
+                    ->options(['debt' => 'Borc', 'payment' => 'Ödəmə', 'refund' => 'Qaytarılma', 'adjustment' => 'Tənzimləmə'])
                     ->required(),
                 TextInput::make('amount')
                     ->required()

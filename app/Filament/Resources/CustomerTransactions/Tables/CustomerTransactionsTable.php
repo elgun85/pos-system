@@ -24,13 +24,6 @@ class CustomerTransactionsTable
                             ? "{$record->customer->name} ({$record->customer->phone})  {$record->customer->address}"
                             : 'Müştəri silinib';
                     }),
-
-/*                 TextColumn::make('customer.name')
-                ->label('Müştəri')
-                ->searchable()
-                ->sortable(),
- */
-
                 TextColumn::make('paymentMethod.name')
                     ->label('Ödəmə üsulu')
                     ->searchable()

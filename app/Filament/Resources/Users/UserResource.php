@@ -22,9 +22,11 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationLabel = 'İstifadəçilər';
-    protected static string | UnitEnum | null $navigationGroup = 'Sistem';
     protected static ?string $modelLabel = 'İstifadəçi';
     protected static ?string $pluralModelLabel = 'İstifadəçilər';
+    
+    protected static string | UnitEnum | null $navigationGroup = 'SİSTEM';
+
     protected static ?int $navigationSort = 1;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;

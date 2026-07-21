@@ -20,7 +20,7 @@ class BrandResource extends Resource
     protected static ?string $model = Brand::class;
 
     protected static ?string $navigationLabel = 'Brendlər';
-    protected static string | UnitEnum | null $navigationGroup = 'Mağaza';
+    protected static string | UnitEnum | null $navigationGroup = 'MAĞAZA';
     protected static ?string $modelLabel = 'Brend';
     protected static ?string $pluralModelLabel = 'Brendlər';
     protected static ?int $navigationSort = 2;

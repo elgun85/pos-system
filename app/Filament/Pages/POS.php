@@ -15,7 +15,7 @@ class POS extends Page
    // protected static bool $shouldRegisterNavigation = false;
 
     protected static ?string $navigationLabel = 'Kassa / POS';
-    protected static string | UnitEnum | null $navigationGroup = 'Satış';
+    protected static string | UnitEnum | null $navigationGroup = 'SATIŞ';
     protected static ?int $navigationSort = 1; 
 
     //   protected ?string $heading = 'Kassa Satışı';

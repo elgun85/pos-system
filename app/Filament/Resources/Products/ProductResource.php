@@ -25,7 +25,7 @@ class ProductResource extends Resource
     protected static ?string $model = Product::class;
 
     protected static ?string $navigationLabel = 'Məhsullar';
-    protected static string | UnitEnum | null $navigationGroup = 'Mağaza';
+    protected static string | UnitEnum | null $navigationGroup = 'MAĞAZA';
     protected static ?string $modelLabel = 'Məhsul';
     protected static ?string $pluralModelLabel = 'Məhsul';
     protected static ?int $navigationSort = 3;

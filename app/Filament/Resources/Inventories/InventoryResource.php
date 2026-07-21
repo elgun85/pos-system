@@ -19,7 +19,7 @@ class InventoryResource extends Resource
 {
     protected static ?string $model = Inventory::class ;
     protected static ?string $navigationLabel = 'Məhsul qalığı';
-    protected static string | UnitEnum | null $navigationGroup = 'Mağaza';
+    protected static string | UnitEnum | null $navigationGroup = 'MAĞAZA';
     protected static ?string $modelLabel = 'Stok';
     protected static ?string $pluralModelLabel = 'Stoklar';
     protected static ?int $navigationSort = 5;

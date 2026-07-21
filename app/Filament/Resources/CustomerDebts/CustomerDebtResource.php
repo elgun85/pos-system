@@ -22,12 +22,12 @@ use UnitEnum;
 
 class CustomerDebtResource extends Resource
 {
-
-    protected static ?string $navigationLabel = 'Borc əməliyyatları';
-    protected static string | UnitEnum | null $navigationGroup = 'Satış';
-    protected static ?string $pluralModelLabel = 'Borc əməliyyatları';
-    protected static ?int $navigationSort = 6;
     protected static ?string $model = Customer::class;
+
+    protected static ?string $navigationLabel = 'Borclu Müştərilər';
+    protected static ?string $pluralModelLabel = 'Borclu Müştərilər';
+    protected static string | UnitEnum | null $navigationGroup = 'MÜŞTƏRİ BORCLARI';
+    protected static ?int $navigationSort = 6;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::CurrencyDollar;
 
@@ -37,7 +37,7 @@ class CustomerDebtResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return Customer::query()
-          ->debtors();
+            ->debtors();
     }
 
     public static function form(Schema $schema): Schema

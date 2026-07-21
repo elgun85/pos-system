@@ -24,7 +24,7 @@ class CategoryResource extends Resource
     protected static ?string $model = Category::class;
 
     protected static ?string $navigationLabel = 'Kategoriyalar';
-    protected static string | UnitEnum | null $navigationGroup = 'Mağaza';
+    protected static string | UnitEnum | null $navigationGroup = 'MAĞAZA';
     protected static ?string $modelLabel = 'Kategoriya';
     protected static ?string $pluralModelLabel = 'Kategoriyalar';
     protected static ?int $navigationSort = 1;

@@ -19,11 +19,12 @@ class PaymentMethodResource extends Resource
 {
     protected static ?string $model = PaymentMethod::class;
 
-    
+
     protected static ?string $navigationLabel = 'Ödəmə üsulları';
-    protected static string | UnitEnum | null $navigationGroup = 'Sistem';
     protected static ?string $modelLabel = 'Ödəmə üsulu';
     protected static ?string $pluralModelLabel = 'Ödəmə üsulları';
+    protected static string | UnitEnum | null $navigationGroup = 'SİSTEM';
+
     protected static ?int $navigationSort = 1;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCreditCard;
 

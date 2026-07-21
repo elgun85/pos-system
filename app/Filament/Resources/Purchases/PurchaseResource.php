@@ -20,14 +20,16 @@ class PurchaseResource extends Resource
     protected static ?string $model = Purchase::class;
 
     protected static ?string $navigationLabel = 'Məhsul Alışları';
-    protected static string | UnitEnum | null $navigationGroup = 'Mağaza';
     protected static ?string $modelLabel = 'Məhsul Alışı';
     protected static ?string $pluralModelLabel = 'Məhsul Alışları';
+
+
+    protected static string | UnitEnum | null $navigationGroup = 'TƏCHİZAT';
     protected static ?int $navigationSort = 4;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShoppingBag;
 
-        protected static ?string $recordTitleAttribute = 'invoice_number';
+    protected static ?string $recordTitleAttribute = 'invoice_number';
 
 
     public static function form(Schema $schema): Schema
@@ -40,7 +42,7 @@ class PurchaseResource extends Resource
         return PurchasesTable::configure($table);
     }
 
-        public static function getNavigationBadge(): ?string
+    public static function getNavigationBadge(): ?string
     {
         return static::getModel()::where('status', true)->count();
     }

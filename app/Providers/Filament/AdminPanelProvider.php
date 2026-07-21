@@ -26,9 +26,9 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-           ->maxContentWidth(Width::Full)
-          ->sidebarCollapsibleOnDesktop()
-           
+            ->maxContentWidth(Width::Full)
+            ->sidebarCollapsibleOnDesktop()
+
 
             ->id('admin')
             ->path('admin')
@@ -41,12 +41,15 @@ class AdminPanelProvider extends PanelProvider
                 // \Filament\Support\Assets\Css::make('custom-styles', \Illuminate\Support\Facades\Vite::asset('resources/css/app.css')),
             ])
             ->navigationGroups([
-                'Satış',
-                'Kassa',
-                'Mağaza',
-                
-                'Təchizat',
-                'Sistem',
+                'SATIŞ',
+                'KASSA',
+                'MAĞAZA',
+
+                'TƏCHİZAT',
+                'MÜŞTƏRİLƏR',
+                'MÜŞTƏRİ BORCLARI',
+
+                'SİSTEM',
             ])
             ->colors([
                 'primary' => Color::Amber,

@@ -74,7 +74,7 @@ class CustomerDebtsTable
                                     ->pluck('name', 'id')
                             )
                             // 👈 Adı "Nağd" olanı tapır, tapmasa ilk aktiv olanın ID-sini seçir
-                            ->default(fn() => PaymentMethod::where('status', true)->where('name', 'like', '%Nağd%')->first()?->id
+                            ->default(fn() => PaymentMethod::where('status', true)->where('name', 'like', '%Nəğd%')->first()?->id
                                 ?? PaymentMethod::where('status', true)->first()?->id)
                            // ->searchable()
                             ->required(),

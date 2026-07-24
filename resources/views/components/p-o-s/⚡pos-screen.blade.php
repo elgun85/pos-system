@@ -35,7 +35,7 @@ new class extends Component {
     public function mount()
     {
         $this->products = Product::where('status', true)->get();
-        $this->paymentMethods = PaymentMethod::where('status', true)->orderByRaw("CASE WHEN name = 'Nəğd' THEN 0 ELSE 1 END")->orderBy('name')->get();
+        $this->paymentMethods = PaymentMethod::where('status', true)->orderByRaw("CASE WHEN name = 'Nağd' THEN 0 ELSE 1 END")->orderBy('name')->get();
         $this->payment_method_id = $this->paymentMethods->first()?->id;
         // $this->customers = Customer::orderBy('name')->get();
     }

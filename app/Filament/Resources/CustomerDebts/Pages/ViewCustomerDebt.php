@@ -42,7 +42,7 @@ class ViewCustomerDebt extends ViewRecord
                                 ->pluck('name', 'id')
                         )
                         // 👈 Adı "Nağd" olanı tapır, tapmasa ilk aktiv olanın ID-sini seçir
-                        ->default(fn() => PaymentMethod::where('status', true)->where('name', 'like', '%Nəğd%')->first()?->id
+                        ->default(fn() => PaymentMethod::where('status', true)->where('name', 'like', '%Nağd%')->first()?->id
                             ?? PaymentMethod::where('status', true)->first()?->id)
                         ->searchable()
                         ->required(),

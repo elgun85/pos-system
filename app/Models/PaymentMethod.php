@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,7 +17,7 @@ class PaymentMethod extends Model
     ];
 
 
-        protected static function booted(): void
+    protected static function booted(): void
     {
         static::updating(function ($model) {
 
@@ -36,5 +38,25 @@ class PaymentMethod extends Model
     {
         return $this->hasMany(CustomerTransaction::class);
     }
-    
+
+    protected function cashId(): ?int
+    {
+        return static::where('name', 'Nağd')
+            ->where('status', true)
+            ->value('id');
+    }
+
+    public static function cardId(): ?int
+    {
+        return static::where('name', 'Kart')
+            ->where('status', true)
+            ->value('id');
+    }
+
+    public static function creditId(): ?int
+    {
+        return static::where('name', 'Nisyə')
+            ->where('status', true)
+            ->value('id');
+    }
 }

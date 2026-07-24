@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 
 class CustomerTransaction extends Model
 {
@@ -36,6 +38,9 @@ class CustomerTransaction extends Model
         return $this->belongsTo(User::class);
     }
 
-    
-    
+    #[Scope]
+    protected function today(Builder $query): void
+    {
+        $query->whereDate('created_at', today());
+    }
 }

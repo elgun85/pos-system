@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
@@ -9,9 +11,7 @@ class Sale extends Model
     protected $fillable = [
         'sale_number',
         'customer_id',
-        //  'payment_method_id',
         'total',
-        //    'paid_amount',
         'discount',
         'status',
         'user_id',
@@ -57,4 +57,29 @@ class Sale extends Model
     {
         return $this->hasMany(CustomerTransaction::class);
     }
+
+    #[Scope]
+    protected function today(Builder $query): void
+    {
+        $query->whereDate('created_at', today());
+    }
+
+    #[Scope]
+    protected function completed(Builder $query): void
+    {
+        $query->where('status', 'completed');
+    }
+
+    #[Scope]
+    protected function partial(Builder $query): void
+    {
+        $query->where('status', 'partial');
+    }
+
+    #[Scope]
+    protected function unpaid(Builder $query): void
+    {
+        $query->where('status', 'unpaid');
+    }
+
 }

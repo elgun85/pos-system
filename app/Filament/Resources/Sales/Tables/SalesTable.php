@@ -79,12 +79,15 @@ class SalesTable
 
                 TextColumn::make('created_at')
                     ->label('Yaradılma tarixi')
-                    ->dateTime()
+                  //  ->dateTime()
+                    ->searchable()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                //    ->toggleable(isToggledHiddenByDefault: true)
+                    ,
                 TextColumn::make('updated_at')
                     ->label('Yenilənmə tarixi')
                     ->dateTime()
+                    ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

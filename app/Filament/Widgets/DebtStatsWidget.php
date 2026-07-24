@@ -12,7 +12,7 @@ class DebtStatsWidget extends StatsOverviewWidget
     use InteractsWithPageFilters;
 
     protected ?string $heading = 'Borclar və ödənişlər';
-    protected static ?int $sort = 3;
+    protected static ?int $sort = 40;
 
 
     protected function getStats(): array

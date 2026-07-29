@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Cache;
 use UnitEnum;
 
 class BrandResource extends Resource
@@ -35,7 +36,12 @@ class BrandResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::where('status', true)->count();
+        return Cache::remember(
+            'brand',now()->addMinutes(10),
+            fn() => static::getModel()::where('status', true)
+            ->count()
+            
+        );
     }
     protected static ?string $recordTitleAttribute = 'name';
 

@@ -17,6 +17,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Cache;
 use UnitEnum;
 
 class ProductResource extends Resource
@@ -43,7 +44,12 @@ class ProductResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::where('status', true)->count();
+        return Cache::remember(
+            'product',now()->addMinutes(10),
+            fn() => static::getModel()::where('status', true)
+            ->count()
+        
+        );
     }
 
     public static function getNavigationBadgeColor(): ?string

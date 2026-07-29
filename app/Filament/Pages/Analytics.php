@@ -47,8 +47,9 @@ class Analytics extends BaseDashboard
     {
         return [
             PaymentsByDays::class,
-            CashChartWidget::class,
             SalesChartWidget::class,
+            CashChartWidget::class,
+
         ];
     }
 }

@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Cache;
 use UnitEnum;
 
 class PurchaseResource extends Resource
@@ -44,7 +45,12 @@ class PurchaseResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::where('status', true)->count();
+        return Cache::remember(
+            'purchases',now()->addMinutes(10),
+            fn() =>  static::getModel()::where('status', true)
+            ->count()
+
+        );
     }
 
 

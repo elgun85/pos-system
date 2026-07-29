@@ -9,6 +9,7 @@ use App\Models\SalesPayment;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 
 class DashboardService
@@ -104,7 +105,6 @@ class DashboardService
     {
         return $this->remember('totalPayments', $startDate, $endDate, function () use ($startDate, $endDate) {
             return $this->paymentsQuery($startDate, $endDate)
-                // ->where('payment_method_id', PaymentMethod::cashId())
                 ->sum('amount');
         });
     }
@@ -125,6 +125,16 @@ class DashboardService
                 ->where('payment_method_id', PaymentMethod::cardId())
                 ->sum('amount');
         });
+    }
+
+    public function paymentsByDays($startDate = null, $endDate = null)
+    {
+        return $this->paymentsQuery($startDate, $endDate)
+            ->selectRaw('DATE(created_at) as day')
+            ->selectRaw('SUM(amount) as total')
+            ->groupByRaw('DATE(created_at)')
+            ->orderByRaw('DATE(created_at)')
+            ->get();
     }
 
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace App\Filament\Widgets\Dashboard;
 
 use App\Services\DashboardService;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;

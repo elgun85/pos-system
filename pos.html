@@ -47,6 +47,23 @@ php artisan make:filament-user
     protected static ?string $pluralModelLabel = 'Məhsul';                             // pluralModelLabel - resursun cəmi adı
     protected static ?int $navigationSort = 1;                                         // navigationSort - menyuda görünmə sırası (aşağıdakı nümunədə 1, 2, 3, ... olaraq sıralanır)
 
+    // 1. Sol menyudakı qrup adı
+    protected static ?string $navigationGroup = 'ANBAR HESABATI';
+
+    // 2. Sol menyudakı yazılan ad
+    protected static ?string $navigationLabel = 'Anbar Hesabatı';
+
+    // 3. Səhifənin yuxarısında (kontentdə) görünən böyük başlıq 
+    protected static ?string $title = 'Anbar Hesabatı';
+
+    // 4. Menyuda görünüş ikonası (bunu yazmasan düz xətt olacaq)
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::ArchiveBox;
+
+    // 5. Sıralama
+    protected static ?int $navigationSort = 1;
+
+
+
     sidebar siralamani adminPanelProviderde 
                 ->navigationGroups([
                 'Kassa',

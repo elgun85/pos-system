@@ -19,7 +19,6 @@ class Product extends Model
         'brand_id',
         'supplier_id',
         'sku',
-        // 'barcode',
         'cost_price',
         'sale_price',
         'is_favorite',

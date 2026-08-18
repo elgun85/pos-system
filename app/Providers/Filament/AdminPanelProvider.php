@@ -5,6 +5,9 @@ namespace App\Providers\Filament;
 use App\Filament\Pages\Analytics;
 use App\Filament\Pages\Dashboard;
 use App\Filament\Pages\POS;
+use App\Filament\Pages\Reports\InventoryReport;
+use App\Filament\Pages\Reports\ProfitReport;
+use App\Filament\Pages\Reports\SalesReport;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -50,6 +53,8 @@ class AdminPanelProvider extends PanelProvider
                 'MÜŞTƏRİLƏR',
                 'MÜŞTƏRİ BORCLARI',
 
+                'ANBAR HESABATI',
+
                 'SİSTEM',
             ])
             ->colors([
@@ -61,6 +66,9 @@ class AdminPanelProvider extends PanelProvider
                Dashboard::class,
                Analytics::class,
                POS::class,
+               InventoryReport::class,
+               SalesReport::class,
+               ProfitReport::class,
             ])
            // ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([

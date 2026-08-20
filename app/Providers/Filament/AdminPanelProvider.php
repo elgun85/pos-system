@@ -22,6 +22,7 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -38,6 +39,9 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->spa()
             ->login()
+            ->plugins([
+                FilamentShieldPlugin::make(),
+            ])
             ->assets([
                 // Sizin əsas Tailwind CSS buildinizi Filament daxilinə yükləyir
                 \Filament\Support\Assets\Css::make('custom-styles', \Illuminate\Support\Facades\Vite::asset('resources/css/app.css')),
@@ -61,19 +65,17 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Amber,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
-          //  ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
+            //  ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
-               Dashboard::class,
-               Analytics::class,
-               POS::class,
-               InventoryReport::class,
-               SalesReport::class,
-               ProfitReport::class,
+                Dashboard::class,
+                Analytics::class,
+                POS::class,
+                InventoryReport::class,
+                SalesReport::class,
+                ProfitReport::class,
             ])
-           // ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
-            ->widgets([
-
-            ])
+            // ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
+            ->widgets([])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

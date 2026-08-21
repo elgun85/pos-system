@@ -25,6 +25,7 @@ class CustomerDebtResource extends Resource
     protected static ?string $model = Customer::class;
 
     protected static ?string $navigationLabel = 'Borclu Müştərilər';
+    protected static ?string $modelLabel = 'Borclu Müştəri';
     protected static ?string $pluralModelLabel = 'Borclu Müştərilər';
     protected static string | UnitEnum | null $navigationGroup = 'MÜŞTƏRİ BORCLARI';
     protected static ?int $navigationSort = 6;

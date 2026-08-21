@@ -76,7 +76,6 @@ class CustomerDebtsTable
                             // 👈 Adı "Nağd" olanı tapır, tapmasa ilk aktiv olanın ID-sini seçir
                             ->default(fn() => PaymentMethod::where('status', true)->where('name', 'like', '%Nağd%')->first()?->id
                                 ?? PaymentMethod::where('status', true)->first()?->id)
-                           // ->searchable()
                             ->required(),
 
                         Textarea::make('notes')

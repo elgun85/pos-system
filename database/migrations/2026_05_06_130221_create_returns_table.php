@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('sale_id')->constrained()->cascadeOnDelete();
             $table->decimal('quantity', 10, 2)->nullable();
             $table->decimal('total', 10, 2)->nullable();
+            $table->string('reason')->nullable();        
             $table->timestamps();
         });
     }

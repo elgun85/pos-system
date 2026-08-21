@@ -11,6 +11,7 @@ class SaleReturn extends Model
         'sale_id',
         'quantity',
         'total',
+        'reason',
     ];
 
     public function sale()
@@ -20,6 +21,6 @@ class SaleReturn extends Model
 
     public function returnItems()
     {
-        return $this->hasMany(ReturnItem::class);
+        return $this->hasMany(ReturnItem::class,'return_id');
     }
 }

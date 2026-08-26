@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\CustomerTransaction;
 use App\Models\PaymentMethod;
+use App\Models\ReturnItem;
 use App\Models\Sale;
 use App\Models\SalesPayment;
 use Closure;
@@ -15,22 +16,22 @@ use Illuminate\Support\Facades\DB;
 class DashboardService
 {
 
+
     private function paymentsQuery($startDate = null, $endDate = null): Builder
     {
         return SalesPayment::query()
-            ->when($startDate, fn($q) =>
-            $q->whereDate('created_at',  '>=', $startDate))
-            ->when($endDate, fn($q) =>
-            $q->whereDate('created_at', '<=', $endDate))
-            ->when(! $startDate && ! $endDate, function ($q) {
-                $q->whereDate('created_at', now()->today());
+            ->whereHas('sale', function ($q) {
+                $q->whereNotIn('status', ['cancelled', 'draft']); // whereNotIn istifadə olunmalıdır
             })
-        ;
+            ->when($startDate, fn($q) => $q->whereDate('created_at', '>=', $startDate))
+            ->when($endDate, fn($q) => $q->whereDate('created_at', '<=', $endDate))
+            ->when(!$startDate && !$endDate, fn($q) => $q->whereDate('created_at', now()->today()));
     }
 
     private function salesQuery($startDate = null, $endDate = null): Builder
     {
         return Sale::query()
+            ->whereNotIn('status', ['cancelled', 'draft'])
             ->when($startDate, fn($q) =>
             $q->whereDate('created_at',  '>=', $startDate))
             ->when($endDate, fn($q) =>
@@ -58,7 +59,7 @@ class DashboardService
 
         return Cache::remember(
             "dashboard.{$name}.{$start}.{$end}",
-            now()->addMinutes(5),
+            now()->addMinutes(1),
             $callback
         );
     }
@@ -98,6 +99,23 @@ class DashboardService
         });
     }
 
+    public function totalReturns($startDate = null, $endDate = null)
+    {
+        return $this->remember('totalReturns', $startDate, $endDate, function () use ($startDate, $endDate) {
+            return ReturnItem::query()
+                ->when($startDate, fn($q) => $q->whereDate('created_at', '>=', $startDate))
+                ->when($endDate, fn($q) => $q->whereDate('created_at', '<=', $endDate))
+                ->when(!$startDate && ! $endDate, fn($q) => $q->whereDate('created_at', now()->today()))
+                ->sum('refund_amount')
+            ;
+        });
+    }
+
+    public function netSales($startDate = null, $endDate = null)
+    {
+        return $this->allSales($startDate, $endDate) - $this->totalReturns($startDate, $endDate);
+    }
+
 
     // KASSA
 
@@ -108,6 +126,8 @@ class DashboardService
                 ->sum('amount');
         });
     }
+
+
 
     public function cashPayments($startDate = null, $endDate = null)
     {

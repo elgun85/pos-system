@@ -28,6 +28,9 @@ class SalesStatsWidget extends StatsOverviewWidget
         $completedSales = $dashboardService->completedSales($startDate, $endDate);
         $partialSales = $dashboardService->partialSales($startDate, $endDate);
         $creditSales = $dashboardService->creditSales($startDate, $endDate);
+        $totalReturns = $dashboardService->totalReturns($startDate, $endDate);
+        $netSales = $dashboardService->netSales($startDate, $endDate);
+
 
 
 
@@ -36,6 +39,12 @@ class SalesStatsWidget extends StatsOverviewWidget
             Stat::make('Tam ödənilmiş satış', number_format($completedSales, 2) . ' AZN')->color('danger'),
             Stat::make('Hissəli satış', number_format($partialSales, 2) . ' AZN')->color('danger'),
             Stat::make('Nisyə satış', number_format($creditSales, 2) . ' AZN'),
+            Stat::make('Qaytarılan Məbləğ ', number_format($totalReturns, 2) . ' AZN')->color('danger')
+                ->icon('heroicon-m-arrow-uturn-left'),
+            Stat::make('Xalis Satış (Net) ', number_format($netSales, 2) . ' AZN')
+                ->color('success')
+                ->description('Real satış gəliri'),
+
 
         ];
     }

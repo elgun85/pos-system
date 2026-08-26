@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Sales\Tables;
 
 use App\Models\Sale;
+use App\Models\SalesItem;
 use App\Services\ReturnService;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
@@ -114,7 +115,12 @@ class SalesTable
                                             return $record->items()
                                                 ->with('product')
                                                 ->get()
-                                                ->pluck('product.name', 'product.id');
+                                                ->mapWithKeys(function ($item) {
+                                                    return [
+                                                        $item->product->id => $item->product->name . '(' . number_format($item->price, 2) . '₼ )'
+                                                    ];
+                                                })
+                                            ;
                                         })
                                         ->required()
                                         ->reactive()

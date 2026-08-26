@@ -17,6 +17,12 @@ class PurchaseItemObserver
             if ($inventory) {
                 $inventory->increment('quantity', $purchaseItem->quantity);
             }
+
+            if ($purchaseItem->cost_price > 0) {
+                $purchaseItem->product->update([
+                    'cost_price' => $purchaseItem->cost_price
+                ]);
+            }
         }
     }
 
@@ -34,6 +40,11 @@ class PurchaseItemObserver
 
                 // Fərqi anbara tətbiq edirik
                 $inventory->increment('quantity', $difference);
+            }
+            if ($purchaseItem->cost_price > 0 && $purchaseItem->isDirty('cost_price')) {
+                $purchaseItem->product->update([
+                    'cost_price' => $purchaseItem->cost_price,
+                ]);
             }
         }
     }

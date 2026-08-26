@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\CustomerTransaction;
 use App\Models\Inventory;
+use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SalesItem;
 use App\Models\SalesPayment;
@@ -88,12 +89,17 @@ class SalesService
                     throw new Exception("{$cartItem['name']} məhsulundan stokda kifayət qədər yoxdur.");
                 }
 
+                $productCostPrice = $cartItem['cost_price']
+                ?? Product::where('id',$cartItem['product_id'])->value('cost_price')
+                ?? 0;
+
                 // Satış elementini yazırıq
                 SalesItem::create([
                     'sale_id'    => $sale->id,
                     'product_id' => $cartItem['product_id'],
                     'quantity'   => $cartItem['quantity'],
                     'price'      => $cartItem['sale_price'],
+                    'cost_price' => $productCostPrice,
                     'total'      => $cartItem['quantity'] * $cartItem['sale_price'],
                 ]);
 

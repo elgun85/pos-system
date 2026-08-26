@@ -30,6 +30,7 @@ class SalesStatsWidget extends StatsOverviewWidget
         $creditSales = $dashboardService->creditSales($startDate, $endDate);
         $totalReturns = $dashboardService->totalReturns($startDate, $endDate);
         $netSales = $dashboardService->netSales($startDate, $endDate);
+        $netProfit = $dashboardService->netProfit($startDate, $endDate);
 
 
 
@@ -44,6 +45,7 @@ class SalesStatsWidget extends StatsOverviewWidget
             Stat::make('Xalis Satış (Net) ', number_format($netSales, 2) . ' AZN')
                 ->color('success')
                 ->description('Real satış gəliri'),
+            Stat::make('Xalis Gəlir (Net) ', number_format($netProfit, 2) . ' AZN'),
 
 
         ];

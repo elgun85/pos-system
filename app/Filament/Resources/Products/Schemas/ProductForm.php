@@ -52,11 +52,12 @@ class ProductForm
                             })
                             ->maxLength(255)
                             ->required(),
-                        /*                         TextInput::make('cost_price')
+                        TextInput::make('cost_price')
                             ->label('Alış Qiyməti')
-                            ->required()
+                            ->default(0)
+                            //->required()
                             ->numeric()
-                            ->prefix('₼'), */
+                            ->prefix('₼'),
                         TextInput::make('sale_price')
                             ->label('Satış Qiyməti')
                             ->required()
@@ -149,10 +150,9 @@ class ProductForm
                             ->default('active')
                             ->required(),
 
-                            Toggle::make('is_favorite')
+                        Toggle::make('is_favorite')
                             ->label('Sevimli Məhsul')
-                            ->onIcon('heroicon-s-star')
-                            ,
+                            ->onIcon('heroicon-s-star'),
                     ]),
             ]);
     }

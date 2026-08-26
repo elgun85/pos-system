@@ -55,9 +55,9 @@ class ProductsTable
                 /*                 TextColumn::make('barcode')
                     ->label('Barkod')
                     ->searchable(), */
-                /*           TextColumn::make('cost_price')
+                          TextColumn::make('cost_price')
                     ->label('Alış Qiyməti')
-                    ->sortable(), */
+                    ->sortable(), 
                 TextColumn::make('sale_price')
                     ->label('Satış Qiyməti')
                     ->color('success')

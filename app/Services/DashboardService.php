@@ -6,6 +6,7 @@ use App\Models\CustomerTransaction;
 use App\Models\PaymentMethod;
 use App\Models\ReturnItem;
 use App\Models\Sale;
+use App\Models\SalesItem;
 use App\Models\SalesPayment;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
@@ -115,6 +116,26 @@ class DashboardService
     {
         return $this->allSales($startDate, $endDate) - $this->totalReturns($startDate, $endDate);
     }
+
+public function netProfit($startDate = null, $endDate = null)
+{
+    return $this->remember('netProfit', $startDate, $endDate, function () use ($startDate, $endDate) {
+        $salesProfit = SalesItem::query()
+            ->whereHas('sale', function ($q) use ($startDate, $endDate) {
+                $q->whereNotIn('status', ['cancelled', 'draft'])
+                    ->when($startDate, fn($sq) => $sq->whereDate('created_at', '>=', $startDate))
+                    ->when($endDate, fn($sq) => $sq->whereDate('created_at', '<=', $endDate))
+                    ->when(!$startDate && !$endDate, fn($sq) => $sq->whereDate('created_at', now()->today()));
+            })
+            ->selectRaw('SUM((price - cost_price) * quantity) as profit')
+            ->value('profit') ?? 0;
+
+        $returnProfitLoss = $this->totalReturns($startDate, $endDate); // Qaytarılan məbləğ
+
+        return $salesProfit - $returnProfitLoss;
+    });
+}
+
 
 
     // KASSA

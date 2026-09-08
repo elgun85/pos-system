@@ -41,6 +41,14 @@ class DamagedProductsTable
                 TextColumn::make('user.name')
                     ->label('İstifadəçi'),
 
+                TextColumn::make('created_at')
+                    ->sortable()
+                    ->label('Tarix')
+                    ->date('j M Y')
+                    //->since()
+
+
+
 
             ])
             ->filters([

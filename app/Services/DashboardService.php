@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\CustomerTransaction;
+use App\Models\Damage;
 use App\Models\PaymentMethod;
 use App\Models\ReturnItem;
 use App\Models\Sale;
@@ -117,24 +118,36 @@ class DashboardService
         return $this->allSales($startDate, $endDate) - $this->totalReturns($startDate, $endDate);
     }
 
-public function netProfit($startDate = null, $endDate = null)
-{
-    return $this->remember('netProfit', $startDate, $endDate, function () use ($startDate, $endDate) {
-        $salesProfit = SalesItem::query()
-            ->whereHas('sale', function ($q) use ($startDate, $endDate) {
-                $q->whereNotIn('status', ['cancelled', 'draft'])
-                    ->when($startDate, fn($sq) => $sq->whereDate('created_at', '>=', $startDate))
-                    ->when($endDate, fn($sq) => $sq->whereDate('created_at', '<=', $endDate))
-                    ->when(!$startDate && !$endDate, fn($sq) => $sq->whereDate('created_at', now()->today()));
-            })
-            ->selectRaw('SUM((price - cost_price) * quantity) as profit')
-            ->value('profit') ?? 0;
+    public function netProfit($startDate = null, $endDate = null)
+    {
+        return $this->remember('netProfit', $startDate, $endDate, function () use ($startDate, $endDate) {
+            $salesProfit = SalesItem::query()
+                ->whereHas('sale', function ($q) use ($startDate, $endDate) {
+                    $q->whereNotIn('status', ['cancelled', 'draft'])
+                        ->when($startDate, fn($sq) => $sq->whereDate('created_at', '>=', $startDate))
+                        ->when($endDate, fn($sq) => $sq->whereDate('created_at', '<=', $endDate))
+                        ->when(!$startDate && !$endDate, fn($sq) => $sq->whereDate('created_at', now()->today()));
+                })
+                ->selectRaw('SUM((price - cost_price) * quantity) as profit')
+                ->value('profit') ?? 0;
 
-        $returnProfitLoss = $this->totalReturns($startDate, $endDate); // Qaytarılan məbləğ
+            $returnProfitLoss = $this->totalReturns($startDate, $endDate); // Qaytarılan məbləğ
+            $totalDamages = $this->totalDamages($startDate, $endDate); // xarab mehsul
 
-        return $salesProfit - $returnProfitLoss;
-    });
-}
+            return $salesProfit - $returnProfitLoss - $totalDamages;
+        });
+    }
+
+    public function totalDamages($startDate = null, $endDate = null)
+    {
+        return $this->remember('totalDamages', $startDate, $endDate, function () use ($startDate, $endDate) {
+            return Damage::query()
+                ->when($startDate, fn($q) => $q->whereDate('created_at', '>=', $startDate))
+                ->when($endDate, fn($q) => $q->whereDate('created_at', '<=', $endDate))
+                ->when(!$startDate && !$endDate, fn($q) => $q->whereDate('created_at', now()->today()))
+                ->sum('total_cost');
+        });
+    }
 
 
 

@@ -53,6 +53,11 @@ use HasRoles;
         return $this->hasMany(Sale::class);
     }
 
+    public function damages()
+    {
+        return $this->hasMany(Damage::class);
+    }
+
     public function customerTransactions()
     {
         return $this->hasMany(CustomerTransaction::class);

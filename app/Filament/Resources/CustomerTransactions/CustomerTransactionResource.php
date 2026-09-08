@@ -23,7 +23,7 @@ class CustomerTransactionResource extends Resource
 
     protected static ?string $navigationLabel = 'Borc Əməliyyatları';
     protected static ?string $pluralModelLabel = 'Borc əməliyyatları';
-    protected static string | UnitEnum | null $navigationGroup = 'MÜŞTƏRİ BORCLARI';
+    protected static string | UnitEnum | null $navigationGroup = 'MÜŞTƏRİLƏR';
     protected static ?int $navigationSort = 7;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::ClipboardDocumentList;

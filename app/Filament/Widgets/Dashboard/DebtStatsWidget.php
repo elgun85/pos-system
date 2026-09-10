@@ -28,10 +28,26 @@ class DebtStatsWidget extends StatsOverviewWidget
         $debtPayments = $dashboardService->debtPayments($startDate, $endDate);
         $currentDebt = $dashboardService->currentDebt();
         return [
-            Stat::make('Hissəli satış borcu', number_format($partialDebt, 2) . ' AZN'),
-            Stat::make('Tam nisyə borcu', number_format($creditDebt, 2) . ' AZN'),
-            Stat::make('Borclardan daxil olan ödəniş', number_format($debtPayments, 2) . ' AZN'),
-            Stat::make('Cari qalıq borc', number_format($currentDebt, 2) . ' AZN') ->color('danger'),
+
+            Stat::make('Hissəli satış borcu', number_format($partialDebt, 2) . ' AZN')
+                ->description('Hissəli satışlardan qalan gözlənilən məbləğ')
+                ->descriptionIcon('heroicon-m-clock')
+                ->color('warning'),
+
+            Stat::make('Tam nisyə borcu', number_format($creditDebt, 2) . ' AZN')
+                ->description('Tam nisyə verilən malların ümumi məbləği')
+                ->descriptionIcon('heroicon-m-exclamation-triangle')
+                ->color('warning'),
+
+            Stat::make('Borclardan daxil olan ödəniş', number_format($debtPayments, 2) . ' AZN')
+                ->description('Müştərilərin ödədikləri borc məbləğləri')
+                ->descriptionIcon('heroicon-m-arrow-down-circle')
+                ->color('success'),
+
+            Stat::make('Cari qalıq borc', number_format($currentDebt, 2) . ' AZN')
+                ->description('Müştərilərin mağazaya olan ümumi aktiv borcu')
+                ->descriptionIcon('heroicon-m-scale')
+                ->color('danger'),
 
         ];
     }

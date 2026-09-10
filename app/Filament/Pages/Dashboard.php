@@ -10,6 +10,7 @@ use Filament\Pages\Dashboard as BaseDashboard;
 use Filament\Pages\Dashboard\Concerns\HasFiltersForm;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use UnitEnum;
 
 
 class Dashboard extends BaseDashboard
@@ -17,9 +18,10 @@ class Dashboard extends BaseDashboard
     use HasFiltersForm;
 
     
-    //protected static ?string $navigationLabel = 'Analitiksfsdfa';
-    //protected static ?string $title = 'Analitik statistikalarfdfsdf';
+    protected static ?string $navigationLabel = 'Dashboard';
+     //   protected static ?string $modelLabel = '  ';
 
+    protected static string | UnitEnum | null $navigationGroup = 'ANALİTİKA';
 
     public function filtersForm(Schema $schema): Schema
     {

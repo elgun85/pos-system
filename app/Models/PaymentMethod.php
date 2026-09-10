@@ -59,4 +59,9 @@ class PaymentMethod extends Model
             ->where('status', true)
             ->value('id');
     }
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
 }

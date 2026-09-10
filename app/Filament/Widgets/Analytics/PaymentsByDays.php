@@ -9,7 +9,7 @@ use Filament\Widgets\Concerns\InteractsWithPageFilters;
 class PaymentsByDays extends ChartWidget
 {
     use InteractsWithPageFilters;
-   protected static bool $isDiscovered = false;
+    protected static bool $isDiscovered = false;
     protected ?string $heading = 'Günlər üzrə  Ödənişlər';
     protected static ?int $sort = 9;
 
@@ -27,7 +27,7 @@ class PaymentsByDays extends ChartWidget
                     'label' => 'Blog posts created',
                     'data' => $payments
                         ->pluck('total')
-                       ->map(fn($value) => (float) $value)
+                        ->map(fn($value) => (float) $value)
                         ->toArray(),
                     'backgroundColor' => '#F5274D',
                     'borderColor' => '#F5274D',

@@ -49,6 +49,7 @@ class AdminPanelProvider extends PanelProvider
                 // \Filament\Support\Assets\Css::make('custom-styles', \Illuminate\Support\Facades\Vite::asset('resources/css/app.css')),
             ])
             ->navigationGroups([
+                'ANALİTİKA',
                 'SATIŞ',
                 'KASSA',
                 'MAĞAZA',

@@ -23,6 +23,8 @@ class DamagedProductResource extends Resource
     protected static string | UnitEnum | null $navigationGroup = 'ANBAR HESABATI';
     protected static ?string $navigationLabel = 'Xarab olmuş məhsullar';
     protected static ?string $pluralModelLabel = 'Xarab olmuş məhsullar';
+    protected static ?string $modelLabel = ' Xarab olmuş məhsul';
+
 
 
     public static function form(Schema $schema): Schema

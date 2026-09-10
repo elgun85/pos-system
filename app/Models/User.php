@@ -62,4 +62,9 @@ use HasRoles;
     {
         return $this->hasMany(CustomerTransaction::class);
     }
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
 }

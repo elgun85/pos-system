@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\CustomerTransaction;
 use App\Models\Damage;
+use App\Models\Expense;
 use App\Models\PaymentMethod;
 use App\Models\ReturnItem;
 use App\Models\Sale;
@@ -133,8 +134,10 @@ class DashboardService
 
             $returnProfitLoss = $this->totalReturns($startDate, $endDate); // Qaytarılan məbləğ
             $totalDamages = $this->totalDamages($startDate, $endDate); // xarab mehsul
+            $totalExpenses = $this->totalExpenses($startDate, $endDate); // daxili xercler
 
-            return $salesProfit - $returnProfitLoss - $totalDamages;
+
+            return $salesProfit - $returnProfitLoss - $totalDamages - $totalExpenses;
         });
     }
 
@@ -147,6 +150,41 @@ class DashboardService
                 ->when(!$startDate && !$endDate, fn($q) => $q->whereDate('created_at', now()->today()))
                 ->sum('total_cost');
         });
+    }
+
+    public function totalExpenses($startDate = null, $endDate = null)
+    {
+        return $this->remember('totalExpenses', $startDate, $endDate, function () use ($startDate, $endDate) {
+            return Expense::query()
+                ->when($startDate, fn($q) => $q->whereDate('created_at', '>=', $startDate))
+                ->when($endDate, fn($q) => $q->whereDate('created_at', '<=', $endDate))
+                ->when(!$startDate && !$endDate, fn($q) => $q->whereDate('created_at', now()->today()))
+                ->sum('amount')
+            ;
+        });
+    }
+
+    public function expensesByCategory($startDate = null, $endDate = null)
+    {
+        /*         return $this->remember('expensesByCategory', $startDate, $endDate, function () use ($startDate, $endDate) {
+
+        }); */
+
+        return Expense::query()
+            ->join('expense_categories', 'expenses.expense_category_id', '=', 'expense_categories.id')
+            ->select(
+                'expense_categories.name as category_name',
+                DB::raw(('SuM(expenses.amount) as total_amount'))
+            )
+            ->when($startDate, fn($q) => $q->whereDate('expenses.created_at', '>=', $startDate))
+            ->when($endDate, fn($q) => $q->whereDate('expenses.created_at', '<=', $endDate))
+            ->when(!$startDate && !$endDate, fn($q) => $q->whereDate('expenses.created_at', now()->today()))
+            ->groupBy('expense_categories.id', 'expense_categories.name')
+          //  ->whereNotIn('expense_categories.name',['Yeni Mehsul'])
+            ->orderByDesc('total_amount')
+            ->get()
+            ->pluck('total_amount', 'category_name')
+        ;
     }
 
 

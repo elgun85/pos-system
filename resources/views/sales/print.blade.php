@@ -7,10 +7,32 @@
     <style>
         body {
             font-family: 'Courier New', Courier, monospace;
-            width: 80mm;
+            width: 72mm;
             margin: 0;
             padding: 5mm;
             font-size: 12px;
+        }
+
+        @page {
+            size: 78mm auto;
+            /* Kağız eni 80mm, uzunluq məzmuna görə */
+            margin: 0;
+            /* Brauzerin avtomatik haşiyələrini ləğv edir */
+        }
+
+        @media print {
+
+            html,
+            body {
+                width: 80mm;
+                margin: 0;
+                padding: 3mm;
+            }
+
+            header,
+            footer {
+                display: none !important;
+            }
         }
 
         .text-center {
@@ -85,7 +107,7 @@
             <p>Endirim: -₼{{ number_format($sale->discount, 2) }}</p>
         @endif
         <p class="bold">Yekun: ₼{{ number_format($sale->total, 2) }}</p>
-{{--         <p>Ödənilən: ₼{{ number_format($sale->paid_amount, 2) }}</p>
+        {{--         <p>Ödənilən: ₼{{ number_format($sale->paid_amount, 2) }}</p>
         <p>Qalıq: ₼{{ number_format($sale->due_amount, 2) }}</p>
         <p>Qaytarılan: ₼{{ number_format($sale->change_amount, 2) }}</p> --}}
     </div>

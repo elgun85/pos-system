@@ -72,8 +72,8 @@ class AdminPanelProvider extends PanelProvider
                 Analytics::class,
                 POS::class,
                 InventoryReport::class,
-                SalesReport::class,
-                ProfitReport::class,
+             //   SalesReport::class,
+               // ProfitReport::class,
             ])
             // ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([])

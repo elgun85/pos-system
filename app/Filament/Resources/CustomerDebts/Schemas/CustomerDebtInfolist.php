@@ -19,25 +19,27 @@ class CustomerDebtInfolist
                     ->columnSpanFull(1)
                     ->schema([
                         TextEntry::make('name')
-                            ->label('Ad, Soyad')
+                            ->label(__('resource.customer_deb.name'))
                             ->weight('bold'),
+
                         TextEntry::make('phone')
-                            ->label('Telefon')
+                            ->label(__('resource.customer_deb.phone'))
                             ->weight('bold'),
+
                         TextEntry::make('address')
-                            ->label('Ünvan')
+                            ->label(__('resource.customer_deb.address'))
                             ->weight('bold'),
 
                         TextEntry::make('total_debt')
-                            ->label('Cari Borc Qalığı')
-                            ->color(fn ($state) => $state > 0 ? 'danger' : 'success')
+                            ->label(__('resource.customer_deb.total'))
+                            ->color(fn($state) => $state > 0 ? 'danger' : 'success')
                             ->size('lg')
-                            ->money('AZN')
+                            ->money(__('resource.money_icon'))
                             ->weight('bold'),
                     ])->columns(3),
 
                 // Sağ Tərəf: CƏDVƏL FORMALIDIR (Transactions)
-                Section::make('Əməliyyat Tarixçəsi (Borclar və Ödənişlər)')
+                Section::make(__('resource.customer_deb.deb_data'))
                     ->columnSpan(2)
                     ->schema([
                         RepeatableEntry::make('transactions') // Bütün hərəkətləri göstərir
@@ -47,19 +49,19 @@ class CustomerDebtInfolist
                                 Grid::make(5)->schema([
                                     // 1. Tarix
                                     TextEntry::make('created_at')
-                                        ->label('Tarix')
+                                        ->label(__('resource.customer_deb.created_at'))
                                         ->dateTime('d.m.Y H:i'),
 
                                     // 2. Növ (Debitor / Ödəniş)
                                     TextEntry::make('type')
-                                        ->label('Əməliyyat Növü')
+                                        ->label(__('resource.customer_deb.deb_cat'))
                                         ->badge()
-                                        ->formatStateUsing(fn ($state) => match ($state) {
+                                        ->formatStateUsing(fn($state) => match ($state) {
                                             'debt' => 'Borc (Nisyə)',
                                             'payment' => 'Ödəniş',
                                             default => $state,
                                         })
-                                        ->color(fn ($state) => match ($state) {
+                                        ->color(fn($state) => match ($state) {
                                             'debt' => 'danger',
                                             'payment' => 'success',
                                             default => 'gray',
@@ -67,19 +69,19 @@ class CustomerDebtInfolist
 
                                     // 3. Məbləğ (Borc qırmızı, ödəniş yaşıl)
                                     TextEntry::make('amount')
-                                        ->label('Məbləğ')
-                                        ->money('AZN')
+                                        ->label(__('resource.customer_deb.total'))
+                                        ->money(__('resource.money_icon'))
                                         ->weight('bold')
-                                        ->color(fn ($record) => $record->type === 'debt' ? 'danger' : 'success'),
+                                        ->color(fn($record) => $record->type === 'debt' ? 'danger' : 'success'),
 
                                     // 4. Ödəniş Üsulu
                                     TextEntry::make('paymentMethod.name')
-                                        ->label('Ödəniş Üsulu')
+                                        ->label(__('resource.customer_deb.pay_met'))
                                         ->default('-'),
 
                                     // 5. Satış ID
                                     TextEntry::make('sale.sale_number')
-                                        ->label('Satış №')
+                                        ->label(__('resource.customer_deb.sale_num'))
                                         ->default('-'),
                                 ]),
                             ]),

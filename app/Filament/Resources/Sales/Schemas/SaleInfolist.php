@@ -13,40 +13,40 @@ class SaleInfolist
         return $schema
             ->components([
                 TextEntry::make('sale_number')
+                    ->label(__('resource.sale.number'))
                     ->placeholder('-'),
+
                 TextEntry::make('payments.paymentMethod.name')
-                    ->label('Ödəmə üsulu')
+                    ->label(__('resource.sale.payment'))
                     ->placeholder('-'),
+
                 TextEntry::make('total')
-                    ->label('Cəmi')
-                    ->money('AZN')
+                    ->label(__('resource.sale.total'))
+                    ->money(__('resource.money_icon'))
                     ->placeholder('-'),
-
-
-
 
                 TextEntry::make('created_at')
+                    ->label(__('resource.sale.created_at'))
                     ->dateTime()
                     ->placeholder('-'),
 
 
                 RepeatableEntry::make('items')
-                    ->label('Məhsullar')
                     ->schema([
                         TextEntry::make('product.name')
-                            ->label('Məhsul'),
+                            ->label(__('resource.sale.product')),
 
                         TextEntry::make('quantity')
-                            ->label('Say'),
+                            ->label(__('resource.sale.quantity')),
 
                         TextEntry::make('price')
-                            ->label('Qiymət')
-                            ->money('AZN'),
+                            ->label(__('resource.sale.price'))
+                            ->money(__('resource.money_icon')),
 
                         TextEntry::make('total')
-                            ->label('Məbləğ')
+                            ->label(__('resource.sale.total'))
                             ->state(fn($record) => $record->quantity * $record->price)
-                            ->money('AZN'),
+                            ->money(__('resource.money_icon')),
 
 
                     ])

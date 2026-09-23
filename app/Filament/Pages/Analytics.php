@@ -19,15 +19,32 @@ use UnitEnum;
 class Analytics extends BaseDashboard
 {
     use HasFiltersForm;
-    protected static ?string $navigationLabel = 'Qrafiklər';
-    protected static string | UnitEnum | null $navigationGroup = 'ANALİTİKA';
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.analyse');
+    }
+
+    public  static function getNavigationLabel(): string
+    {
+        return __('resource.analytics.navigationLabel');
+    }
+
+
+    public function getTitle(): string
+    {
+        return __('resource.analytics.pluralModelLabel');
+    }
+
+
+
 
     // 🛑 1. ROUTE XƏTASI ALMAMAQ ÜÇÜN BU 2 SƏTİR MÜTLƏQDİR:
     protected static string $routePath = 'analytics'; // Tip mütləq "string" olmalıdır (?string YOX!)
     protected static ?string $slug = 'analytics';
 
     // protected static ?string $navigationLabel = 'Analitika';
-    protected static ?string $title = 'Analitik statistikalar';
+    // protected static ?string $title = 'Analitik statistikalar';
     protected static string|BackedEnum|null $navigationIcon = Heroicon::ChartBar;
 
 

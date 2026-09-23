@@ -14,16 +14,31 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Cache;
-use UnitEnum;
 
 class BrandResource extends Resource
 {
     protected static ?string $model = Brand::class;
 
-    protected static ?string $navigationLabel = 'Brendlər';
-    protected static string | UnitEnum | null $navigationGroup = 'MAĞAZA';
-    protected static ?string $modelLabel = 'Brend';
-    protected static ?string $pluralModelLabel = 'Brendlər';
+    public  static function getNavigationLabel(): string
+    {
+        return __('resource.brand.navigationLabel');
+    }
+
+    public  static function getModelLabel(): string
+    {
+        return __('resource.brand.modelLabel');
+    }
+
+    public  static function getPluralModelLabel(): string
+    {
+        return __('resource.brand.pluralModelLabel');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.shop');
+    }
+
     protected static ?int $navigationSort = 2;
 
 
@@ -37,10 +52,11 @@ class BrandResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         return Cache::remember(
-            'brand',now()->addMinutes(10),
+            'brand',
+            now()->addMinutes(10),
             fn() => static::getModel()::where('status', true)
-            ->count()
-            
+                ->count()
+
         );
     }
     protected static ?string $recordTitleAttribute = 'name';

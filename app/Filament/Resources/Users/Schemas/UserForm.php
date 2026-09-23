@@ -15,29 +15,28 @@ class UserForm
         return $schema
             ->components([
                 TextInput::make('name')
+                ->label(__('resource.users.name'))
                     ->required(),
+
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label(__('resource.users.email'))
                     ->email()
                     ->required(),
 
                 TextInput::make('password')
+                ->label(__('resource.users.password'))
                     ->password()
                     ->required(),
 
                     Select::make('roles')
+                    ->label(__('resource.users.role'))
                     ->relationship('roles','name')
                     ->multiple()
                     ->preload()
                     ->searchable()
                     ->label('Rollar')
                     ,
-                Textarea::make('two_factor_secret')
-                    ->columnSpanFull(),
-                Textarea::make('two_factor_recovery_codes')
-                    ->columnSpanFull(),
-                DateTimePicker::make('two_factor_confirmed_at'),
-                DateTimePicker::make('email_verified_at'),
+
             ]);
     }
 }

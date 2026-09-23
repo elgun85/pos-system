@@ -13,18 +13,31 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use UnitEnum;
 
 class PaymentMethodResource extends Resource
 {
     protected static ?string $model = PaymentMethod::class;
 
 
-    protected static ?string $navigationLabel = 'Ödəmə üsulları';
-    protected static ?string $modelLabel = 'Ödəmə üsulu';
-    protected static ?string $pluralModelLabel = 'Ödəmə üsulları';
-    protected static string | UnitEnum | null $navigationGroup = 'SİSTEM';
+    public  static function getNavigationLabel(): string
+    {
+        return __('resource.payment.navigationLabel');
+    }
 
+    public  static function getModelLabel(): string
+    {
+        return __('resource.payment.modelLabel');
+    }
+
+    public  static function getPluralModelLabel(): string
+    {
+        return __('resource.payment.pluralModelLabel');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.system');
+    }
     protected static ?int $navigationSort = 1;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCreditCard;
 

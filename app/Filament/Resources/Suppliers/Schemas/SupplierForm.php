@@ -13,24 +13,28 @@ class SupplierForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->label('Təchizatçının adı')
+                    ->label(__('resource.supplier.name'))
                     ->placeholder('Təchizatçının adını daxil edin')
                     ->live()
                     ->afterStateUpdated(function ($state, callable $set) {
                         $set('name', mb_convert_case($state, MB_CASE_TITLE, 'UTF-8'));
                     })
                     ->required(),
+
                 TextInput::make('phone')
-                ->label('Telefon nömrəsi')
+                ->label(__('resource.supplier.phone'))
                 ->placeholder('+994 XX XXX XX XX')
                     ->tel(),
+
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label(__('resource.supplier.email'))
                     ->placeholder('... @email.com')
                     ->email(),
+
                 TextInput::make('address')
-                    ->label('Ünvan')
+                    ->label(__('resource.supplier.address'))
                     ->placeholder('Ünvani daxil edin'),
+                    
                 Toggle::make('status')
                     ->default(true),
             ]);

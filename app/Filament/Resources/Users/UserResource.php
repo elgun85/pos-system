@@ -15,17 +15,31 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use UnitEnum;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationLabel = 'İstifadəçilər';
-    protected static ?string $modelLabel = 'İstifadəçi';
-    protected static ?string $pluralModelLabel = 'İstifadəçilər';
-    
-    protected static string | UnitEnum | null $navigationGroup = 'SİSTEM';
+    public  static function getNavigationLabel(): string
+    {
+        return __('resource.users.navigationLabel');
+    }
+
+    public  static function getModelLabel(): string
+    {
+        return __('resource.users.modelLabel');
+    }
+
+    public  static function getPluralModelLabel(): string
+    {
+        return __('resource.users.pluralModelLabel');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.system');
+    }
+
 
     protected static ?int $navigationSort = 1;
 

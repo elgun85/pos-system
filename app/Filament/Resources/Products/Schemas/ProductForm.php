@@ -21,10 +21,10 @@ class ProductForm
         return $schema
             ->components([
 
-                Section::make('Məhsul Məlumatları')
+                Section::make(__('resource.product.details'))
                     ->schema([
                         TextInput::make('sku')
-                            ->label('Barkod')
+                            ->label(__('resource.product.sku'))
                             ->unique(ignoreRecord: true) // Bazada təkrarlanmasın
                             ->autofocus()
                             ->required()
@@ -42,8 +42,9 @@ class ProductForm
                                         $set('sku', $randomBarcode);
                                     })
                             ),
+
                         TextInput::make('name')
-                            ->label('Məhsul Adı')
+                            ->label(__('resource.product.name'))
                             ->unique(ignoreRecord: true) // Bazada təkrarlanmasın
                             ->placeholder('Məhsul adını daxil edin')
                             ->live()
@@ -52,19 +53,21 @@ class ProductForm
                             })
                             ->maxLength(255)
                             ->required(),
+
                         TextInput::make('cost_price')
-                            ->label('Alış Qiyməti')
+                            ->label(__('resource.product.cost_price'))
                             ->default(0)
                             //->required()
                             ->numeric()
                             ->prefix('₼'),
+
                         TextInput::make('sale_price')
-                            ->label('Satış Qiyməti')
+                            ->label(__('resource.product.sale_price'))
                             ->required()
                             ->numeric()
                             ->prefix('₼'),
                         FileUpload::make('image')
-                            ->label('Məhsul Şəkli')
+                            ->label(__('resource.product.image'))
                             ->disk('public')
                             ->directory('products')
                             ->maxSize(4096)
@@ -79,10 +82,10 @@ class ProductForm
 
 
 
-                Section::make('Əsas Məlumatlar')
+                Section::make(__('resource.product.main_det'))
                     ->schema([
                         Select::make('category_id')
-                            ->label('Kateqoriya')
+                            ->label(__('resource.product.category.name'))
                             ->relationship('category', 'name')
                             ->preload()
                             ->native(false)
@@ -90,12 +93,12 @@ class ProductForm
                             ->required()
                             ->createOptionForm([
                                 TextInput::make('name')
-                                    ->label('Kateqoriya Adı')
+                                    ->label(__('resource.category.name'))
                                     ->required()
                                     ->unique('categories', 'name'),
 
                                 Select::make('parent_id')
-                                    ->label('Üst Kateqoriya')
+                                    ->label(__('resource.category.parent.name'))
                                     ->relationship('parent', 'name')
                                     ->nullable()
                                     ->preload()
@@ -113,7 +116,7 @@ class ProductForm
                             ->searchable()
                             ->createOptionForm([
                                 TextInput::make('name')
-                                    ->label('Brend Adı')
+                                    ->label(__('resource.brand.name'))
                                     ->required()
                                     ->unique('brands', 'name'),
 
@@ -121,29 +124,7 @@ class ProductForm
                                     ->label('Status')
                                     ->default(true)
                             ]),
-                        /*                         Select::make('supplier_id')
-                            ->label('Təchizatçı')
-                            ->relationship('supplier', 'name')
-                            ->preload()
-                            ->native(false)
-                            ->searchable()
-                            ->createOptionForm([
-                                TextInput::make('name')
-                                    ->label('Təchizatçı Adı')
-                                    ->live()
-                                    ->afterStateUpdated(function ($state, callable $set) {
-                                        $set('name', mb_convert_case($state, MB_CASE_TITLE, 'UTF-8'));
-                                    })
-                                    ->required(),
-                                TextInput::make('phone')
-                                    ->label('Telefon nömrəsi')
-                                    ->placeholder('+994 XX XXX XX XX')
-                                    ->tel(),
 
-                                Toggle::make('status')
-                                    ->default(true),
-
-                            ]), */
                         Select::make('status')
                             ->label('Status')
                             ->options(['active' => 'Active', 'inactive' => 'Inactive'])
@@ -151,7 +132,7 @@ class ProductForm
                             ->required(),
 
                         Toggle::make('is_favorite')
-                            ->label('Sevimli Məhsul')
+                            ->label(__('resource.product.fovorite'))
                             ->onIcon('heroicon-s-star'),
                     ]),
             ]);

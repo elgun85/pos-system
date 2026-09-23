@@ -14,7 +14,7 @@ class CategoryForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->label('Kateqoriya Adı')
+                    ->label(__('resource.category.name'))
                     ->unique(ignoreRecord: true) // Bazada təkrarlanmasın
                     ->required()
                     ->placeholder('Kateqoriya adını daxil edin')
@@ -23,7 +23,7 @@ class CategoryForm
                         $set('name', mb_convert_case($state, MB_CASE_TITLE, 'UTF-8'));
                     }),
                 Select::make('parent_id')
-                    ->label('Üst Kateqoriya')
+                    ->label(__('resource.category.parent.name'))
                     ->relationship('parent', 'name')
                     ->nullable()
                     ->preload()

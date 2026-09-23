@@ -10,7 +10,10 @@ class CashChartWidget extends ChartWidget
 {
     use InteractsWithPageFilters;
 
-    protected ?string $heading = 'Ödəniş üsulları';
+    public function getHeading(): ?string
+    {
+        return __('resource.cashChart_header');
+    }
     protected static ?int $sort = 4;
 
 
@@ -50,9 +53,9 @@ class CashChartWidget extends ChartWidget
             ],
 
             'labels' => [
-                'Ümumi daxil olan pul',
-                'Nağd',
-                'Kart',
+                __('resource.totalPayments'),
+                __('resource.cashPayments'),
+                __('resource.cardPayments'),
             ],
         ];
     }

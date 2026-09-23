@@ -10,8 +10,11 @@ use Filament\Widgets\Concerns\InteractsWithPageFilters;
 class ExpenseChart extends ChartWidget
 {
     use InteractsWithPageFilters;
+    public function getHeading(): ?string
+    {
+        return __('resource.expence_header');
+    }
     protected static bool $isDiscovered = false;
-    protected ?string $heading = 'Kateqoriyalar Üzrə Xərclər';
     protected static ?int $sort = 50;
 
     protected function getData(): array
@@ -27,7 +30,7 @@ class ExpenseChart extends ChartWidget
         return [
             'datasets' =>    [
                 [
-                    'label' => 'Xərc Məbləği' ,
+                    'label' =>   __('resource.totalExpenses'),
                     'data' => $expensesData->values()->toArray(),
 
                     'backgroundColor' =>
@@ -46,8 +49,8 @@ class ExpenseChart extends ChartWidget
                     'borderRadius' => 10,
                 ]
             ],
-           'labels' => $expensesData->keys()->toArray(),
-        //  'labels' => 'salam',
+            'labels' => $expensesData->keys()->toArray(),
+            //  'labels' => 'salam',
         ];
     }
 

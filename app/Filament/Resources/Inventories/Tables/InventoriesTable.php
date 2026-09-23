@@ -17,21 +17,21 @@ class InventoriesTable
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('product.name')
-                    ->label('Məhsul adı')
+                    ->label(__('resource.inventory.product.name'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('product.brand.name')
-                    ->label('Marka')
+                    ->label(__('resource.inventory.brand.name'))
                     ->sortable(),
 
                 TextColumn::make('product.sale_price')
-                    ->label('Satış Qiyməti')
+                    ->label(__('resource.inventory.sale_cost'))
                     ->prefix('₼')
                     ->sortable(),
 
                 TextColumn::make('quantity')
-                    ->label('Stok Miqdarı')
+                    ->label(__('resource.inventory.quantity'))
                     ->numeric()
                     ->badge()
                     ->color(fn($state) => match (true) {
@@ -44,11 +44,15 @@ class InventoriesTable
                     })
                     ->sortable()
                     ->searchable(),
+
                 TextColumn::make('created_at')
+                    ->label(__('resource.inventory.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('updated_at')
+                    ->label(__('resource.inventory.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -57,8 +61,8 @@ class InventoriesTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()->iconButton(),
+                DeleteAction::make()->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

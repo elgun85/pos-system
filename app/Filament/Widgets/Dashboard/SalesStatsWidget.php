@@ -11,7 +11,10 @@ class SalesStatsWidget extends StatsOverviewWidget
 {
     use InteractsWithPageFilters;
 
-    protected ?string $heading = ' Satış və  Kassaya daxil olan vəsaitlər';
+    protected function getHeading(): ?string
+    {
+        return __('resource.sales_header');
+    }
     protected static ?int $sort = 1;
 
 
@@ -40,40 +43,40 @@ class SalesStatsWidget extends StatsOverviewWidget
 
         return [
             // Satış Növləri və Dövriyyə
-            Stat::make('Ümumi satış', number_format($allSales, 2) . ' AZN')
-                ->description('Ümumi yaradılan satış dövriyyəsi')
+            Stat::make(__('resource.allSales'), number_format($allSales, 2) .   __('resource.money'))
+                ->description(__('resource.allSalesDesc'))
                 ->descriptionIcon('heroicon-m-chart-bar')
                 ->color('info'),
 
-            Stat::make('Tam ödənilmiş satış', number_format($completedSales, 2) . ' AZN')
-                ->description('Məbləği tam bağlanan satışlar')
+            Stat::make(__('resource.completedSales'), number_format($completedSales, 2) .   __('resource.money'))
+                ->description(__('resource.completedSalesDesc'))
                 ->descriptionIcon('heroicon-m-check-circle')
                 ->color('success'),
 
-            Stat::make('Hissəli satış', number_format($partialSales, 2) . ' AZN')
-                ->description('Müəyyən hissəsi ödənilən satışlar')
+            Stat::make(__('resource.partialSales'), number_format($partialSales, 2) .   __('resource.money'))
+                ->description(__('resource.partialSalesDesc'))
                 ->descriptionIcon('heroicon-m-clock')
                 ->color('warning'),
 
-            Stat::make('Nisyə satış', number_format($creditSales, 2) . ' AZN')
-                ->description('Tamamilə borca edilən satışlar')
+            Stat::make(__('resource.creditSales'), number_format($creditSales, 2) .   __('resource.money'))
+                ->description(__('resource.creditSalesDesc'))
                 ->descriptionIcon('heroicon-m-exclamation-circle')
                 ->color('danger'),
 
 
             // Kassaya Daxil Olan Vəsaitlər
-            Stat::make('Ümumi daxil olan pul', number_format($totalPayments, 2) . ' AZN')
-                ->description('Kassaya real daxil olan ümumi məbləğ')
+            Stat::make(__('resource.totalPayments'), number_format($totalPayments, 2) .   __('resource.money'))
+                ->description(__('resource.totalPaymentsDesc'))
                 ->descriptionIcon('heroicon-m-banknotes')
                 ->color('success'),
 
-            Stat::make('Nağd', number_format($cashPayments, 2) . ' AZN')
-                ->description('Nağd şəkildə toplanan vəsait')
+            Stat::make(__('resource.cashPayments'), number_format($cashPayments, 2) .   __('resource.money'))
+                ->description(__('resource.cashPaymentsDesc'))
                 ->descriptionIcon('heroicon-m-currency-dollar')
                 ->color('success'),
 
-            Stat::make('Kart', number_format($cardPayments, 2) . ' AZN')
-                ->description('Pos-terminal/Kart ilə ödənişlər')
+            Stat::make(__('resource.cardPayments'), number_format($cardPayments, 2) .   __('resource.money'))
+                ->description(__('resource.cardPaymentsDesc'))
                 ->descriptionIcon('heroicon-m-credit-card')
                 ->color('info'),
 

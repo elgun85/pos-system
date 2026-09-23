@@ -12,15 +12,17 @@ class CustomerDebtForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->label('Ad, Soyad')
+                    ->label(__('resource.customer_deb.name'))
                     ->required()
                     ->maxLength(255),
+
                 TextInput::make('phone')
-                    ->label('Telefon')
+                    ->label(__('resource.customer_deb.phone'))
                     ->required()
                     ->maxLength(255),
+
                 TextInput::make('address')
-                    ->label('Ünvan')
+                    ->label(__('resource.customer_deb.address'))
                     ->required()
                     ->maxLength(255),
             ]);

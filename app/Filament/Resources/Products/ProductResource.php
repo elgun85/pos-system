@@ -18,17 +18,31 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Cache;
-use UnitEnum;
 
 class ProductResource extends Resource
 {
 
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationLabel = 'Məhsullar';
-    protected static string | UnitEnum | null $navigationGroup = 'MAĞAZA';
-    protected static ?string $modelLabel = 'Məhsul';
-    protected static ?string $pluralModelLabel = 'Məhsul';
+    public  static function getNavigationLabel(): string
+    {
+        return __('resource.product.navigationLabel');
+    }
+
+    public  static function getModelLabel(): string
+    {
+        return __('resource.product.modelLabel');
+    }
+
+    public  static function getPluralModelLabel(): string
+    {
+        return __('resource.product.pluralModelLabel');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.shop');
+    }
     protected static ?int $navigationSort = 3;
 
 
@@ -45,10 +59,11 @@ class ProductResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         return Cache::remember(
-            'product',now()->addMinutes(10),
+            'product',
+            now()->addMinutes(10),
             fn() => static::getModel()::where('status', true)
-            ->count()
-        
+                ->count()
+
         );
     }
 

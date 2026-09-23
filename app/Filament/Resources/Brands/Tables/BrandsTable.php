@@ -19,12 +19,13 @@ class BrandsTable
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('name')
-                    ->label('Ad')
+                    //->label('Ad')
+                    ->label(__('resource.brand.name'))
                     ->sortable()
                     ->searchable(),
 
                 ImageColumn::make('logo')
-                    ->label('Logo')
+                    ->label(__('resource.brand.logo'))
                     ->disk('public')
                     ->square()
                     ->size(50)
@@ -35,6 +36,7 @@ class BrandsTable
                 IconColumn::make('status')
                     ->boolean(),
                 TextColumn::make('created_at')
+                    ->label(__('resource.brand.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -44,8 +46,8 @@ class BrandsTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()->iconButton(),
+                DeleteAction::make()->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

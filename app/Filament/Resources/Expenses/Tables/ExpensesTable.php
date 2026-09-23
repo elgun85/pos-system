@@ -16,29 +16,29 @@ class ExpensesTable
         return $table
             ->columns([
                 TextColumn::make('expenseCategory.name')
-                    ->label('Kateqoriya')
+                    ->label(__('resource.category.name'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('amount')
-                    ->label('Məbləğ')
-                    ->money('AZN')
+                    ->label(__('resource.sale.price'))
+                    ->money(__('resource.money_icon'))
                     ->sortable(),
 
                 TextColumn::make('paymentMethod.name')
-                    ->label('Ödəniş'),
+                    ->label(__('resource.payment_method')),
 
                 TextColumn::make('notes')
-                    ->label('Qeyd')
+                    ->label(__('resource.customer_deb.note'))
                     ->limit(50),
 
                 TextColumn::make('created_at')
-                    ->label('Tarix')
+                    ->label(__('resource.product.created_at'))
                     ->date('d M Y')
                     ->sortable(),
 
                 TextColumn::make('user.name')
-                    ->label('İstifadəçi'),
+                    ->label(__('resource.customer_deb.users')),
 
             ])
             ->filters([

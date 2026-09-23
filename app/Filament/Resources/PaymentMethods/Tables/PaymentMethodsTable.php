@@ -18,24 +18,26 @@ class PaymentMethodsTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label('Ödəniş üsulu')
+                    ->label(__('resource.payment.name'))
                     ->sortable()
                     ->searchable(),
 
                 ImageColumn::make('icon')
-                    ->label('İkon')
+                    ->label(__('resource.payment.icon'))
                     ->disk('public')
                     ->square()
                     ->size(50),
 
                 TextColumn::make('description')
-                    ->label('Açıqlama')
+                   ->label(__('resource.payment.description'))
                     ->limit(20)
                     ->searchable(),
 
                 IconColumn::make('status')
                     ->boolean(),
+                    
                 TextColumn::make('created_at')
+                ->label(__('resource.payment.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -45,8 +47,8 @@ class PaymentMethodsTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()->iconButton(),
+                DeleteAction::make()->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

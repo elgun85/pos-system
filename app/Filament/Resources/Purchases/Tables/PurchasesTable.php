@@ -18,34 +18,40 @@ class PurchasesTable
         return $table
             ->columns([
                 ImageColumn::make('photo')
-                    ->label('Qaimənin Şəkli')
+                    ->label(__('resource.purchase.photo'))
                     ->disk('public')
                     ->circular()
                     ->size(50)
                     ->url(fn($record) => $record->photo ? asset('storage/' . $record->photo) : null)
                     ->openUrlInNewTab(),
+
                 TextColumn::make('invoice_number')
-                    ->label('Qaimə Nömrəsi')
+                    ->label(__('resource.purchase.number'))
                     ->searchable()
                     ->sortable(),
+
                 TextColumn::make('supplier.name')
-                    ->label('Təchizatçı')
+                    ->label(__('resource.purchase.supp_name'))
                     ->searchable()
                     ->sortable(),
+
                 TextColumn::make('total_price')
-                    ->label('Ümumi Məbləğ')
+                    ->label(__('resource.purchase.total_price'))
                     ->money()
                     ->sortable(),
+
                 IconColumn::make('status')
                     ->label('Status')
                     ->boolean(),
+
                 TextColumn::make('created_at')
-                    ->label('Yaradılma Tarixi')
+                    ->label(__('resource.purchase.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('updated_at')
-                    ->label('Yenilənmə Tarixi')
+                    ->label(__('resource.purchase.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -54,8 +60,8 @@ class PurchasesTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()->iconButton(),
+                DeleteAction::make()->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

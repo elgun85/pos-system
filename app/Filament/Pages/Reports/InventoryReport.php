@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages\Reports;
 
+use App\Exports\InventoryReportExport;
 use App\Models\Inventory;
 use Filament\Actions\Action;
 use Filament\Pages\Page;
@@ -17,9 +18,24 @@ class InventoryReport extends Page implements HasTable
 {
     use InteractsWithTable;
 
-    protected static string | UnitEnum | null $navigationGroup = 'ANBAR HESABATI';
-    protected static ?string $navigationLabel = 'Anbar Hesabatı';
-    protected static ?string $title = 'Az qalan məhsullar';
+
+    public  static function getNavigationLabel(): string
+    {
+        return __('resource.inventory_report.navigationLabel');
+    }
+
+
+
+    public function getTitle(): string
+    {
+        return __('resource.inventory_report.pluralModelLabel');
+    }
+
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.inventory');
+    }
 
 
 
@@ -30,9 +46,10 @@ class InventoryReport extends Page implements HasTable
             ->query($this->query())
             ->columns($this->columns())->defaultSort('quantity', 'asc')
             ->filters($this->filters())
-          //  ->actions($this->actions())
+            //  ->actions($this->actions())
             ->bulkActions($this->bulkActions())
-            ->headerActions($this->getHeaderActions());
+           // ->headerActions($this->getHeaderActions())
+            ;
     }
 
     protected function query(): Builder
@@ -52,18 +69,18 @@ class InventoryReport extends Page implements HasTable
     {
         return [
             TextColumn::make('product.name')
-                ->label('Məhsulun adı')
+                ->label(__('resource.inventory.product.name'))
                 ->searchable()
                 ->sortable(),
 
             TextColumn::make('product.category.name')
-                ->label('Kateqoriya')
+                ->label(__('resource.category.name'))
                 ->sortable()
                 ->searchable(),
 
             TextColumn::make('quantity')
                 ->sortable()
-                ->label('Say')
+                ->label(__('resource.inventory.quantity'))
                 ->badge()
                 ->color(fn($state) => match (true) {
                     $state == 0 => 'danger',
@@ -81,8 +98,9 @@ class InventoryReport extends Page implements HasTable
     {
         return [
             Action::make('Excel')
-                ->label('Excelle yukle')
+            //    ->label('Excelle yukle')
                 ->color('success')
+                ->action(fn () => InventoryReportExport::download()),
         ];
     }
     protected function bulkActions(): array

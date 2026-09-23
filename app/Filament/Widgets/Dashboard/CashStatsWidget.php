@@ -11,7 +11,10 @@ class CashStatsWidget extends StatsOverviewWidget
 {
     use InteractsWithPageFilters;
 
-    protected ?string $heading = ' Maliyyə və Anbar ';
+    protected function getHeading(): ?string
+    {
+        return __('resource.cash_header');
+    }
     protected static ?int $sort = 2;
 
     protected function getStats(): array
@@ -33,28 +36,28 @@ class CashStatsWidget extends StatsOverviewWidget
         return [
 
 
-            Stat::make('Qaytarılan Məbləğ', number_format($totalReturns, 2) . ' AZN')
-                ->description('Müştərilərdən geri alınan mallar')
+            Stat::make(__('resource.totalReturns'), number_format($totalReturns, 2) .   __('resource.money'))
+                ->description(__('resource.totalReturnsDesc'))
                 ->descriptionIcon('heroicon-m-arrow-uturn-left')
                 ->color('danger'),
 
-            Stat::make('Xarab Olmuş Məhsullar', number_format($totalDamages, 2) . ' AZN')
-                ->description('Zədələnmiş mal itkisi')
+            Stat::make(__('resource.totalDamages'), number_format($totalDamages, 2) .   __('resource.money'))
+                ->description(__('resource.totalDamagesDesc'))
                 ->descriptionIcon('heroicon-m-exclamation-triangle')
                 ->color('danger'),
 
-            Stat::make('Daxili Xərclər', number_format($totalExpenses, 2) . ' AZN')
-                ->description('Mağaza daxili xərclər')
+            Stat::make(   __('resource.totalExpenses'), number_format($totalExpenses, 2) .   __('resource.money'))
+                ->description(   __('resource.totalExpensesDesc'))
                 ->descriptionIcon('heroicon-m-banknotes')
                 ->color('danger'),
 
-            Stat::make('Xalis Satış (Net)', number_format($netSales, 2) . ' AZN')
-                ->description('Qaytarmalar çıxıldıqdan sonra xalis dövriyyə')
+            Stat::make( __('resource.netSales'), number_format($netSales, 2) .   __('resource.money'))
+                ->description( __('resource.netSalesDesc'))
                 ->descriptionIcon('heroicon-m-shopping-bag')
                 ->color('success'),
 
-            Stat::make('Xalis Gəlir (Net)', number_format($netProfit, 2) . ' AZN')
-                ->description($netProfit >= 0 ? 'Bütün xərclər çıxıldıqdan sonra xalis mənfəət' : 'Diqqət: Zərər qeydə alınıb')
+            Stat::make( __('resource.netProfit'), number_format($netProfit, 2) .   __('resource.money'))
+                ->description($netProfit >= 0 ?  __('resource.netProfitDesc'):__('resource.netLossDesc'))
                 ->descriptionIcon($netProfit >= 0 ? 'heroicon-m-arrow-trending-up' : 'heroicon-m-arrow-trending-down')
                 ->color($netProfit >= 0 ? 'success' : 'danger'),
 

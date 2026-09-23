@@ -18,16 +18,30 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Cache;
-use UnitEnum;
 
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static ?string $navigationLabel = 'Kategoriyalar';
-    protected static string | UnitEnum | null $navigationGroup = 'MAĞAZA';
-    protected static ?string $modelLabel = 'Kategoriya';
-    protected static ?string $pluralModelLabel = 'Kategoriyalar';
+    public  static function getNavigationLabel(): string
+    {
+        return __('resource.category.navigationLabel');
+    }
+
+    public  static function getModelLabel(): string
+    {
+        return __('resource.category.modelLabel');
+    }
+
+    public  static function getPluralModelLabel(): string
+    {
+        return __('resource.category.pluralModelLabel');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.shop');
+    }
     protected static ?int $navigationSort = 1;
 
 

@@ -21,21 +21,30 @@ class SuppliersTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('resource.supplier.name'))
                     ->searchable(),
+
                 TextColumn::make('phone')
+                    ->label(__('resource.supplier.phone'))
                     ->searchable(),
+
                 TextColumn::make('email')
-                    ->label('Email address')
+                    ->label(__('resource.supplier.email'))
                     ->searchable(),
+
                 TextColumn::make('address')
+                    ->label(__('resource.supplier.address'))
                     ->searchable(),
+
                 IconColumn::make('status')
                     ->boolean(),
+
                 TextColumn::make('created_at')
+                    ->label(__('resource.supplier.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-/*                 TextColumn::make('updated_at')
+                /*                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -48,9 +57,9 @@ class SuppliersTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+                ViewAction::make()->iconButton(),
+                EditAction::make()->iconButton(),
+                DeleteAction::make()->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

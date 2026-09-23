@@ -25,12 +25,12 @@ class SalesTable
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('sale_number')
-                    ->label('Satış nömrəsi')
+                    ->label(__('resource.sale.number'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('items')
-                    ->label('Məhsullar')
+                    ->label(__('resource.sale.product'))
                     ->state(function ($record) {
                         $items = $record->items;
                         $shown = $items->take(4);
@@ -48,28 +48,30 @@ class SalesTable
                         return $text;
                     })
                     ->wrap(),
+
                 TextColumn::make('payments.paymentMethod.name')
-                    ->label('Ödəmə üsulu')
+                    ->label(__('resource.sale.payment'))
                     ->sortable(),
 
 
                 TextColumn::make('total')
-                    ->label('Cəmi')
-                    ->money('azn')
+                    ->label(__('resource.sale.total'))
+                    ->money(__('resource.money_icon'))
                     ->sortable(),
 
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn($state) => match ($state) {
-                        'draft' => 'Gözləmədə',
-                        'completed' => 'Tamamlanıb',
-                        'cancelled' => 'Ləğv edilib',
-                        'partial' => 'Qismən ödənilib',
-                        'unpaid' => 'Ödənilməyib',
-                        'returned'           => 'Tam qaytarılıb',
-                        'partially_returned' => 'Qismən qaytarılıb'
+                        'draft'              =>    __('resource.sale.draft'),
+                        'completed'          =>    __('resource.sale.completed'),
+                        'cancelled'          =>    __('resource.sale.cancelled'),
+                        'partial'            =>    __('resource.sale.partial'),
+                        'unpaid'             =>    __('resource.sale.unpaid'),
+                        'returned'           =>    __('resource.sale.returned'),
+                        'partially_returned' =>    __('resource.sale.partially_returned'),
                     })
+
                     ->color(fn($state) => match ($state) {
                         'draft' => 'warning',
                         'completed' => 'success',
@@ -81,36 +83,31 @@ class SalesTable
                     }),
 
                 TextColumn::make('user.name')
-                    ->label('Satışı edən')
+                    ->label(__('resource.sale.user'))
                     ->getStateUsing(fn($record) => $record->user?->name)
                     ->sortable(),
 
 
                 TextColumn::make('created_at')
-                    ->label('Yaradılma tarixi')
+                    ->label(__('resource.sale.created_at'))
                     //  ->dateTime()
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('updated_at')
-                    ->label('Yenilənmə tarixi')
-                    ->dateTime()
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+
             ])
             ->filters([])
             ->recordActions([
                 Action::make('return')
                     ->icon(Heroicon::ArrowUturnLeft)
-                    ->modalHeading('Satışdan Məhsul Qaytarılması')
-                    ->modalSubmitActionLabel('Qaytarmanı Təsdiqlə')
+                    ->modalHeading(__('resource.sale.modal_head'))
+                    ->modalSubmitActionLabel(__('resource.sale.modal_label'))
                     ->form(
                         [
                             Repeater::make('items')
-                                ->label('Qaytarılacaq Məhsullar')
+                                ->label(__('resource.sale.modal_header'))
                                 ->schema([
                                     Select::make('product_id')
-                                        ->label('Məhsul')
+                                        ->label(__('resource.sale.product'))
                                         ->options(function (Sale $record) {
                                             return $record->items()
                                                 ->with('product')
@@ -129,13 +126,14 @@ class SalesTable
                                         ->disableOptionsWhenSelectedInSiblingRepeaterItems(),
 
                                     TextInput::make('quantity')
-                                        ->label('Say')
+                                        ->label(__('resource.sale.quantity'))
                                         ->numeric()
                                         ->default(1)
                                         ->minValue(1)
                                         ->required(),
+
                                     TextInput::make('refund_amount')
-                                        ->label('Məbləğ (AZN)')
+                                        ->label(__('resource.sale.price'))
                                         ->required()
                                         ->prefix('₼')
 
@@ -145,8 +143,8 @@ class SalesTable
                                 ->defaultItems(1),
 
                             TextInput::make('reason')
-                                ->label('Qaytarılma Səbəbi')
-                                ->placeholder('Məs: Defektli məhsul, razı qalmadı və s.')
+                                ->label(__('resource.sale.reason'))
+                                ->placeholder(__('resource.sale.reason_note'))
                                 ->maxLength(255),
 
 
@@ -160,12 +158,12 @@ class SalesTable
                                 reason: $data['reason'] ?? null
                             );
                             Notification::make()
-                                ->title('Məhsul qaytarılması uğurla icra olundu')
+                                ->title(__('resource.sale.title'))
                                 ->success()
                                 ->send();
                         } catch (\Exception $e) {
                             Notification::make()
-                                ->title('Xəta baş verdi')
+                                ->title(__('resource.sale.title_error'))
                                 ->body($e->getMessage())
                                 ->danger()
                                 ->send();

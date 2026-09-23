@@ -105,7 +105,7 @@ new class extends Component {
 
         $inventory = Inventory::where('product_id', $productId)->first();
         if (!$inventory || $inventory->quantity < 0) {
-            Notification::make()->title('Bu məhsulun stokda kifayət qədər miqdarı yoxdur.')->danger()->send();
+            Notification::make()->title(__('resource.no_invebtory.error'))->danger()->send();
             return;
         }
 
@@ -113,7 +113,7 @@ new class extends Component {
             $currentQuantity = $this->cart[$productId]['quantity'];
 
             if ($currentQuantity >= $inventory->quantity) {
-                Notification::make()->title('Bu məhsulun stokda kifayət qədər miqdarı yoxdur.')->danger()->send();
+                Notification::make()->title(__('resource.no_invebtory.error'))->danger()->send();
                 return;
             }
             $this->cart[$productId]['quantity']++;
@@ -135,7 +135,7 @@ new class extends Component {
             $removedItem = $this->cart[$productId];
             unset($this->cart[$productId]);
             Notification::make()
-                ->title("{$removedItem['name']} səbətdən silindi.")
+                ->title($removedItem['name'] . ' ' . __('resource.cart.remove'))
                 ->warning()
                 ->send();
         }
@@ -199,7 +199,7 @@ new class extends Component {
 
         // Əgər nisyə borc yaranırsa və müştəri seçilməyibsə, satışı dayandırırıq
         if ($deuAmount > 0 && !$this->customer_id) {
-            Notification::make()->title('Nisyə satış üçün mütləq müştəri seçilməlidir!')->danger()->send();
+            Notification::make()->title(__('resource.credit.info'))->danger()->send();
             return;
         }
 
@@ -208,7 +208,7 @@ new class extends Component {
                 'payment_method_id' => 'required|exists:payment_methods,id',
             ],
             [
-                'payment_method_id.required' => 'Ödəniş növü seçimi vacibdir.',
+                'payment_method_id.required' => __('resource.payment_info'),
             ],
         );
 
@@ -249,7 +249,7 @@ new class extends Component {
             $this->customer_search = '';
 
             // 4. Uğurlu bildiriş göndərilir
-            Notification::make()->title('Satış uğurla tamamlandı.')->success()->send();
+            Notification::make()->title(__('resource.sale_success'))->success()->send();
 
             // 5. Çap pəncərəsi açılır
             $printUrl = route('sales.print', ['sale' => $sale->id]);
@@ -258,7 +258,7 @@ new class extends Component {
             //     $this->js('window.dispatchEvent(new CustomEvent("print-receipt", { detail: { url: "' . route('sales.print', ['sale' => $sale->id]) . '" } }))');
         } catch (\Exception $e) {
             Notification::make()
-                ->title('Satış zamanı xəta baş verdi: ' . $e->getMessage())
+                ->title(__('resource.sale_errors') . $e->getMessage())
                 ->danger()
                 ->send();
             return;
@@ -281,10 +281,10 @@ new class extends Component {
                 'new_customer_phone' => ['nullable', 'regex:/^[0-9\s\-]+$/'],
             ],
             [
-                'new_customer_name.required' => 'Müştərinin adı mütləq daxil edilməlidir.',
-                'new_customer_name.max'      => 'Ad maksimum 255 simvol ola bilər.',
-                'new_customer_address.max' =>   'Ünvan maksimum 255 simvol ola bilər.',
-                'new_customer_phone.regex' =>   'Telefon nömrəsi yalnız rəqəmlərdən, boşluq və "-" işarəsindən ibarət ola bilər.',
+                'new_customer_name.required' => __('resource.name_required'),
+                'new_customer_name.max' => __('resource.name_max'),
+                'new_customer_address.max' => __('resource.address_max'),
+                'new_customer_phone.regex' => __('resource.phone_regex'),
             ],
         );
 
@@ -300,9 +300,9 @@ new class extends Component {
             $this->new_customer_address = '';
 
             $this->dispatch('close-customer-modal');
-            session()->flash('success', 'Yeni müştəri uğurla əlavə edildi.');
+            session()->flash('success', __('resource.customer_success'));
         } catch (\Exception $e) {
-            session()->flash('error', 'Xəta baş verdi: ' . $e->getMessage());
+            session()->flash('error', __('resource.customer_error') . $e->getMessage());
         }
     }
 };
@@ -318,9 +318,9 @@ new class extends Component {
 
                 <div class="border-b border-zinc-200 pb-4">
                     <div class="flex items-center justify-between">
-                        <h2 class="text-2xl font-bold">Səbət</h2>
+                        <h2 class="text-2xl font-bold">{{ __('resource.cart') }}</h2>
                         <span class="rounded-full bg-primary-100 px-3 py-1 text-xs font-medium">
-                            {{ count($this->cart) }} məhsul
+                            {{ count($this->cart) }} {{ __('resource.product') }}
                         </span>
                         <div class="flex justify-between pt-3 text-xl font-bold">
                             <span class="font-bold text-red-600 text-4xl"> ₼{{ number_format($this->total, 2) }}</span>
@@ -356,7 +356,7 @@ new class extends Component {
                             </div>
                         </div>
                     @empty
-                        <div class="text-center text-red-500 py-10">Səbət boşdur</div>
+                        <div class="text-center text-red-500 py-10">{{ __('resource.cart_empty') }} </div>
                     @endforelse
                 </div>
 
@@ -366,11 +366,11 @@ new class extends Component {
                     <!-- MÜŞTƏRİ SEÇİMİ VƏ SÜRƏTLİ ƏLAVƏ ET DÜYMƏSİ -->
                     <div class="space-y-1">
                         <div class="flex items-center justify-between gap-2">
-                            <span class="text-sm font-medium">Müştəri</span>
+                            <span class="text-sm font-medium"> {{ __('resource.customer') }}</span>
                             <div class="relative flex-1">
 
                                 <input type="text" wire:model.live.debounce.300ms="customer_search"
-                                    placeholder="Müştəri axtarın..."
+                                    placeholder="{{ __('resource.search') }}"
                                     class="w-full border-accent-foreground border-0 rounded px-3 py-2 ">
 
                                 @if (count($customerList))
@@ -385,7 +385,7 @@ new class extends Component {
                                                 {{ $customer->name }}
 
                                                 @if ($customer->phone)
-                                                    ( {{ $customer->phone }} )
+                                                    ({{ $customer->phone }})
                                                 @endif
 
                                                 @if ($customer->address)
@@ -402,7 +402,7 @@ new class extends Component {
 
                             <flux:button size="sm" variant="subtle" icon="plus" class="text-xs"
                                 x-on:click="openModal = true">
-                                Yeni Müştəri
+                                {{ __('resource.new_customer') }}
                             </flux:button>
                         </div>
 
@@ -411,20 +411,20 @@ new class extends Component {
                     <hr class="border-zinc-200 my-2" />
 
                     <div class="flex justify-between">
-                        <span>Cəmi</span>
+                        <span> {{ __('resource.total') }}</span>
                         <span>₼{{ number_format($this->subtotal, 2) }}</span>
                     </div>
 
                     <div class="flex justify-between text-red-500">
-                        <span>Endirim</span>
+                        <span> {{ __('resource.discount') }} </span>
                         <input type="number" min="0" step="0.01"
                             wire:model.live.debounce.500ms="discount_amount"
                             class="w-24 border-0 bg-transparent text-right focus:ring-0">
                     </div>
 
                     <div class="flex justify-between">
-                        <span>Ödəniş növü</span>
-                        <flux:select wire:model="payment_method_id" placeholder="Ödəniş növü seçin" class="w-48">
+                        <span> {{ __('resource.payment_method') }} </span>
+                        <flux:select wire:model="payment_method_id" placeholder="  {{   __('resource.payment_method') }}" class="w-48">
                             @foreach ($this->paymentMethods as $method)
                                 <flux:select.option :value="$method->id">{{ $method->name }}</flux:select.option>
                             @endforeach
@@ -435,25 +435,25 @@ new class extends Component {
                     </div>
 
                     <div class="flex justify-between border-t pt-3 text-xl font-bold">
-                        <span>Yekun</span>
+                        <span> {{ __('resource.grand_total') }} </span>
                         <span class="font-bold text-red-600 text-2xl"> ₼{{ number_format($this->total, 2) }}</span>
                     </div>
 
                     <div class="flex justify-between">
-                        <span>Qaytarılan</span>
+                        <span>{{ __('resource.change') }}</span>
                         <span>₼{{ number_format($this->change, 2) }}</span>
                     </div>
 
                     <div class="flex justify-between">
-                        <span>Qalıq</span>
+                        <span>{{ __('resource.amount_due') }}</span>
                         <span>₼{{ number_format($this->deuAmount(), 2) }}</span>
                     </div>
 
-                    <flux:input placeholder="Ödənilən məbləğ" wire:model.live.debounce.500ms="paid_amount"
-                        type="number" step="0.01" min="0" />
+                    <flux:input placeholder="  {{ __('resource.paid_amount') }}"
+                        wire:model.live.debounce.500ms="paid_amount" type="number" step="0.01" min="0" />
 
                     <flux:button wire:click="checkout" wire:loading.attr="disabled" variant="primary" class="w-full">
-                        Satışı Tamamla
+                        {{ __('resource.finish_sale') }}
                     </flux:button>
                 </div>
 
@@ -462,8 +462,8 @@ new class extends Component {
             <!-- PRODUCTS -->
             <flux:card class="flex h-full flex-col">
                 <div class="space-y-4">
-                    <h2 class="text-2xl font-bold">Məhsullar</h2>
-                    <flux:input autofocus wire:model.live="search" placeholder="Məhsul axtar..." />
+                    <h2 class="text-2xl font-bold">{{ __('resource.products') }}</h2>
+                    <flux:input autofocus wire:model.live="search" placeholder="{{ __('resource.search') }}..." />
                     @if (session()->has('error'))
                         <div
                             class="mt-2 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-lg shadow-md">
@@ -488,7 +488,7 @@ new class extends Component {
                                     <div class="font-normal truncate text-base">{{ $product->name }}</div>
                                     <div class="text-xs text-zinc-500">{{ $product->brand?->name }}</div>
                                     <div class="mt-1 text-xs text-zinc-500">
-                                        Stok: {{ $product->inventory ? $product->inventory->quantity : 'Yoxdur' }}
+                                        Stok: {{ $product->inventory ? $product->inventory->quantity :   {{   __('resource.not') }} }}
                                     </div>
                                     <div class="text-xs text-zinc-500">{{ $product->sku }}</div>
                                     <div class="mt-1 text-xm font-bold">₼ {{ number_format($product->sale_price, 2) }}
@@ -496,7 +496,8 @@ new class extends Component {
                                 </div>
                             </div>
                         @empty
-                            <div class="text-center py-10 text-red-500 col-span-3">Məhsul tapılmadı</div>
+                            <div class="text-center py-10 text-red-500 col-span-3">{{ __('resource.product_no') }}
+                            </div>
                         @endforelse
                     </div>
                 </div>
@@ -509,32 +510,33 @@ new class extends Component {
     <div x-show="openModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" x-cloak>
         <div
             class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-xl w-full max-w-[450px] space-y-6 border border-zinc-200 dark:border-zinc-800">
-            <div>
-                <h3 class="text-lg font-bold">Yeni Müştəri Əlavə Et</h3>
-                <p class="text-sm text-zinc-500">Səhifədən ayrılmadan müştərini sürətlə qeydiyyata alın.</p>
-            </div>
+
 
             <div class="space-y-4">
-                <flux:input label="Ad və Soyad *" wire:model="new_customer_name" placeholder="Məs. Əli Məmmədov" />
+                <flux:input label="{{ __('resource.customer.name') }}*" wire:model="new_customer_name"
+                    placeholder="{{ __('resource.customer.name') }}" />
                 @error('new_customer_name')
                     <span class="text-red-500 text-xs">{{ $message }}</span>
                 @enderror
 
-                <flux:input label="Telefon Nömrəsi" wire:model="new_customer_phone"
-                    placeholder="Məs. +994 50 123 45 67" />
+                <flux:input label="{{ __('resource.customer.phone') }}" wire:model="new_customer_phone"
+                    placeholder=" +994 50 123 45 67" />
                 @error('new_customer_phone')
                     <span class="text-red-500 text-xs">{{ $message }}</span>
                 @enderror
 
-                <flux:input label="Ünvan" wire:model="new_customer_address" placeholder="Məs. Bakı, Nizami küçəsi 10" />
+                <flux:input label="{{ __('resource.customer.address') }}" wire:model="new_customer_address"
+                    placeholder="{{ __('resource.customer.address') }}" />
                 @error('new_customer_address')
                     <span class="text-red-500 text-xs">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="flex justify-end gap-2 border-t pt-4">
-                <flux:button variant="ghost" x-on:click="openModal = false">Ləğv et</flux:button>
-                <flux:button wire:click="quickCreateCustomer" variant="primary">Yadda Saxla</flux:button>
+                <flux:button variant="ghost" x-on:click="openModal = false"> {{ __('resource.cancel') }}
+                </flux:button>
+                <flux:button wire:click="quickCreateCustomer" variant="primary">{{ __('resource.save') }}
+                </flux:button>
             </div>
         </div>
     </div>

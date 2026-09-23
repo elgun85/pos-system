@@ -12,14 +12,24 @@ class POS extends Page
 {
     protected Width|string|null $maxContentWidth = Width::Full;
 
-   // protected static bool $shouldRegisterNavigation = false;
+    // protected static bool $shouldRegisterNavigation = false;
 
-    protected static ?string $navigationLabel = 'Kassa / POS';
-    protected static string | UnitEnum | null $navigationGroup = 'SATIŞ';
-    protected static ?int $navigationSort = 1; 
+    public  static function getNavigationLabel(): string
+    {
+        return __('resource.sale_pos.navigationLabel');
+    }
 
-    //   protected ?string $heading = 'Kassa Satışı';
-    protected static ?string $title = 'POS';
+    public function getTitle(): string
+    {
+        return __('resource.sale_pos.pluralModelLabel');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.sale');
+    }
+    protected static ?int $navigationSort = 1;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::ShoppingCart;
 
 

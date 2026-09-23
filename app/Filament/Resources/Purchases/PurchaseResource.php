@@ -14,18 +14,30 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Cache;
-use UnitEnum;
 
 class PurchaseResource extends Resource
 {
     protected static ?string $model = Purchase::class;
 
-    protected static ?string $navigationLabel = 'Məhsul Alışları';
-    protected static ?string $modelLabel = 'Məhsul Alışı';
-    protected static ?string $pluralModelLabel = 'Məhsul Alışları';
+    public  static function getNavigationLabel(): string
+    {
+        return __('resource.purchase.navigationLabel');
+    }
 
+    public  static function getModelLabel(): string
+    {
+        return __('resource.purchase.modelLabel');
+    }
 
-    protected static string | UnitEnum | null $navigationGroup = 'TƏCHİZAT';
+    public  static function getPluralModelLabel(): string
+    {
+        return __('resource.purchase.pluralModelLabel');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.supplier');
+    }
     protected static ?int $navigationSort = 4;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShoppingBag;
@@ -46,9 +58,10 @@ class PurchaseResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         return Cache::remember(
-            'purchases',now()->addMinutes(10),
+            'purchases',
+            now()->addMinutes(10),
             fn() =>  static::getModel()::where('status', true)
-            ->count()
+                ->count()
 
         );
     }

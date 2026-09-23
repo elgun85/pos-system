@@ -14,10 +14,10 @@ class DamagedProductForm
         return $schema
             ->components([
 
-            
+
 
                 Select::make('product_id')
-                    ->label('Məhsul')
+                    ->label(__('resource.product.name'))
                     ->relationship('product', 'name')
                     ->searchable()
                     ->preload()
@@ -25,14 +25,14 @@ class DamagedProductForm
 
 
                 TextInput::make('quantity')
-                    ->label('Say')
+                    ->label(__('resource.purchase.quantity'))
                     ->numeric()
                     ->default(1)
                     ->minValue(0.01)
                     ->required(),
 
                 Textarea::make('notes')
-                    ->label('Qeyd')
+                    ->label(__('resource.customer_deb.note'))
                     ->nullable()
                     ->maxLength(300)
                     ->columnSpanFull(),

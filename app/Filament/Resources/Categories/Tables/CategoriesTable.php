@@ -21,24 +21,27 @@ class CategoriesTable
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('name')
-                    ->label('Kateqoriya Adı')
+                    ->label(__('resource.category.name'))
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('parent.name')
-                    ->label('Üst Kateqoriya')
+                    ->label(__('resource.category.parent.name'))
                     ->numeric()
                     ->sortable(),
                 IconColumn::make('status')
                     ->boolean(),
                 TextColumn::make('created_at')
+                    ->label(__('resource.category.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label(__('resource.category.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deleted_at')
+                    ->label(__('resource.category.deleted_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -48,8 +51,8 @@ class CategoriesTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()->iconButton(),
+                DeleteAction::make()->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -27,24 +27,24 @@ class CustomerDebtsTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label('Müştəri')
+                    ->label(__('resource.customer_deb.name'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('total_debt')
-                    ->label('Borc')
-                    ->money('AZN', true)
+                    ->label(__('resource.customer_deb.total'))
+                    ->money(__('resource.money_icon'), true)
                     ->badge()
                     ->color('danger')
                     ->sortable(),
 
                 TextColumn::make('phone')
-                    ->label('Telefon')
+                    ->label(__('resource.customer_deb.phone'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('address')
-                    ->label('Ünvan')
+                    ->label(__('resource.customer_deb.address'))
                     ->searchable()
                     ->sortable(),
 
@@ -54,12 +54,12 @@ class CustomerDebtsTable
             ])
             ->recordActions([
                 Action::make('quick_payment')
-                    ->label('Ödəniş')
+                    ->label(__('resource.customer_deb.pay_head'))
                     ->icon('heroicon-o-banknotes')
                     ->color('success')
                     ->form([
                         TextInput::make('amount')
-                            ->label('Ödənilən məbləğ')
+                            ->label(__('resource.customer_deb.payment'))
                             ->numeric()
                             ->step(0.01)
                             ->required()
@@ -68,7 +68,7 @@ class CustomerDebtsTable
                             ->maxValue(fn($record) => round($record->total_debt, 2)),
 
                         Select::make('payment_method_id')
-                            ->label('Ödəniş üsulu')
+                            ->label(__('resource.customer_deb.pay_met'))
                             ->options(
                                 PaymentMethod::where('status', true)
                                     ->pluck('name', 'id')
@@ -79,7 +79,7 @@ class CustomerDebtsTable
                             ->required(),
 
                         Textarea::make('notes')
-                            ->label('Qeyd'),
+                            ->label(__('resource.customer_deb.note')),
                     ])
                     ->action(function ($record, array $data) {
                         DB::transaction(function () use ($record, $data) {
@@ -94,7 +94,7 @@ class CustomerDebtsTable
                         });
 
                         Notification::make()
-                            ->title('Ödəniş qəbul edildi.')
+                            ->title(__('resource.customer_deb.note_det'))
                             ->success()
                             ->send();
 

@@ -14,7 +14,7 @@ class BrandForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->label('Brand Adı')
+                    ->label(__('resource.brand.name'))
                     ->required()
                     ->placeholder('Brand adını daxil edin')
                     ->live()
@@ -23,7 +23,7 @@ class BrandForm
                     }),
 
                 FileUpload::make('logo')
-                    ->label('Logo və ya şəkil')
+                    ->label(__('resource.brand.logo'))
                     ->image()
                     ->disk('public')
                     ->directory('brands')

@@ -13,17 +13,31 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use UnitEnum;
 
 class InventoryResource extends Resource
 {
-    protected static ?string $model = Inventory::class ;
-    protected static ?string $navigationLabel = 'Məhsul qalığı';
-    protected static string | UnitEnum | null $navigationGroup = 'MAĞAZA';
-    protected static ?string $modelLabel = 'Stok';
-    protected static ?string $pluralModelLabel = 'Stoklar';
+    protected static ?string $model = Inventory::class;
+    public  static function getNavigationLabel(): string
+    {
+        return __('resource.inventory.navigationLabel');
+    }
+
+    public  static function getModelLabel(): string
+    {
+        return __('resource.inventory.modelLabel');
+    }
+
+    public  static function getPluralModelLabel(): string
+    {
+        return __('resource.inventory.pluralModelLabel');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.shop');
+    }
     protected static ?int $navigationSort = 5;
-    
+
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArchiveBox;
 

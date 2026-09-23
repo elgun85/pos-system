@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Customers\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
@@ -20,42 +21,34 @@ class CustomersTable
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('resource.customer.name'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('phone')
+                    ->label(__('resource.customer.phone'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('address')
+                    ->label(__('resource.customer.address'))
                     ->searchable()
                     ->sortable(),
-                /*                 TextColumn::make('email')
-                    ->label('Email address')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('points')
-                    ->numeric()
-                    ->sortable(), */
+
                 IconColumn::make('status')
                     ->boolean(),
                 TextColumn::make('created_at')
+                    ->label(__('resource.customer.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                /*                 TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true), */
+
             ])
             ->filters([
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()->iconButton(),
+                DeleteAction::make()->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

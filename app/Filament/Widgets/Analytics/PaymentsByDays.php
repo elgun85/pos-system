@@ -9,8 +9,11 @@ use Filament\Widgets\Concerns\InteractsWithPageFilters;
 class PaymentsByDays extends ChartWidget
 {
     use InteractsWithPageFilters;
+    public function getHeading(): ?string
+    {
+        return __('resource.payments');
+    }
     protected static bool $isDiscovered = false;
-    protected ?string $heading = 'Günlər üzrə  Ödənişlər';
     protected static ?int $sort = 9;
 
 
@@ -24,7 +27,7 @@ class PaymentsByDays extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Blog posts created',
+                    'label' => __('resource.payments'),
                     'data' => $payments
                         ->pluck('total')
                         ->map(fn($value) => (float) $value)

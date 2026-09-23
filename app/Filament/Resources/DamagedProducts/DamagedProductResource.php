@@ -8,22 +8,33 @@ use App\Filament\Resources\DamagedProducts\Pages\ListDamagedProducts;
 use App\Filament\Resources\DamagedProducts\Schemas\DamagedProductForm;
 use App\Filament\Resources\DamagedProducts\Tables\DamagedProductsTable;
 use App\Models\Damage;
-use App\Services\DamageService;
-use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Model;
-use UnitEnum;
 
 class DamagedProductResource extends Resource
 {
     protected static ?string $model = Damage::class;
-    protected static string | UnitEnum | null $navigationGroup = 'ANBAR HESABATI';
-    protected static ?string $navigationLabel = 'Xarab olmuş məhsullar';
-    protected static ?string $pluralModelLabel = 'Xarab olmuş məhsullar';
-    protected static ?string $modelLabel = ' Xarab olmuş məhsul';
+    public  static function getNavigationLabel(): string
+    {
+        return __('resource.damage.navigationLabel');
+    }
+
+    public  static function getModelLabel(): string
+    {
+        return __('resource.damage.modelLabel');
+    }
+
+    public  static function getPluralModelLabel(): string
+    {
+        return __('resource.damage.pluralModelLabel');
+    }
+
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.inventory');
+    }
 
 
 

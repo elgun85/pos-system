@@ -13,15 +13,33 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use UnitEnum;
 
 class ExpenseResource extends Resource
 {
     protected static ?string $model = Expense::class;
-    protected static string | UnitEnum | null $navigationGroup = 'ANALİTİKA';
-    protected static ?string $navigationLabel = 'Daxili Xərclər';
-    protected static ?string $pluralModelLabel = 'Daxili Xərclər '; 
-    protected static ?string $modelLabel = ' Daxili Xərclər ';
+
+    public  static function getNavigationLabel(): string
+    {
+        return __('resource.expenses.navigationLabel');
+    }
+
+    public  static function getModelLabel(): string
+    {
+        return __('resource.expenses.modelLabel');
+    }
+
+    public  static function getPluralModelLabel(): string
+    {
+        return __('resource.expenses.pluralModelLabel');
+    }
+
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.analyse');
+    }
+
+
 
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;

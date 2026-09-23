@@ -17,16 +17,30 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use UnitEnum;
 
 class SupplierResource extends Resource
 {
     protected static ?string $model = Supplier::class;
 
-    protected static ?string $navigationLabel = 'Təchizatçılar';
-    protected static ?string $modelLabel = 'Təchizatçı';
-    protected static ?string $pluralModelLabel = 'Təchizatçılar';
-    protected static string | UnitEnum | null $navigationGroup = 'TƏCHİZAT';
+    public  static function getNavigationLabel(): string
+    {
+        return __('resource.supplier.navigationLabel');
+    }
+
+    public  static function getModelLabel(): string
+    {
+        return __('resource.supplier.modelLabel');
+    }
+
+    public  static function getPluralModelLabel(): string
+    {
+        return __('resource.supplier.pluralModelLabel');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.supplier');
+    }
 
     protected static ?int $navigationSort = 1;
 

@@ -15,8 +15,7 @@ class PaymentMethodForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->label('Ödəniş üsulu')
-                    ->placeholder('Ödəniş üsulu')
+                    ->label(__('resource.payment.name'))
                     ->live()
                     ->afterStateUpdated(function ($state, callable $set) {
                         $set('name', mb_convert_case($state, MB_CASE_TITLE, 'UTF-8'));
@@ -24,7 +23,7 @@ class PaymentMethodForm
                     ->required(),
 
                 FileUpload::make('icon')
-                    ->label('İkon')
+                    ->label(__('resource.payment.icon'))
                     ->image()
                     ->disk('public')
                     ->directory('payment-methods')
@@ -40,13 +39,12 @@ class PaymentMethodForm
                     ]),
 
                 Textarea::make('description')
-                    ->label('Description')
-                    ->placeholder('100 simvola qədər təsvir daxil edin')
+                    ->label(__('resource.payment.description'))
+                    ->placeholder(__('resource.payment.description.placeholder'))
                     ->maxLength(100),
 
 
                 Toggle::make('status')
-                    ->label('Vəziyyət')
                     ->default(true),
             ]);
     }

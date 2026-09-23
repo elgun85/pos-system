@@ -13,8 +13,7 @@ class CustomerForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->label('Ad')
-                    ->placeholder('Adı daxil edin')
+                    ->label(__('resource.customer.name'))
                     ->live()
                     ->afterStateUpdated(function ($state, callable $set) {
                         $set('name', mb_convert_case($state, MB_CASE_TITLE, 'UTF-8'));
@@ -22,20 +21,13 @@ class CustomerForm
                     ->required(),
 
                 TextInput::make('phone')
-                    ->label('Telefon nömrəsi')
+                    ->label(__('resource.customer.phone'))
                     ->placeholder('+994 50 123 45 67')
                     ->tel(),
 
                 TextInput::make('address')
-                    ->label('Ünvan')
-                    ->placeholder('Ünvanı daxil edin'),
-                /*              TextInput::make('email')
-                    ->label('Email address')
-                    ->email(), 
-             TextInput::make('points')
-                    ->required()
-                    ->numeric()
-                    ->default(0), */
+                    ->label(__('resource.customer.address')),
+
                 Toggle::make('status')
                     ->default(true),
             ]);

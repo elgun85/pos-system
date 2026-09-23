@@ -23,11 +23,23 @@ class SaleResource extends Resource
 {
     protected static ?string $model = Sale::class;
 
-    protected static ?string $navigationLabel = 'Satışlar';
-    protected static ?string $modelLabel = 'Satış';
-    protected static ?string $pluralModelLabel = 'Satışlar';
-    
-    protected static string | UnitEnum | null $navigationGroup = 'SATIŞ';
+    public  static function getNavigationLabel(): string
+    {
+        return __('resource.sale.navigationLabel');
+    }
+
+
+
+    public  static function getPluralModelLabel(): string
+    {
+        return __('resource.sale.pluralModelLabel');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.sale');
+    }
+
 
     protected static ?int $navigationSort = 1;
 

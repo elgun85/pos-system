@@ -14,22 +14,26 @@ class SupplierInfolist
         return $schema
             ->components([
                 TextEntry::make('name')
-                    ->label('Təchizatçının adı'),
+                    ->label(__('resource.supplier.name')),
+
                 TextEntry::make('phone')
-                    ->label('Telefon nömrəsi')
+                    ->label(__('resource.supplier.phone'))
                     ->placeholder('-'),
+
                 TextEntry::make('email')
-                    ->label('Email address')
+                    ->label(__('resource.supplier.email'))
                     ->placeholder('-'),
+
                 TextEntry::make('address')
-                    ->label('Ünvan')
+                    ->label(__('resource.supplier.address'))
                     ->placeholder('-'),
+                    
                 IconEntry::make('status')
                     ->boolean(),
 
                 TextEntry::make('deleted_at')
                     ->dateTime()
-                    ->visible(fn (Supplier $record): bool => $record->trashed()),
+                    ->visible(fn(Supplier $record): bool => $record->trashed()),
             ]);
     }
 }

@@ -14,7 +14,7 @@ class InventoryForm
             ->components([
                 Select::make('product_id')
                     ->relationship('product', 'name')
-                    ->label('Məhsul')
+                    ->label(__('resource.product.name'))
                     ->searchable()
                     ->preload()
 
@@ -22,8 +22,8 @@ class InventoryForm
                     ->required(),
                 TextInput::make('quantity')
                     ->required()
-                    ->label('Miqdar')
-                    ->placeholder('Miqdarı daxil edin')
+                    ->label(__('resource.inventory.quantity'))
+                    ->placeholder(__('resource.inventory.quantity.plasholder'))
                     ->numeric(),
             ]);
     }

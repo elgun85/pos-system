@@ -17,11 +17,17 @@ class Dashboard extends BaseDashboard
 {
     use HasFiltersForm;
 
-    
-    protected static ?string $navigationLabel = 'Dashboard';
-     //   protected static ?string $modelLabel = '  ';
 
-    protected static string | UnitEnum | null $navigationGroup = 'ANALİTİKA';
+    public function getTitle(): string
+    {
+        return __('resource.dashboard.pluralModelLabel');
+    }
+    //   protected static ?string $modelLabel = '  ';
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.analyse');
+    }
 
     public function filtersForm(Schema $schema): Schema
     {
@@ -40,12 +46,12 @@ class Dashboard extends BaseDashboard
 
     public function getWidgets(): array
     {
-        return[
+        return [
 
-        SalesStatsWidget::class,
-        CashStatsWidget::class,
-        DebtStatsWidget::class,
-        
+            SalesStatsWidget::class,
+            CashStatsWidget::class,
+            DebtStatsWidget::class,
+
         ];
     }
 }

@@ -5,12 +5,17 @@ namespace App\Filament\Widgets\Analytics;
 use App\Services\DashboardService;
 use Filament\Widgets\ChartWidget;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
+use Override;
 
 class SalesChartWidget extends ChartWidget
 {
     use InteractsWithPageFilters;
 
-    protected ?string $heading = 'Satış statistikaları';
+   #[Override]
+   public function getHeading(): ?string
+   {
+    return __('resource.salesChartHeader');
+   }
     protected static ?int $sort = 3;
 
 
@@ -58,10 +63,10 @@ class SalesChartWidget extends ChartWidget
 
             'labels' =>
             [
-                'Ümumi satiş',
-                'Tam ödənilmiş satış',
-                'Hissəli satış',
-                'Nisyə satışş',
+                __('resource.allSales'),
+                __('resource.completedSales'),
+                __('resource.partialSales'),
+                __('resource.creditSales'),
 
 
             ]

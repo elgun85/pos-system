@@ -25,46 +25,46 @@ class ProductsTable
 
             ->columns([
                 TextColumn::make('sku')
-                    ->label('Barkod')
+                    ->label(__('resource.product.sku'))
                     ->searchable()
                     ->sortable(),
+
                 TextColumn::make('name')
-                    ->limit(20)
+                    ->label(__('resource.product.name'))
+                    ->limit(25)
                     ->sortable()
                     ->searchable(),
 
 
                 ImageColumn::make('image')
-                    ->label('Şəkil')
+                    ->label(__('resource.product.image'))
                     ->disk('public')
                     ->circular()
                     ->url(fn($record) => $record->image ? asset('storage/' . $record->image) : null)
                     ->openUrlInNewTab()
                     ->size(50),
+
                 TextColumn::make('category.name')
-                    ->label('Kateqoriya')
+                    ->label(__('resource.product.category.name'))
                     ->limit(15)
                     ->sortable(),
+
                 TextColumn::make('brand.name')
-                    ->label('Brend')
+                    ->label(__('resource.product.brand.name'))
                     ->limit(15)
                     ->sortable(),
 
+                TextColumn::make('cost_price')
+                    ->label(__('resource.product.cost_price'))
+                    ->sortable(),
 
-
-                /*                 TextColumn::make('barcode')
-                    ->label('Barkod')
-                    ->searchable(), */
-                          TextColumn::make('cost_price')
-                    ->label('Alış Qiyməti')
-                    ->sortable(), 
                 TextColumn::make('sale_price')
-                    ->label('Satış Qiyməti')
+                    ->label(__('resource.product.sale_price'))
                     ->color('success')
                     ->sortable(),
 
                 TextColumn::make('inventory.quantity')
-                    ->label('Stok Miqdarı')
+                    ->label(__('resource.product.inventory.quantity'))
                     ->badge()
                     ->color(fn($state) => match (true) {
 
@@ -76,31 +76,28 @@ class ProductsTable
                     })
                     ->numeric()
                     ->sortable(),
-                /*                 TextColumn::make('supplier.name')
-                    ->label('Təchizatçı')
-                    ->limit(15)
-                    ->sortable(), */
+
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge(),
 
                 ToggleColumn::make('is_favorite')
-                    ->label('Sevimli Məhsul')
+                    ->label(__('resource.product.fovorite'))
                     ->onIcon('heroicon-s-star')
                     ->sortable(),
 
                 TextColumn::make('created_at')
-                    ->label('Yaradılma Tarixi')
+                    ->label(__('resource.product.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->label('Yenilənmə Tarixi')
+                    ->label(__('resource.product.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deleted_at')
-                    ->label('Silinmə Tarixi')
+                    ->label(__('resource.product.deleted_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -109,9 +106,9 @@ class ProductsTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+                ViewAction::make()->iconButton(),
+                EditAction::make()->iconButton(),
+                DeleteAction::make()->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

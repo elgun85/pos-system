@@ -11,7 +11,12 @@ class DebtStatsWidget extends StatsOverviewWidget
 {
     use InteractsWithPageFilters;
 
-    protected ?string $heading = 'Borclar və ödənişlər';
+
+    protected function getHeading(): ?string
+    {
+        return __('resource.debt_header');
+    }
+
     protected static ?int $sort = 40;
 
 
@@ -29,23 +34,23 @@ class DebtStatsWidget extends StatsOverviewWidget
         $currentDebt = $dashboardService->currentDebt();
         return [
 
-            Stat::make('Hissəli satış borcu', number_format($partialDebt, 2) . ' AZN')
-                ->description('Hissəli satışlardan qalan gözlənilən məbləğ')
+            Stat::make(__('resource.partialDebt'), number_format($partialDebt, 2) .   __('resource.money'))
+                ->description(__('resource.partialDebtDesc'))
                 ->descriptionIcon('heroicon-m-clock')
                 ->color('warning'),
 
-            Stat::make('Tam nisyə borcu', number_format($creditDebt, 2) . ' AZN')
-                ->description('Tam nisyə verilən malların ümumi məbləği')
+            Stat::make(__('resource.creditDebt'), number_format($creditDebt, 2) .   __('resource.money'))
+                ->description(__('resource.creditDebtDesc'))
                 ->descriptionIcon('heroicon-m-exclamation-triangle')
                 ->color('warning'),
 
-            Stat::make('Borclardan daxil olan ödəniş', number_format($debtPayments, 2) . ' AZN')
-                ->description('Müştərilərin ödədikləri borc məbləğləri')
+            Stat::make(__('resource.debtPayments'), number_format($debtPayments, 2) .   __('resource.money'))
+                ->description(__('resource.debtPaymentsDesc'))
                 ->descriptionIcon('heroicon-m-arrow-down-circle')
                 ->color('success'),
 
-            Stat::make('Cari qalıq borc', number_format($currentDebt, 2) . ' AZN')
-                ->description('Müştərilərin mağazaya olan ümumi aktiv borcu')
+            Stat::make(__('resource.currentDebt'), number_format($currentDebt, 2) .   __('resource.money'))
+                ->description(__('resource.currentDebtDesc'))
                 ->descriptionIcon('heroicon-m-scale')
                 ->color('danger'),
 

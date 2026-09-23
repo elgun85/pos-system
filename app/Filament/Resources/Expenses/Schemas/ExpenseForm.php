@@ -23,7 +23,7 @@ class ExpenseForm
                             ->schema([
                                 Select::make('expense_category_id')
                                     ->relationship('expenseCategory', 'name')
-                                    ->label('Kateqoriya')
+                                    ->label(__('resource.category.name'))
                                     ->preload()
                                     ->searchable()
                                     ->native(false)
@@ -36,14 +36,14 @@ class ExpenseForm
                                     ]),
 
                                 TextInput::make('amount')
-                                    ->label('Məbləğ')
+                                    ->label(__('resource.sale.price'))
                                     ->numeric()
                                     ->required()
                                     ->prefix('₼')
                                     ->minValue(0.01),
 
                                 Select::make('payment_method_id')
-                                    ->label('Ödəniş növü')
+                                    ->label(__('resource.payment_method'))
                                     ->required()
                                     ->relationship(
                                         'paymentMethod',
@@ -58,7 +58,7 @@ class ExpenseForm
 
 
                         Textarea::make('notes')
-                            ->label('Açiqlama')
+                            ->label(__('resource.customer_deb.note'))
                             ->maxLength(300),
                     ])->secondary()->columnSpan(2)->columnStart(1),
             ]);

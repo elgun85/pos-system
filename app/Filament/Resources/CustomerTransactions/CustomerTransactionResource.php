@@ -21,9 +21,25 @@ class CustomerTransactionResource extends Resource
 {
     protected static ?string $model = CustomerTransaction::class;
 
-    protected static ?string $navigationLabel = 'Borc Əməliyyatları';
-    protected static ?string $pluralModelLabel = 'Borc əməliyyatları';
-    protected static string | UnitEnum | null $navigationGroup = 'MÜŞTƏRİLƏR';
+ public  static function getNavigationLabel(): string
+    {
+        return __('resource.customer_tran.navigationLabel');
+    }
+
+    public  static function getModelLabel(): string
+    {
+        return __('resource.customer_tran.modelLabel');
+    }
+
+    public  static function getPluralModelLabel(): string
+    {
+        return __('resource.customer_tran.pluralModelLabel');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.customer');
+    }
     protected static ?int $navigationSort = 7;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::ClipboardDocumentList;
@@ -54,9 +70,9 @@ class CustomerTransactionResource extends Resource
     {
         return [
             'index' => ListCustomerTransactions::route('/'),
-            'create' => CreateCustomerTransaction::route('/create'),
-            'view' => ViewCustomerTransaction::route('/{record}'),
-            'edit' => EditCustomerTransaction::route('/{record}/edit'),
+            //'create' => CreateCustomerTransaction::route('/create'),
+            //'view' => ViewCustomerTransaction::route('/{record}'),
+            //'edit' => EditCustomerTransaction::route('/{record}/edit'),
         ];
     }
 }

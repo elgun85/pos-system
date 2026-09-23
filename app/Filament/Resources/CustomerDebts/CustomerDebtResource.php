@@ -23,11 +23,27 @@ use UnitEnum;
 class CustomerDebtResource extends Resource
 {
     protected static ?string $model = Customer::class;
+    public  static function getNavigationLabel(): string
+    {
+        return __('resource.customer_deb.navigationLabel');
+    }
 
-    protected static ?string $navigationLabel = 'Borclu Müştərilər';
-    protected static ?string $modelLabel = 'Borclu Müştəri';
-    protected static ?string $pluralModelLabel = 'Borclu Müştərilər';
-    protected static string | UnitEnum | null $navigationGroup = 'MÜŞTƏRİLƏR';
+    public  static function getModelLabel(): string
+    {
+        return __('resource.customer_deb.modelLabel');
+    }
+
+    public  static function getPluralModelLabel(): string
+    {
+        return __('resource.customer_deb.pluralModelLabel');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('resource.navigationGroup.customer');
+    }
+
+
     protected static ?int $navigationSort = 6;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;

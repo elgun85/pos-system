@@ -16,7 +16,7 @@ class CustomerTransactionsTable
         return $table
             ->columns([
                 TextColumn::make('customer.name')
-                    ->label('Müştəri')
+                    ->label(__('resource.customer_deb.name'))
                     ->searchable()
                     ->sortable()
                     ->formatStateUsing(function ($state, $record) {
@@ -25,40 +25,43 @@ class CustomerTransactionsTable
                             : 'Müştəri silinib';
                     }),
                 TextColumn::make('paymentMethod.name')
-                    ->label('Ödəmə üsulu')
+                    ->label(__('resource.customer_deb.pay_met'))
                     ->searchable()
                     ->sortable(),
+
                 TextColumn::make('sale.sale_number')
-                    ->label('Satış ID')
+                    ->label(__('resource.customer_deb.sale_num'))
                     ->searchable()
                     ->sortable(),
+
                 TextColumn::make('user.name')
-                    ->label('İstifadəçi')
+                    ->label(__('resource.customer_deb.users'))
                     ->searchable()
                     ->sortable(),
+
                 TextColumn::make('type')
-                    ->label('Növ')
+                    ->label(__('resource.customer_deb.deb_cat'))
                     ->badge(),
 
                 TextColumn::make('amount')
-                    ->label('Məbləğ')
+                    ->label(__('resource.customer_deb.total'))
                     ->sortable(),
+
                 TextColumn::make('created_at')
+                    ->label(__('resource.customer_deb.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+
             ])->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+             //   ViewAction::make()->iconButton(),
+            //    EditAction::make()->iconButton(),
             ])
+            ->recordUrl(null)
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

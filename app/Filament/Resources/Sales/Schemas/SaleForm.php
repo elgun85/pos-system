@@ -13,15 +13,14 @@ class SaleForm
         return $schema
             ->components([
                 TextInput::make('sale_number')
-                    ->label('Satış nömrəsi'),
-
+                    ->label(__('resource.sale.number')),
                 Select::make('payment_method_id')
-                    ->label('Ödəmə üsulu')
+                    ->label(__('resource.sale.payment'))
                     ->relationship('paymentMethod', 'name'),
 
 
                 TextInput::make('total')
-                    ->label('Cəmi')
+                    ->label(__('resource.sale.total'))
                     ->numeric()
                     ->suffix('₼')
                     ->readOnly()
@@ -30,9 +29,14 @@ class SaleForm
                 Select::make('status')
                     ->label('Status')
                     ->options([
-                        'draft' => 'Gözləmədə',
-                        'completed' => 'Tamamlanıb',
-                        'cancelled' => 'Ləğv edilib',
+                        'draft'              =>    __('resource.sale.draft'),
+                        'completed'          =>    __('resource.sale.completed'),
+                        'cancelled'          =>    __('resource.sale.cancelled'),
+                        'partial'            =>    __('resource.sale.partial'),
+                        'unpaid'             =>    __('resource.sale.unpaid'),
+                        'returned'           =>    __('resource.sale.returned'),
+                        'partially_returned' =>    __('resource.sale.partially_returned'),
+
                     ]),
 
             ]);

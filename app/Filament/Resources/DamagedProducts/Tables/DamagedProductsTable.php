@@ -17,35 +17,35 @@ class DamagedProductsTable
         return $table
             ->columns([
                 TextColumn::make('product.name')
-                    ->label('Məhsul')
+                    ->label(__('resource.product.name'))
                     ->sortable()
                     ->searchable(),
 
                 TextColumn::make('cost_price')
-                    ->label('Maya deyeri')
-                    ->money('AZN'),
+                    ->label(__('resource.product.cost_price'))
+                    ->money(__('resource.money_icon')),
 
                 TextColumn::make('quantity')
-                    ->label('Say')
+                    ->label(__('resource.purchase.quantity'))
                     ->numeric(),
 
                 TextColumn::make('total_cost')
-                    ->label('Ümumi zərər')
+                    ->label(__('resource.totalDamage'))
                     ->color('danger')
-                    ->money('AZN'),
+                    ->money(__('resource.money_icon')),
 
                 TextColumn::make('notes')
-                    ->label('Qeyd')
+                    ->label(__('resource.customer_deb.note'))
                     ->limit(20),
 
                 TextColumn::make('user.name')
-                    ->label('İstifadəçi'),
+                    ->label(__('resource.customer_deb.users')),
 
                 TextColumn::make('created_at')
                     ->sortable()
-                    ->label('Tarix')
+                    ->label(__('resource.product.created_at'))
                     ->date('j M Y')
-                    //->since()
+                //->since()
 
 
 

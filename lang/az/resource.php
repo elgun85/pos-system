@@ -23,8 +23,8 @@ return
         "brand.modelLabel"                   =>      "Brend",
         "brand.pluralModelLabel"             =>      "Brendlər",
 
-        "expenses.navigationLabel"           =>      "Daxili Xərclər",
-        "expenses.modelLabel"                =>      "Daxili Xərc",
+        "expenses.navigationLabel"           =>      "Daxili xərclər",
+        "expenses.modelLabel"                =>      "Daxili xərc",
         "expenses.pluralModelLabel"          =>      "Daxili xərclər üzrə statistika",
 
         "damage.navigationLabel"             =>      "Xarab olmuş məhsullar",
@@ -47,76 +47,39 @@ return
         "supplier.modelLabel"                =>     "Təchizatçı",
         "supplier.pluralModelLabel"          =>     "Təchizatçılar",
 
-        "purchase.navigationLabel"           =>     "Məhsul Alışları",
-        "purchase.modelLabel"                =>     "Məhsul Alışı",
-        "purchase.pluralModelLabel"          =>     "Məhsul Alışları",
+        "purchase.navigationLabel"           =>     "Məhsul alışları",
+        "purchase.modelLabel"                =>     "Məhsul alışı",
+        "purchase.pluralModelLabel"          =>     "Məhsul alışları",
 
         "users.navigationLabel"              =>      "İstifadəçilər",
         "users.modelLabel"                   =>      "İstifadəçi ",
         "users.pluralModelLabel"             =>      "İstifadəçilər ",
 
-        "payment.navigationLabel"            =>      "Ödəmə üsulları",
-        "payment.modelLabel"                 =>      "Ödəmə üsulu ",
-        "payment.pluralModelLabel"           =>      "Ödəmə üsulları ",
+        "payment.navigationLabel"            =>      "Ödəniş üsulları",
+        "payment.modelLabel"                 =>      "Ödəniş üsulu",
+        "payment.pluralModelLabel"           =>      "Ödəniş üsulları ",
 
         "customer.navigationLabel"           =>     "Müştərilər",
         "customer.modelLabel"                =>     "Müştəri",
         "customer.pluralModelLabel"          =>     "Müştərilər ",
 
-        "customer_deb.navigationLabel"       =>      "Borclu Müştərilər",
+        "customer_deb.navigationLabel"       =>      "Borclu müştərilər",
         "customer_deb.modelLabel"            =>      "Müştəri",
-        "customer_deb.pluralModelLabel"      =>      "Borclu Müştərilər ",
+        "customer_deb.pluralModelLabel"      =>      "Borclu müştərilər ",
 
-        "customer_tran.navigationLabel"      =>      "Borc Əməliyyatları",
+        "customer_tran.navigationLabel"      =>      "Borc əməliyyatları",
         "customer_tran.modelLabel"           =>      "Əməliyyat",
-        "customer_tran.pluralModelLabel"     =>      "Borc Əməliyyatları",
+        "customer_tran.pluralModelLabel"     =>      "Borc əməliyyatları",
 
-        "inventory_report.navigationLabel"   =>      "Anbar Hesabatı",
+        "inventory_report.navigationLabel"   =>      "Anbar hesabatı",
         "inventory_report.pluralModelLabel"  =>      "Az qalan məhsullar",
 
         "dashboard.navigationLabel"          =>      "Dashboard",
-        "dashboard.pluralModelLabel"         =>      "İdarəetmə Paneli",
+        "dashboard.pluralModelLabel"         =>      "İdarəetmə paneli",
 
 
         "analytics.navigationLabel"          =>      "Qrafiklər",
         "analytics.pluralModelLabel"         =>      "Analitik statistikalar",
-
-
-
-
-        /* 
-
-    public  static function getNavigationLabel(): string
-    {
-        return __('resource.damage.navigationLabel');
-    }
-
-    public  static function getModelLabel(): string
-    {
-        return __('resource.damage.modelLabel');
-    }
-
-    public  static function getPluralModelLabel(): string
-    {
-        return __('resource.damage.pluralModelLabel');
-    }
-
-
-    public static function getNavigationGroup(): string
-    {
-        return __('resource.navigationGroup.inventory');
-    }
-
-
-
-
-
-        public function getTitle(): string
-    {
-        return __('resource.analytics.navigationLabel');
-    }
-
- */
 
         "totalDamage"                      =>           "Ümumi zərər",
 
@@ -134,27 +97,27 @@ return
 
 
 
-        "product.details"                  =>           "Məhsul Məlumatları",
-        "product.main_det"                 =>           "Əsas Məlumatlar",
+        "product.details"                  =>           "Məhsul məlumatları",
+        "product.main_det"                 =>           "Əsas məlumatlar",
         "product.sku"                      =>           "Barkod",
         "product.image"                    =>           "Şəkil",
         "product.name"                     =>           "Məhsulun adı",
         "product.category.name"            =>           "Kateqoriya",
         "product.brand.name"               =>           "Brend",
-        "product.cost_price"               =>           "Alış Qiyməti",
-        "product.sale_price"               =>           "Satış  Qiyməti",
-        "product.inventory.quantity"       =>           "Stok Miqdarı",
-        "product.fovorite"                 =>           " Sevimli Məhsul  ",
+        "product.cost_price"               =>           "Alış qiyməti",
+        "product.sale_price"               =>           "Satış qiyməti",
+        "product.inventory.quantity"       =>           "Məhsul qalığı",
+        "product.favorite"                 =>           "Sevimlilərə əlavə et",
         "product.created_at"               =>           "Yaradılma tarixi",
         "product.updated_at"               =>           "Yenilənmə tarixi",
         "product.deleted_at"               =>           "Silinmə tarixi",
 
 
         "inventory.product.name"           =>           "Məhsulun adı",
-        "inventory.brand.name"             =>           "Marka",
-        "inventory.sale_cost"              =>           "Satış Qiyməti",
-        "inventory.quantity"               =>           "Stok Miqdarı",
-        "inventory.quantity.plasholder"    =>           "Miqdarı daxil edin",
+        "inventory.brand.name"             =>           "Brend",
+        "inventory.sale_cost"              =>           "Satış qiyməti",
+        "inventory.quantity"               =>           "Məhsul qalığı",
+        "inventory.quantity.placeholder"   =>           "Miqdarı daxil edin",
         "inventory.created_at"             =>           "Yaradılma tarixi",
         "inventory.updated_at"             =>           "Yenilənmə tarixi",
 
@@ -164,22 +127,22 @@ return
         "supplier.address"                 =>           "Ünvan",
         "supplier.created_at"              =>           "Yaradılma tarixi",
 
-        "purchase.details"                 =>           " Qaimə / Faktura Məlumatları",
-        "purchase.det.description"         =>           " Təchizatçıdan gələn rəsmi sənəd məlumatları",
-        "purchase.main"                    =>           "Alınan Məhsulların Siyahısı",
-        "purchase.main_det"                =>           "Bu qaimə ilə gələn bütün malları bura skan edin və ya əlavə edin",
-        "purchase.photo"                   =>           "Qaimənin Şəkli",
+        "purchase.details"                 =>           "Qaimə məlumatları",
+        "purchase.det.description"         =>           "Təchizatçıdan gələn rəsmi sənəd məlumatları",
+        "purchase.main"                    =>           "Alınan məhsulların siyahısı",
+        "purchase.main_det"                =>           "Bu qaimə üzrə gələn məhsulları skan edin və ya əlavə edin",
+        "purchase.photo"                   =>           "Qaimənin şəkli",
         "purchase.photo.placeholder"       =>           "Şəkil seçilməyib",
-        "purchase.number"                  =>           "Qaimənin Nömrəsi",
+        "purchase.number"                  =>           "Qaimənin nömrəsi",
         "purchase.supp_name"               =>           "Təchizatçı",
-        "purchase.total_price"             =>           "Ümumi Məbləğ",
-        "purchase.total_price.placeholder" =>           "Ümumi məbləğin cəmi",
+        "purchase.total_price"             =>           "Ümumi məbləğ",
+        "purchase.total_price.placeholder" =>           "Ümumi məbləğ",
         "purchase.status"                  =>           "Anbara daxil edilsin?",
-        "purchase.status.placeholder"      =>           "Aktiv olduqda mallar dərhal anbar qalığına oturacaq",
+        "purchase.status.placeholder"      =>           "Aktiv olduqda məhsullar anbar qalığına əlavə ediləcək",
         "purchase.quantity"                =>           "Say",
-        "purchase.cost_price"              =>           "Alış Maya Dəyəri (Ədəd başı)*",
-        "purchase.main_head"               =>           "Yeni Məhsul Sətri",
-        "purchase.main_plus"               =>           " +  Yeni Məhsul Əlavə Et",
+        "purchase.cost_price"              =>           "Alış maya dəyəri (ədəd üçün)*",
+        "purchase.main_head"               =>           "Yeni məhsul sətri",
+        "purchase.main_plus"               =>           " +  Yeni məhsul əlavə et",
         "purchase.created_at"              =>           "Yaradılma tarixi",
         "purchase.updated_at"              =>           "Yenilənmə tarixi",
 
@@ -202,7 +165,7 @@ return
 
         "customer_deb.name"                =>           "Müştəri adı",
         "customer_deb.users"               =>           "İstifadəçi",
-        "customer_deb.total"               =>           "Borc Qalığı",
+        "customer_deb.total"               =>           "Borc qalığı",
         "customer_deb.address"             =>           "Ünvan",
         "customer_deb.phone"               =>           "Telefon",
         "customer_deb.pay_head"            =>           "Ödəniş",
@@ -210,25 +173,25 @@ return
         "customer_deb.pay_met"             =>           "Ödəniş üsulu",
         "customer_deb.note"                =>           "Qeyd",
         "customer_deb.note_det"            =>           "Ödəniş qəbul edildi",
-        "customer_deb.deb_data"            =>           "Əməliyyat Tarixçəsi (Borclar və Ödənişlər",
-        "customer_deb.deb_cat"             =>           "Əməliyyat Növü",
+        "customer_deb.deb_data"            =>           "Əməliyyat tarixçəsi (borclar və ödənişlər)",
+        "customer_deb.deb_cat"             =>           "Əməliyyat növü",
         "customer_deb.sale_num"            =>           "Satış №",
 
         "sale.number"                      =>           "Satış nömrəsi",
         "sale.product"                     =>           "Məhsul",
         "sale.quantity"                    =>           "Say",
         "sale.price"                       =>           "Məbləğ",
-        "sale.reason"                      =>           "Qaytarılma Səbəbi",
-        "sale.reason_note"                 =>           "Məs: Defektli məhsul, razı qalmadı və s.",
+        "sale.reason"                      =>           "Qaytarılma səbəbi",
+        "sale.reason_note"                 =>           "Məsələn: Defektli məhsul, razı qalmadı və s.",
         "sale.total"                       =>           "Cəmi",
-        "sale.title"                       =>           "Məhsul qaytarılması uğurla icra olundu",
+        "sale.title"                       =>           "Məhsul uğurla qaytarıldı",
         "sale.title_error"                 =>           "Xəta baş verdi",
         "sale.user"                        =>           "Kassir",
-        "sale.payment"                     =>           "Ödəmə üsulu",
+        "sale.payment"                     =>           "Ödəniş üsulu",
         "sale.created_at"                  =>           "Yaradılma tarixi",
-        "sale.modal_head"                  =>           "Satışdan Məhsul Qaytarılması",
+        "sale.modal_head"                  =>           "Satışdan məhsul qaytarılması",
         "sale.modal_header"                =>           "Qaytarılacaq Məhsullar",
-        "sale.modal_label"                 =>           "Qaytarmanı Təsdiqlə",
+        "sale.modal_label"                 =>           "Qaytarmanı təsdiqlə",
         "sale.draft"                       =>           "Gözləmədə",
         "sale.completed"                   =>           "Tamamlanıb",
         "sale.cancelled"                   =>           "Ləğv edilib",
@@ -238,10 +201,10 @@ return
         "sale.partially_returned"          =>           "Qismən qaytarılıb",
 
 
-        "no_invebtory.error"               =>           "Bu məhsulun stokda kifayət qədər miqdarı yoxdur.",
+        "no_inventory.error"               =>           "Bu məhsulun stokda kifayət qədər miqdarı yoxdur.",
         "cart.remove"                      =>           "səbətdən silindi",
         "credit.info"                      =>           "Nisyə satış üçün mütləq müştəri seçilməlidir!",
-        "payment_info"                     =>           "Ödəniş növü seçimi vacibdir.",
+        "payment_info"                     =>           "Ödəniş növü seçmək vacibdir.",
         "sale_success"                     =>           "Satış uğurla tamamlandı.",
         "sale_errors"                      =>           "Satış zamanı xəta baş verdi:",
         "customer_success"                 =>           "Yeni müştəri uğurla əlavə edildi.",
@@ -250,56 +213,63 @@ return
         "name_required"                    =>           "Müştərinin adı mütləq daxil edilməlidir.",
         "name_max"                         =>           "Ad maksimum 255 simvol ola bilər.",
         "address_max"                      =>           "Ünvan maksimum 255 simvol ola bilər.",
-        "phone_regex"                      =>           "Telefon nömrəsi yalnız rəqəmlərdən, boşluq və  -  işarəsindən ibarət ola bilər.",
+        "phone_regex"                      =>           "Telefon nömrəsi yalnız rəqəmlərdən, boşluq və  -   işarəsindən ibarət ola bilər.",
 
-        "finish_sale"                      =>           "Satışı Tamamla",
+        "finish_sale"                      =>           "Satışı tamamla",
         "cart"                             =>           "Səbət",
-        "cart_empty"                       =>           "Satış boşdur",
+        "cart_empty"                       =>           "Səbət boşdur",
         "products"                         =>           "Məhsullar",
-        "product"                          =>           "məhsul",
-        "total"                            =>           "Cəmi",
-        "discount"                         =>           "Endirim",
         "payment_method"                   =>           "Ödəniş növü",
         "grand_total"                      =>           "Yekun",
-        "change"                           =>           "Qaytarılan",
+        "change"                           =>           "Qaytarılacaq məbləğ",
         "amount_due"                       =>           "Qalıq",
         "paid_amount"                      =>           "Ödənilən məbləğ",
-        "new_customer"                     =>           "Yeni Müştəri",
+        "new_customer"                     =>           "Yeni müştəri",
         "customer"                         =>           "Müştəri",
-
-
 
         "product_no"                       =>           "Məhsul tapılmadı",
         "search"                           =>           "Axtarın",
         "cancel"                           =>           "Ləğv et",
-        "save"                             =>           "Yadda Saxla",
+        "save"                             =>           "Yadda saxla",
         "not"                              =>           "Yoxdur",
         "money"                            =>           " AZN",
         "money_icon"                       =>           "AZN",
+        "receipt"                          =>           "Qəbz",
+        "companyName"                      =>           "MARKETİNİZİN ADI",
+        "product"                          =>           "Məhsul",
+        "quantity"                         =>           "Say ",
+        "price"                            =>           " Qiymət",
+        "total"                            =>           "Cəmi",
+        "result"                           =>           "Yekun",
+        "discount"                         =>           "Endirim",
+        "created"                          =>           "Tarix",
+        "cashier"                          =>           "Kassir",
+        "thank"                            =>           "TƏŞƏKKÜR EDİRİK!",
+        "noImage"                          =>           "Şəkil seçilməyib!",
 
 
 
         "cash_header"                      =>           "Maliyyə və Anbar",
         "cashChart_header"                 =>           "Ödəniş üsulları",
-        "payments"                         =>           "Günlər üzrə Ödənişlər",
+        "payments"                         =>           "Günlər üzrə ödənişlər",
         "debt_header"                      =>           "Borclar və ödənişlər",
-        "sales_header"                     =>           "Satış və  Kassaya daxil olan vəsaitlər",
+        "sales_header"                     =>           "Satış və kassaya daxil olan vəsaitlər",
         "salesChartHeader"                 =>           "Satış statistikaları",
-        "expence_header"                   =>           "Kateqoriyalar Üzrə Xərclər",
+        "expense_header"                   =>           "Kateqoriyalar üzrə xərclər",
 
-        "totalReturns"                     =>           "Qaytarılan Məbləğ",
-        "totalReturnsDesc"                 =>           "Müştərilərdən geri alınan mallar",
+        "totalReturns"                     =>           "Qaytarılan məbləğ",
+        "totalReturnsDesc"                 =>           "Müştərilər tərəfindən qaytarılan mallar",
 
-        "totalDamages"                     =>           "Xarab Olmuş Məhsullar ",
-        "totalDamagesDesc"                 =>           " Zədələnmiş mal itkisi",
+        "totalDamages"                     =>           "Xarab olmuş məhsullar ",
+        "totalDamagesDesc"                 =>           "Xarab olmuş məhsullardan yaranan itki",
 
-        "totalExpenses"                    =>           "Daxili Xərclər ",
-        "totalExpensesDesc"                =>           "Mağaza daxili xərcləri ",
+        "totalExpenses"                    =>           "Daxili xərclər ",
+        "totalExpensesDesc"                =>           "Mağazanın daxili xərcləri",
 
-        "netSales"                         =>           " Xalis Satış (Net) ",
+        "netSales"                         =>           " Xalis satış  ",
         "netSalesDesc"                     =>           " Qaytarmalar çıxıldıqdan sonra xalis dövriyyə ",
 
-        "netProfit"                        =>           "Xalis Gəlir (Net) ",
+        "netProfit"                        =>           "Xalis gəlir",
         "netProfitDesc"                    =>           "Bütün xərclər çıxıldıqdan sonra xalis mənfəət",
         "netLossDesc"                      =>           "Diqqət: Zərər qeydə alınıb ",
 
@@ -317,49 +287,25 @@ return
 
 
         "allSales"                         =>           "Ümumi satış",
-        "allSalesDesc"                     =>           "Ümumi yaradılan satış dövriyyəsi",
+        "allSalesDesc"                     =>           "Bütün satışların ümumi dövriyyəsi",
 
         "completedSales"                   =>           "Tam ödənilmiş satış",
-        "completedSalesDesc"               =>           "Məbləği tam bağlanan satışlar",
+        "completedSalesDesc"               =>           "Ödənişi tam həyata keçirilmiş satışlar",
 
         "partialSales"                     =>           "Hissəli satış",
-        "partialSalesDesc"                 =>           "Müəyyən hissəsi ödənilən satışlar",
+        "partialSalesDesc"                 =>           "Məbləğinin bir hissəsi ödənilmiş satışlar",
 
         "creditSales"                      =>           "Nisyə satış",
-        "creditSalesDesc"                  =>           "Tamamilə borca edilən satışlar",
+        "creditSalesDesc"                  =>           "Tam nisyə həyata keçirilən satışlar",
 
-        "totalPayments"                    =>           "Ümumi daxil olan pul",
-        "totalPaymentsDesc"                =>           "Kassaya real daxil olan ümumi məbləğ",
+        "totalPayments"                    =>           "Ümumi daxil olan vəsait",
+        "totalPaymentsDesc"                =>           "Kassaya daxil olan ümumi məbləğ",
 
         "cashPayments"                     =>           "Nağd",
-        "cashPaymentsDesc"                 =>           "Nağd şəkildə toplanan vəsait",
+        "cashPaymentsDesc"                 =>           "Nağd ödənişlərdən daxil olan vəsait",
 
         "cardPayments"                     =>           "Kart",
-        "cardPaymentsDesc"                 =>           "Pos-terminal/Kart ilə ödənişlər",
-        ""                         =>           "",
-
-        /* 
-         ""                              =>           "",
-
-        ->label(__('resource.customer.nam'))
-       
-        __('resource.payments')
-
-
-        {{   __('resource.totalExpenses') }}
-
-
-        protected function getHeading(): ?string
-{
-    return __('resource.payments');
-}
-
-
- */
-
-
-
-
+        "cardPaymentsDesc"                 =>           "POS-terminal və ya kartla ödənişlər",
 
 
     ];

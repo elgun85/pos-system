@@ -31,7 +31,7 @@ class PurchaseForm
                             ->schema([
                                 TextInput::make('invoice_number')
                                     ->label(__('resource.purchase.number'))
-                                    ->placeholder('Məs: Q-1024')
+                                    ->placeholder(' Q-1024')
                                     ->maxLength(255),
 
                                 Select::make('supplier_id')

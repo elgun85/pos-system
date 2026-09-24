@@ -75,7 +75,7 @@ class ProductForm
                             ->reorderable()
                             ->openable()
                             ->deletable(true)
-                            ->placeholder('Şəkil seçilməyib')
+                            ->placeholder(__('resource.noImage'))
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp']),
                     ]),
 
@@ -132,7 +132,7 @@ class ProductForm
                             ->required(),
 
                         Toggle::make('is_favorite')
-                            ->label(__('resource.product.fovorite'))
+                            ->label(__('resource.product.favorite'))
                             ->onIcon('heroicon-s-star'),
                     ]),
             ]);

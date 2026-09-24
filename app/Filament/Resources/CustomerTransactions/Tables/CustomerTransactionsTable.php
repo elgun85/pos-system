@@ -48,7 +48,7 @@ class CustomerTransactionsTable
                     ->sortable(),
 
                 TextColumn::make('created_at')
-                    ->label(__('resource.customer_deb.created_at'))
+                    ->label(__('resource.customer.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -16,7 +16,7 @@ class ExpenseForm
     {
         return $schema
             ->components([
-                Section::make('Daxili Xərclər Modulu')
+                Section::make()
                     ->schema([
 
                         Group::make()

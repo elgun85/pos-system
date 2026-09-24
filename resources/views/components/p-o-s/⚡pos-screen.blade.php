@@ -105,7 +105,7 @@ new class extends Component {
 
         $inventory = Inventory::where('product_id', $productId)->first();
         if (!$inventory || $inventory->quantity < 0) {
-            Notification::make()->title(__('resource.no_invebtory.error'))->danger()->send();
+            Notification::make()->title(__('resource.no_inventory.error'))->danger()->send();
             return;
         }
 
@@ -113,7 +113,7 @@ new class extends Component {
             $currentQuantity = $this->cart[$productId]['quantity'];
 
             if ($currentQuantity >= $inventory->quantity) {
-                Notification::make()->title(__('resource.no_invebtory.error'))->danger()->send();
+                Notification::make()->title(__('resource.no_inventory.error'))->danger()->send();
                 return;
             }
             $this->cart[$productId]['quantity']++;
@@ -488,7 +488,7 @@ new class extends Component {
                                     <div class="font-normal truncate text-base">{{ $product->name }}</div>
                                     <div class="text-xs text-zinc-500">{{ $product->brand?->name }}</div>
                                     <div class="mt-1 text-xs text-zinc-500">
-                                        Stok: {{ $product->inventory ? $product->inventory->quantity :   {{   __('resource.not') }} }}
+                                        Stok: {{ $product->inventory ? $product->inventory->quantity :      __('resource.not')  }}
                                     </div>
                                     <div class="text-xs text-zinc-500">{{ $product->sku }}</div>
                                     <div class="mt-1 text-xm font-bold">₼ {{ number_format($product->sale_price, 2) }}

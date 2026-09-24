@@ -32,7 +32,7 @@ class BrandForm
                     ->reorderable()
                     ->openable()
                     ->deletable(true)
-                    ->placeholder('Şəkil seçilməyib')
+                    ->placeholder(__('resource.noImage'))
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp']),
                 Toggle::make('status')
                     ->label('Status')

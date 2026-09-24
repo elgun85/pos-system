@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Qəbz #{{ $sale->sale_number }}</title>
+    <title>{{ __('resource.receipt') }} #{{ $sale->sale_number }}</title>
     <style>
         body {
             font-family: 'Courier New', Courier, monospace;
@@ -43,6 +43,10 @@
             text-align: right;
         }
 
+        .text-left {
+            text-align: left;
+        }
+
         .bold {
             font-weight: bold;
         }
@@ -66,11 +70,12 @@
 
 <body>
     <div class="text-center">
-        <h2 style="margin:0;">MARKETİNİZİN ADI</h2>
-        <p style="margin:5px 0;">Sürətli Satış Sistemi</p>
-        <p>Tarix: {{ $sale->created_at->format('d.m.Y H:i:s') }}</p>
-        <p>Qəbz No: {{ $sale->sale_number }}</p>
-        <p>Kassir: {{ $sale->user?->name ?? 'Məlum deyil' }}</p>
+        <h2 style="margin:0;">{{ __('resource.companyName') }}</h2>
+        <p class="text-left">{{ __('resource.created') }}: {{ $sale->created_at->format('d.m.Y H:i:s') }}</p>
+
+        <p class="text-left">{{ __('resource.receipt') }} №: {{ $sale->sale_number }}</p>
+
+        <p class="text-left">{{ __('resource.cashier') }}: {{ $sale->user?->name ?? __('resource.not') }}</p>
     </div>
 
     <div class="divider"></div>
@@ -78,22 +83,23 @@
     <table>
         <thead>
             <tr class="bold">
-                <th>Məhsul</th>
-                <th class="text-center">Say</th>
-                <th class="text-right">Qiymət</th>
+                <th class="text-left">{{ __('resource.product') }}</th>
+                <th class="text-center">{{ __('resource.quantity') }} </th>
+                <th class="text-right"> {{ __('resource.price') }}</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($sale->items as $item)
                 <tr>
-                    <td>{{ $item->product->name }}
+                    <td>{{ Str::limit($item->product->name, 30, '...') }}
                         @if ($item->product->brand)
                             <span style="font-size: 10px; color: #555;">({{ $item->product->brand->name }})</span>
                         @endif
 
                     </td>
-                    <td class="text-center">{{ $item->quantity }}</td>
-                    <td class="text-right">₼{{ number_format($item->total, 2) }}</td>
+                    <td class="text-center">{{ rtrim(rtrim(number_format($item->quantity, 2, '.', ''), '0'), '.') }}
+                    </td>
+                    <td class="text-right">{{ number_format($item->total, 2) }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -102,18 +108,16 @@
     <div class="divider"></div>
 
     <div class="text-right">
-        <p>Cəmi: ₼{{ number_format($sale->total + $sale->discount, 2) }}</p>
+        <p>{{ __('resource.total') }}:
+            {{ number_format($sale->total + $sale->discount, 2) }}</p>
         @if ($sale->discount > 0)
-            <p>Endirim: -₼{{ number_format($sale->discount, 2) }}</p>
+            <p>{{ __('resource.discount') }}: -{{ number_format($sale->discount, 2) }}</p>
         @endif
-        <p class="bold">Yekun: ₼{{ number_format($sale->total, 2) }}</p>
-        {{--         <p>Ödənilən: ₼{{ number_format($sale->paid_amount, 2) }}</p>
-        <p>Qalıq: ₼{{ number_format($sale->due_amount, 2) }}</p>
-        <p>Qaytarılan: ₼{{ number_format($sale->change_amount, 2) }}</p> --}}
+        <p class="bold">{{ __('resource.result') }}: {{ number_format($sale->total, 2) }}</p>
     </div>
 
     <div class="divider"></div>
-    <p class="text-center bold">TƏŞƏKKÜR EDİRİK!</p>
+    <p class="text-center bold"> {{ __('resource.thank') }}</p>
 
     <script>
         window.onload = function() {

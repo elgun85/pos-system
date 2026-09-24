@@ -23,7 +23,7 @@ class InventoryForm
                 TextInput::make('quantity')
                     ->required()
                     ->label(__('resource.inventory.quantity'))
-                    ->placeholder(__('resource.inventory.quantity.plasholder'))
+                    ->placeholder(__('resource.inventory.quantity.placeholder'))
                     ->numeric(),
             ]);
     }

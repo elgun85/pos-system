@@ -82,7 +82,7 @@ class ProductsTable
                     ->badge(),
 
                 ToggleColumn::make('is_favorite')
-                    ->label(__('resource.product.fovorite'))
+                    ->label(__('resource.product.favorite'))
                     ->onIcon('heroicon-s-star')
                     ->sortable(),
 

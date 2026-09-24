@@ -12,7 +12,7 @@ class ExpenseChart extends ChartWidget
     use InteractsWithPageFilters;
     public function getHeading(): ?string
     {
-        return __('resource.expence_header');
+        return __('resource.expense_header');
     }
     protected static bool $isDiscovered = false;
     protected static ?int $sort = 50;

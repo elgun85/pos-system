@@ -9,6 +9,10 @@ return [
     "navigationGroup.sale"             => "SALES",
     "navigationGroup.analyse"          => "ANALYTICS",
 
+    "role.navigationLabel"              => "Roles",
+    "role.modelLabel"                   => "Permission",
+    "role.pluralModelLabel"             => "Access Control",
+
     "sale_pos.navigationLabel"         => "POS",
     "sale_pos.pluralModelLabel"        => "Point of Sale",
 
@@ -238,6 +242,8 @@ return [
     "cashier"                          => "Cashier",
     "thank"                            => "THANK YOU!",
     "noImage"                          => " No image selected!",
+    "startDate"                        => "Start date",
+    "endDate"                          => "End date",
 
     "cash_header"                      => "Finance & Inventory",
     "cashChart_header"                 => "Payment Methods",

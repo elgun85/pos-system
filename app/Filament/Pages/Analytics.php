@@ -54,8 +54,8 @@ class Analytics extends BaseDashboard
             ->components([
                 Section::make()
                     ->schema([
-                        DatePicker::make('startDate'),
-                        DatePicker::make('endDate'),
+                        DatePicker::make('startDate')->label(__('resource.startDate')),
+                        DatePicker::make('endDate')->label(__('resource.endDate')),
                     ])
                     ->columns(2)
                     ->columnSpanFull(),

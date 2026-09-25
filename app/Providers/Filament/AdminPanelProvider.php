@@ -40,7 +40,9 @@ class AdminPanelProvider extends PanelProvider
             ->spa()
             ->login()
             ->plugins([
-                FilamentShieldPlugin::make(),
+                FilamentShieldPlugin::make()
+                    ->navigationGroup(__('resource.navigationGroup.system'))
+                    ->navigationSort(3),
             ])
             ->assets([
                 // Sizin əsas Tailwind CSS buildinizi Filament daxilinə yükləyir
@@ -49,7 +51,17 @@ class AdminPanelProvider extends PanelProvider
                 // \Filament\Support\Assets\Css::make('custom-styles', \Illuminate\Support\Facades\Vite::asset('resources/css/app.css')),
             ])
             ->navigationGroups([
-                'ANALİTİKA',
+
+                __('resource.navigationGroup.analyse'),
+                __('resource.navigationGroup.inventory'),
+                __('resource.navigationGroup.sale'),
+                __('resource.navigationGroup.shop'),
+                __('resource.navigationGroup.supplier'),
+                __('resource.navigationGroup.customer'),
+                __('resource.navigationGroup.system'),
+
+
+                /*                 'ANALİTİKA',
                 'SATIŞ',
                 'KASSA',
                 'MAĞAZA',
@@ -60,7 +72,7 @@ class AdminPanelProvider extends PanelProvider
 
                 'ANBAR HESABATI',
 
-                'SİSTEM',
+                'SİSTEM', */
             ])
             ->colors([
                 'primary' => Color::Amber,
@@ -72,8 +84,8 @@ class AdminPanelProvider extends PanelProvider
                 Analytics::class,
                 POS::class,
                 InventoryReport::class,
-             //   SalesReport::class,
-               // ProfitReport::class,
+                //   SalesReport::class,
+                // ProfitReport::class,
             ])
             // ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([])

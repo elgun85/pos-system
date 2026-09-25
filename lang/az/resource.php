@@ -15,6 +15,10 @@ return
         "sale_pos.navigationLabel"          =>      "Kassa / POS",
         "sale_pos.pluralModelLabel"         =>      "Kassa",
 
+        "role.navigationLabel"              =>      "Giriş hüquqları",
+        "role.modelLabel"                   =>      "İcazə",
+        "role.pluralModelLabel"             =>      "Səlahiyyətlər",
+
         "sale.navigationLabel"              =>      "Satışlar",
         "sale.modelLabel"                   =>      "Satış",
         "sale.pluralModelLabel"             =>      "Satışlar",
@@ -246,6 +250,8 @@ return
         "cashier"                          =>           "Kassir",
         "thank"                            =>           "TƏŞƏKKÜR EDİRİK!",
         "noImage"                          =>           "Şəkil seçilməyib!",
+        "startDate"                        =>           "Başlanğıc tarixi",
+        "endDate"                          =>           "Bitmə tarixi ",
 
 
 

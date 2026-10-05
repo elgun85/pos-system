@@ -25,6 +25,11 @@ class UsersTable
                     ->sortable()
                     ->searchable(),
 
+                TextColumn::make('roles.name')
+                    ->label(__('resource.users.role'))
+                    ->badge()
+                    ->color('info'),
+
                 TextColumn::make('created_at')
                     ->label(__('resource.users.created_at'))
                     ->dateTime()

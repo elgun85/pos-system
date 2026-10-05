@@ -127,7 +127,7 @@ class PurchaseForm
                                                         ->tooltip('Unikal barkod generasiya et')
                                                         ->action(function (Set $set) {
                                                             do {
-                                                                $randomBarcode = '200' . rand(1000000002, 9999999999);
+                                                                $randomBarcode = '200' . random_int(1000000002, 9999999999);
                                                             } while (Product::where('sku', $randomBarcode)->exists()); // Bazada varsa, yenidən yoxla
                                                             $set('sku', $randomBarcode);
                                                         })

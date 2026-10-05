@@ -14,7 +14,7 @@ class ProductInfolist
         return $schema
             ->components([
                 ImageEntry::make('image')
-                    ->label('Şəkil')
+                    ->label(__('resource.product.image'))
                     ->disk('public')
                     ->circular()
                     ->size(130),
@@ -23,66 +23,55 @@ class ProductInfolist
 
 
                 TextEntry::make('name')
-                    ->label('Məhsul Adı')
+                    ->label(__('resource.product.name'))
                     ->weight(FontWeight::Bold)
                     ->size('md'),
 
 
                 TextEntry::make('category.name')
-                    ->label('Kateqoriya')
+                    ->label(__('resource.product.category.name'))
                     ->weight(FontWeight::Bold)
                     ->size('md'),
 
                 TextEntry::make('brand.name')
-                    ->label('Brend')
+                    ->label(__('resource.product.brand.name'))
                     ->weight(FontWeight::Bold)
                     ->size('md'),
 
                 TextEntry::make('sku')
-                    ->label('Barkod')
+                    ->label(__('resource.product.sku'))
                     ->weight(FontWeight::Bold)
                     ->size('md'),
-                /*                 TextEntry::make('barcode')
-                    ->label('Barkod')
-                    ->weight(FontWeight::Bold)
-                    ->size('md'), */
+
                 TextEntry::make('cost_price')
-                    ->label('Alış Qiyməti')
+                    ->label(__('resource.product.cost_price'))
                     ->weight(FontWeight::Bold)
                     ->size('md')
                     ->money(),
                 TextEntry::make('sale_price')
-                    ->label('Satış Qiyməti')
+                    ->label(__('resource.product.sale_price'))
                     ->weight(FontWeight::Bold)
                     ->size('md')
                     ->money(),
 
                 TextEntry::make('inventory.quantity')
-                    ->label('Stok Miqdarı')
+                    ->label(__('resource.product.inventory.quantity'))
                     ->weight(FontWeight::Bold)
                     ->size('md')
                     ->numeric(),
                 TextEntry::make('supplier.name')
-                    ->label('Təchizatçı')
+                    ->label(__('resource.product.supplier'))
                     ->weight(FontWeight::Bold)
                     ->size('md'),
                 TextEntry::make('status')
                     ->label('Status')
                     ->badge(),
                 TextEntry::make('is_favorite')
-                    ->label('Sevimli Məhsul')
+                    ->label(__('resource.product.favorite'))
                     ->badge()
                     ->formatStateUsing(fn($state) => $state ? 'Favori' : 'Adi')
                     ->color(fn($state) => $state ? 'warning' : 'gray'),
-                /*                 TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('deleted_at')
-                    ->dateTime()
-                    ->visible(fn(Product $record): bool => $record->trashed()), */
+
             ]);
     }
 }

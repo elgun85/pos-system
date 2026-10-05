@@ -22,6 +22,9 @@ class PaymentMethodsTable
                     ->sortable()
                     ->searchable(),
 
+                TextColumn::make('code')
+                    ->label(__('resource.payment.code')),
+
                 ImageColumn::make('icon')
                     ->label(__('resource.payment.icon'))
                     ->disk('public')
@@ -29,15 +32,15 @@ class PaymentMethodsTable
                     ->size(50),
 
                 TextColumn::make('description')
-                   ->label(__('resource.payment.description'))
+                    ->label(__('resource.payment.description'))
                     ->limit(20)
                     ->searchable(),
 
                 IconColumn::make('status')
                     ->boolean(),
-                    
+
                 TextColumn::make('created_at')
-                ->label(__('resource.payment.created_at'))
+                    ->label(__('resource.payment.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

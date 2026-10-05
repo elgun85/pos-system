@@ -7,14 +7,15 @@
     <style>
         body {
             font-family: 'Courier New', Courier, monospace;
-            width: 72mm;
-            margin: 0;
-            padding: 5mm;
+            width: 80mm;
+            margin: 0 auto;
+            padding: 3mm;
             font-size: 12px;
+            color: #000;
         }
 
         @page {
-            size: 78mm auto;
+            size: 80mm auto;
             /* Kağız eni 80mm, uzunluq məzmuna görə */
             margin: 0;
             /* Brauzerin avtomatik haşiyələrini ləğv edir */
@@ -26,7 +27,7 @@
             body {
                 width: 80mm;
                 margin: 0;
-                padding: 3mm;
+                padding: 4mm;
             }
 
             header,
@@ -59,11 +60,13 @@
         table {
             width: 100%;
             border-collapse: collapse;
+            table-layout: fixed;
         }
 
         th,
         td {
             padding: 3px 0;
+            word-wrap: break-word;
         }
     </style>
 </head>
@@ -71,7 +74,7 @@
 <body>
     <div class="text-center">
         <h2 style="margin:0;">{{ __('resource.companyName') }}</h2>
-        <p class="text-left">{{ __('resource.created') }}: {{ $sale->created_at->format('d.m.Y H:i:s') }}</p>
+        <p class="text-left">{{ __('resource.created') }}: {{ $sale->created_at?->format('d.m.Y H:i:s') }}</p>
 
         <p class="text-left">{{ __('resource.receipt') }} №: {{ $sale->sale_number }}</p>
 
@@ -91,8 +94,8 @@
         <tbody>
             @foreach ($sale->items as $item)
                 <tr>
-                    <td>{{ Str::limit($item->product->name, 30, '...') }}
-                        @if ($item->product->brand)
+                    <td>{{ Str::limit($item->product?->name, 30, '...') }}
+                        @if ($item->product?->brand)
                             <span style="font-size: 10px; color: #555;">({{ $item->product->brand->name }})</span>
                         @endif
 
@@ -119,7 +122,7 @@
     <div class="divider"></div>
     <p class="text-center bold"> {{ __('resource.thank') }}</p>
 
-    <script>
+    {{--     <script>
         window.onload = function() {
             window.print();
             // Çap pəncərəsi bağlandıqdan sonra vərəqi avtomatik bağlasın
@@ -127,6 +130,18 @@
                 window.close();
             };
         }
+    </script> --}}
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                window.print();
+            }, 300);
+        });
+
+        window.addEventListener('afterprint', () => {
+            window.close();
+        });
     </script>
 </body>
 

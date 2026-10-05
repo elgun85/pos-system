@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\CustomerTransaction;
 use App\Models\Inventory;
-use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SalesItem;
 use App\Models\SalesPayment;
@@ -16,7 +15,7 @@ class SalesService
     public function createSale(array $cart, array $data): Sale
     {
         if (empty($cart)) {
-            throw new Exception('Səbət boşdur. Satış üçün ən azı bir məhsul əlavə edin.');
+            throw new Exception(__('resource.cardEmpty'));
         }
 
         return DB::transaction(function () use ($cart, $data) {
@@ -47,13 +46,15 @@ class SalesService
             ]);
 
             // Ödənişləri qeyd edirik
-            foreach ($data['payments'] as $payment) {
-                if ($payment['amount'] > 0) {
-                    SalesPayment::create([
-                        'sale_id'           => $sale->id,
-                        'payment_method_id' => $payment['payment_method_id'],
-                        'amount'            => $payment['amount'],
-                    ]);
+            if (!empty($data['payments'])) {
+                foreach ($data['payments'] as $payment) {
+                    if (($payment['amount'] ?? 0) > 0) {
+                        SalesPayment::create([
+                            'sale_id'           => $sale->id,
+                            'payment_method_id' => $payment['payment_method_id'],
+                            'amount'            => $payment['amount'],
+                        ]);
+                    }
                 }
             }
 
@@ -64,7 +65,7 @@ class SalesService
 
             if ($remainingDebt > 0) {
                 if (empty($data['customer_id'])) {
-                    throw new Exception('Qalan borc (Nisyə) üçün müştəri seçilməlidir.');
+                    throw new Exception(__('resource.customerCreditError'));
                 }
 
                 CustomerTransaction::create([
@@ -74,7 +75,7 @@ class SalesService
                     'amount'      => $remainingDebt,
                     'type'        => 'debt',
                     'user_id'     => auth()->id(),
-                    'notes'       => "Sale #{$sale->sale_number} üzrə nisyə qalıq borc.",
+                    'notes'       => "Sale #{$sale->sale_number}". __('resource.creditBalance'),
                 ]);
             }
 
@@ -82,16 +83,20 @@ class SalesService
             foreach ($cart as $cartItem) {
                 // Stok yarışının (Race Condition) qarşısını almaq üçün sətiri kilidləyirik
                 $inventory = Inventory::where('product_id', $cartItem['product_id'])
+                    ->with('product')
                     ->lockForUpdate()
                     ->first();
 
                 if (!$inventory || $inventory->quantity < $cartItem['quantity']) {
-                    throw new Exception("{$cartItem['name']} məhsulundan stokda kifayət qədər yoxdur.");
+                    $productName = $cartItem['name'] ?? $inventory?->product?->name ?? __('resource.product');
+                    throw new Exception(
+                        "{$productName}" .  __('resource.no_inventory.error')
+                        );
                 }
 
                 $productCostPrice = $cartItem['cost_price']
-                ?? Product::where('id',$cartItem['product_id'])->value('cost_price')
-                ?? 0;
+                    ?? $inventory->product?->cost_price
+                    ?? 0;
 
                 // Satış elementini yazırıq
                 SalesItem::create([

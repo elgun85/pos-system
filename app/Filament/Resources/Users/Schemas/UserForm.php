@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
+use Filament\Resources\Pages\CreateRecord;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Facades\Hash;
 
 class UserForm
 {
@@ -15,7 +15,7 @@ class UserForm
         return $schema
             ->components([
                 TextInput::make('name')
-                ->label(__('resource.users.name'))
+                    ->label(__('resource.users.name'))
                     ->required(),
 
                 TextInput::make('email')
@@ -24,18 +24,18 @@ class UserForm
                     ->required(),
 
                 TextInput::make('password')
-                ->label(__('resource.users.password'))
+                    ->label(__('resource.users.password'))
                     ->password()
-                    ->required(),
+                    ->dehydrateStateUsing(fn($state) => Hash::make($state))
+                    ->dehydrated(fn($state) => filled($state))
+                    ->required(fn($livewire) => $livewire instanceof CreateRecord),
 
-                    Select::make('roles')
+                Select::make('roles')
                     ->label(__('resource.users.role'))
-                    ->relationship('roles','name')
+                    ->relationship('roles', 'name')
                     ->multiple()
                     ->preload()
-                    ->searchable()
-                   
-                    ,
+                    ->searchable(),
 
             ]);
     }

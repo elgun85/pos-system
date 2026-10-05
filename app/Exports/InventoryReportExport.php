@@ -40,7 +40,7 @@ class InventoryReportExport
                 ->whereHas('product', function ($q) {
                     $q->activeProduct();
                 })
-                ->cursor()
+                ->lazy(1000)
                 ->each(function ($item) use ($file) {
                     fputcsv($file, [
                         $item->product?->name ?? '',

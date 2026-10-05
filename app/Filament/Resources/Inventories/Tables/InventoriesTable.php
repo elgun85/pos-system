@@ -42,8 +42,7 @@ class InventoriesTable
 
                         default => 'success',
                     })
-                    ->sortable()
-                    ->searchable(),
+                    ->sortable(),
 
                 TextColumn::make('created_at')
                     ->label(__('resource.inventory.created_at'))

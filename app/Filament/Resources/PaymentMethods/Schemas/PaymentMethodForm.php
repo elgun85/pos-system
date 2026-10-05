@@ -22,6 +22,13 @@ class PaymentMethodForm
                     })
                     ->required(),
 
+                TextInput::make('code')
+                    ->label(__('resource.payment.code'))
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->alphaDash()
+                    ->maxLength(50),
+
                 FileUpload::make('icon')
                     ->label(__('resource.payment.icon'))
                     ->image()

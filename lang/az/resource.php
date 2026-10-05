@@ -56,7 +56,7 @@ return
         "purchase.pluralModelLabel"          =>     "Məhsul alışları",
 
         "users.navigationLabel"              =>      "İstifadəçilər",
-        "users.modelLabel"                   =>      "İstifadəçi ",
+        "users.modelLabel"                   =>      "İstifadəçi",
         "users.pluralModelLabel"             =>      "İstifadəçilər ",
 
         "payment.navigationLabel"            =>      "Ödəniş üsulları",
@@ -111,6 +111,7 @@ return
         "product.cost_price"               =>           "Alış qiyməti",
         "product.sale_price"               =>           "Satış qiyməti",
         "product.inventory.quantity"       =>           "Məhsul qalığı",
+        "product.supplier"                 =>           "Təchizatçı",
         "product.favorite"                 =>           "Sevimlilərə əlavə et",
         "product.created_at"               =>           "Yaradılma tarixi",
         "product.updated_at"               =>           "Yenilənmə tarixi",
@@ -157,10 +158,28 @@ return
         "users.created_at"                 =>           "Yaradılma tarixi",
 
         "payment.name"                     =>           "Ödəniş üsulu",
+        "payment.code"                     =>           "Ödəniş kodu",
+
+        "payment.nameCash"                 =>           "Nağd",
+        "payment.nameCashDesk"             =>           "Nağd pulla ödəniş",
+
+        "payment.nameCard"                 =>           "Kart (POS Terminal)",
+        "payment.nameCardDesk"             =>           "POS Terminal və ya Bank kartı ilə ödəniş",
+
+        "payment.nameCredit"               =>           "Nisyə (Borc)",
+        "payment.nameCreditDesk"           =>           "Müştərinin hesabına borc yazılması",
+
+        "payment.namePartial"              =>           "Hissə-hissə",
+        "payment.namePartialDesk"          =>           "Qarışıq ödəniş (Nağd + Kart)",
+
+        "payment.nameGift"                 =>           "Hədiyyə Kartı / Bonus",
+        "payment.nameGiftDesk"             =>           "Bonus və ya hədiyyə balı ilə ödəniş",
+
         "payment.icon"                     =>           "Şəkil",
         "payment.description"              =>           "Açıqlama",
         "payment.description.placeholder"  =>           "100 simvola qədər təsvir daxil edin",
         "payment.created_at"               =>           "Yaradılma tarixi",
+
 
         "customer.name"                    =>           "Ad",
         "customer.address"                 =>           "Ünvan",
@@ -211,8 +230,9 @@ return
         "payment_info"                     =>           "Ödəniş növü seçmək vacibdir.",
         "sale_success"                     =>           "Satış uğurla tamamlandı.",
         "sale_errors"                      =>           "Satış zamanı xəta baş verdi:",
-        "customer_success"                 =>           "Yeni müştəri uğurla əlavə edildi.",
-        "customer_error"                   =>           "Xəta baş verdi:",
+        "cardEmpty"                        =>           "Səbət boşdur. Satış üçün ən azı bir məhsul əlavə edin.",
+        "creditBalance"                    =>           "üzrə nisyə qalıq borc.",
+
 
         "name_required"                    =>           "Müştərinin adı mütləq daxil edilməlidir.",
         "name_max"                         =>           "Ad maksimum 255 simvol ola bilər.",
@@ -230,6 +250,9 @@ return
         "paid_amount"                      =>           "Ödənilən məbləğ",
         "new_customer"                     =>           "Yeni müştəri",
         "customer"                         =>           "Müştəri",
+        "customerCreditError"              =>           "Qalan borc (Nisyə) üçün müştəri seçilməlidir",
+        "customer_success"                 =>           "Yeni müştəri uğurla əlavə edildi.",
+        "customer_error"                   =>           "Xəta baş verdi:",
 
         "product_no"                       =>           "Məhsul tapılmadı",
         "search"                           =>           "Axtarın",
@@ -241,7 +264,7 @@ return
         "receipt"                          =>           "Qəbz",
         "companyName"                      =>           "MARKETİNİZİN ADI",
         "product"                          =>           "Məhsul",
-        "quantity"                         =>           "Say ",
+        "quantity"                         =>           "Say",
         "price"                            =>           " Qiymət",
         "total"                            =>           "Cəmi",
         "result"                           =>           "Yekun",
@@ -272,7 +295,7 @@ return
         "totalExpenses"                    =>           "Daxili xərclər ",
         "totalExpensesDesc"                =>           "Mağazanın daxili xərcləri",
 
-        "netSales"                         =>           " Xalis satış  ",
+        "netSales"                         =>           " Xalis satış",
         "netSalesDesc"                     =>           " Qaytarmalar çıxıldıqdan sonra xalis dövriyyə ",
 
         "netProfit"                        =>           "Xalis gəlir",

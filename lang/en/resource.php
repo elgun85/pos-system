@@ -105,7 +105,8 @@ return [
     "product.cost_price"               => "Cost Price",
     "product.sale_price"               => "Selling Price",
     "product.inventory.quantity"       => "Stock Quantity",
-    "product.favorite"                 => "Add to Favorites",
+    "product.supplier"                 => "Supplier",
+    "product.favorite"                 => "Favorites",
     "product.created_at"               => "Created At",
     "product.updated_at"               => "Updated At",
     "product.deleted_at"               => "Deleted At",
@@ -150,6 +151,23 @@ return [
     "users.created_at"                 => "Created At",
 
     "payment.name"                     => "Payment Method",
+    "payment.code"                     => "Payment Code",
+
+    "payment.nameCash"                 => "Cash",
+    "payment.nameCashDesk"             => "Payment with cash",
+
+    "payment.nameCard"                 => "Card (POS Terminal)",
+    "payment.nameCardDesk"             => "Payment via POS terminal or bank card",
+
+    "payment.nameCredit"               => "Credit (Debt)",
+    "payment.nameCreditDesk"           => "Added to the customer’s account as debt",
+
+    "payment.namePartial"              => "Partial Payment",
+    "payment.namePartialDesk"          => "Mixed payment (Cash + Card)",
+
+    "payment.nameGift"                 => "Gift Card / Bonus",
+    "payment.nameGiftDesk"             => "Payment with bonus or gift points",
+
     "payment.icon"                     => "Icon",
     "payment.description"              => "Description",
     "payment.description.placeholder"  => "Enter a description of up to 100 characters",
@@ -205,6 +223,10 @@ return [
     "sale_errors"                      => "An error occurred during the sale:",
     "customer_success"                 => "New customer added successfully.",
     "customer_error"                   => "An error occurred:",
+    "customerCreditError"              => "A customer must be selected for the remaining credit balance.",
+    "cardEmpty"                        => "The cart is empty. Add at least one product to make a sale.",
+    "creditBalance"                    => "Remaining credit balance for",
+
 
     "name_required"                    => "Customer name is required.",
     "name_max"                         => "Name may not exceed 255 characters.",
@@ -241,7 +263,7 @@ return [
     "created"                          => "Date",
     "cashier"                          => "Cashier",
     "thank"                            => "THANK YOU!",
-    "noImage"                          => " No image selected!",
+    "noImage"                          => "No image selected!",
     "startDate"                        => "Start date",
     "endDate"                          => "End date",
 

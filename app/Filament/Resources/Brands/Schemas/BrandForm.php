@@ -16,7 +16,6 @@ class BrandForm
                 TextInput::make('name')
                     ->label(__('resource.brand.name'))
                     ->required()
-                    ->placeholder('Brand adını daxil edin')
                     ->live()
                     ->afterStateUpdated(function ($state, callable $set) {
                         $set('name', mb_convert_case($state, MB_CASE_TITLE, 'UTF-8'));

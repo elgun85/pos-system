@@ -253,6 +253,11 @@ return
         "customerCreditError"              =>           "Qalan borc (Nisyə) üçün müştəri seçilməlidir",
         "customer_success"                 =>           "Yeni müştəri uğurla əlavə edildi.",
         "customer_error"                   =>           "Xəta baş verdi:",
+        "customerInformation"              =>           "Müştəri Məlumatları",
+        "pay"                              =>           "Ödəniş et",
+        "paySuccess"                       =>           "Ödəniş uğurla qəbul edildi.",
+        "generalDebtPayment"               =>           "Ümumi borc ödənişi",
+
 
         "product_no"                       =>           "Məhsul tapılmadı",
         "search"                           =>           "Axtarın",

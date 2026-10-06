@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\CustomerDebts\Tables;
 
+use App\Enums\PaymentMethodCode;
 use App\Models\CustomerTransaction;
 use App\Models\PaymentMethod;
 use Filament\Actions\Action;
@@ -73,8 +74,7 @@ class CustomerDebtsTable
                                 PaymentMethod::where('status', true)
                                     ->pluck('name', 'id')
                             )
-                            // 👈 Adı "Nağd" olanı tapır, tapmasa ilk aktiv olanın ID-sini seçir
-                            ->default(fn() => PaymentMethod::where('status', true)->where('name', 'like', '%Nağd%')->first()?->id
+                            ->default(fn() => PaymentMethod::where('status', true)->where('code', PaymentMethodCode::CASH)->first()?->id
                                 ?? PaymentMethod::where('status', true)->first()?->id)
                             ->required(),
 

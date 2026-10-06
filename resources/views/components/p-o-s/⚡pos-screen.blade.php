@@ -6,6 +6,7 @@ use App\Models\Inventory;
 use Livewire\Attributes\Computed;
 use Filament\Notifications\Notification;
 use App\Models\PaymentMethod;
+use App\Enums\PaymentMethodCode;
 use App\Models\Sale;
 use App\Models\SalesItem;
 use Illuminate\Support\Facades\DB;
@@ -35,7 +36,10 @@ new class extends Component {
     public function mount()
     {
         $this->products = Product::where('status', true)->get();
-        $this->paymentMethods = PaymentMethod::where('status', true)->orderByRaw("CASE WHEN name = 'Nağd' THEN 0 ELSE 1 END")->orderBy('name')->get();
+        $this->paymentMethods = PaymentMethod::where('status', true)
+            ->orderByRaw('CASE WHEN code = ? THEN 0 ELSE 1 END', [PaymentMethodCode::CASH])
+            ->orderBy('name')
+            ->get();
         $this->payment_method_id = $this->paymentMethods->first()?->id;
         // $this->customers = Customer::orderBy('name')->get();
     }
@@ -235,8 +239,8 @@ new class extends Component {
                 'customer_id' => $this->customer_id,
                 'payment_method_id' => $this->payment_method_id,
                 'discount_amount' => $this->discount_amount,
-                'payments' => $payments, // Massiv mütləq bura ötürülməlidir!
-                'paid_amount' => $paid, // Həqiqi ödənilən məbləği ötürürük
+                'payments' => $payments,
+                'paid_amount' => $paid,
             ]);
 
             $this->cart = [];
@@ -424,7 +428,8 @@ new class extends Component {
 
                     <div class="flex justify-between">
                         <span> {{ __('resource.payment_method') }} </span>
-                        <flux:select wire:model="payment_method_id" placeholder="  {{   __('resource.payment_method') }}" class="w-48">
+                        <flux:select wire:model="payment_method_id" placeholder="  {{ __('resource.payment_method') }}"
+                            class="w-48">
                             @foreach ($this->paymentMethods as $method)
                                 <flux:select.option :value="$method->id">{{ $method->name }}</flux:select.option>
                             @endforeach
@@ -488,7 +493,8 @@ new class extends Component {
                                     <div class="font-normal truncate text-base">{{ $product->name }}</div>
                                     <div class="text-xs text-zinc-500">{{ $product->brand?->name }}</div>
                                     <div class="mt-1 text-xs text-zinc-500">
-                                        Stok: {{ $product->inventory ? $product->inventory->quantity :      __('resource.not')  }}
+                                        Stok:
+                                        {{ $product->inventory ? $product->inventory->quantity : __('resource.not') }}
                                     </div>
                                     <div class="text-xs text-zinc-500">{{ $product->sku }}</div>
                                     <div class="mt-1 text-xm font-bold">₼ {{ number_format($product->sale_price, 2) }}

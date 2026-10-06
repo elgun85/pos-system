@@ -15,7 +15,7 @@ class CustomerDebtInfolist
         return $schema
             ->components([
                 // Sol Tərəf: Müştəri və Borc Xülasəsi
-                Section::make('Müştəri Məlumatları')
+                Section::make(__('resource.customerInformation'))
                     ->columnSpanFull(1)
                     ->schema([
                         TextEntry::make('name')

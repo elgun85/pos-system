@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\CustomerDebts\Pages;
 
+use App\Enums\PaymentMethodCode;
 use App\Filament\Resources\CustomerDebts\CustomerDebtResource;
 use App\Models\CustomerTransaction;
 use App\Models\PaymentMethod;
@@ -23,12 +24,12 @@ class ViewCustomerDebt extends ViewRecord
         return [
             EditAction::make(),
             Action::make('payment')
-                ->label('Ödəniş et')
+                ->label(__('resource.pay'))
                 ->icon('heroicon-o-banknotes')
                 ->color('success')
                 ->form([
                     TextInput::make('amount')
-                        ->label('Ödənilən məbləğ')
+                        ->label(__('resource.paid_amount'))
                         ->numeric()
                         ->step(0.01)
                         ->required()
@@ -41,8 +42,7 @@ class ViewCustomerDebt extends ViewRecord
                             PaymentMethod::where('status', true)
                                 ->pluck('name', 'id')
                         )
-                        // 👈 Adı "Nağd" olanı tapır, tapmasa ilk aktiv olanın ID-sini seçir
-                        ->default(fn() => PaymentMethod::where('status', true)->where('name', 'like', '%Nağd%')->first()?->id
+                        ->default(fn() => PaymentMethod::where('status', true)->where('code', PaymentMethodCode::CASH)->first()?->id
                             ?? PaymentMethod::where('status', true)->first()?->id)
                         ->searchable()
                         ->required(),
@@ -60,11 +60,11 @@ class ViewCustomerDebt extends ViewRecord
                             'user_id'           => auth()->id(),
                             'type'              => 'payment',
                             'amount'            => $data['amount'],
-                            'notes'             => $data['notes'] ?? 'Ümumi borc ödənişi',
+                            'notes' => $data['notes'] ?? __('resource.generalDebtPayment'),
                         ]);
                     });
                     Notification::make('')
-                        ->title('Ödəniş uğurla qəbul edildi.')
+                        ->title(__('resource.paySuccess'))
                         ->success()
                         ->send();
                     $this->record->refresh();

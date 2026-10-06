@@ -226,6 +226,10 @@ return [
     "customerCreditError"              => "A customer must be selected for the remaining credit balance.",
     "cardEmpty"                        => "The cart is empty. Add at least one product to make a sale.",
     "creditBalance"                    => "Remaining credit balance for",
+    "customerInformation"              => "Customer Information",
+    "pay"                              => "Pay",
+    "paySuccess"                       => "Payment was successfully received.",
+    "generalDebtPayment"               => "General debt payment",
 
 
     "name_required"                    => "Customer name is required.",

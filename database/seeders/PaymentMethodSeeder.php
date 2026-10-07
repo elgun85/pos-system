@@ -26,24 +26,7 @@ class PaymentMethodSeeder extends Seeder
                 'description'    =>          __('resource.payment.nameCardDesk'),
                 'status'         =>          true,
             ],
-            [
-                'code' => PaymentMethodCode::CREDIT,
-                'name' => __('resource.payment.nameCredit'),
-                'description' => __('resource.payment.nameCreditDesk'),
-                'status' => true,
-            ],
-            [
-                'code' => PaymentMethodCode::PARTIAL,
-                'name' => __('resource.payment.namePartial'),
-                'description' => __('resource.payment.namePartialDesk'),
-                'status' => true,
-            ],
-            [
-                'code' => PaymentMethodCode::GIFT,
-                'name' => __('resource.payment.nameGift'),
-                'description' => __('resource.payment.nameGiftDesk'),
-                'status' => false, // Lazım gəldikdə admin paneldən aktiv edilə bilər
-            ],
+
         ];
 
         foreach ($methods as $method) {

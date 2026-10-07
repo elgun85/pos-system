@@ -24,7 +24,7 @@ class DamageService
                 ->first();
 
             if (!$inventory || $inventory->quantity < $quantity) {
-                throw ValidationException::withMessages(['data.quantity' => 'Stokda yetərli sayda məhsul yoxdur.']);
+                throw ValidationException::withMessages(['data.quantity' => __('resource.no_inventory.error')]);
             }
 
             $product = Product::findOrFail($productId);
@@ -60,7 +60,7 @@ class DamageService
                 ->firstOrFail();
 
             if ($difference > 0 && $inventory->quantity < $difference) {
-                 throw ValidationException::withMessages(['data.quantity' => 'Stokda yetərli sayda məhsul yoxdur.']);
+                 throw ValidationException::withMessages(['data.quantity' =>__('resource.no_inventory.error')]);
 
             }
 

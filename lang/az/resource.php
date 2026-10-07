@@ -280,6 +280,10 @@ return
         "noImage"                          =>           "Şəkil seçilməyib!",
         "startDate"                        =>           "Başlanğıc tarixi",
         "endDate"                          =>           "Bitmə tarixi ",
+        "back"                             =>           "Geri",
+        "payment"                          =>           "Ödəniş",
+        "debt"                             =>           "Borc (Nisyə)",
+
 
 
 

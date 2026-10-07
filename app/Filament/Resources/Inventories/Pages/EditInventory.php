@@ -23,6 +23,6 @@ class EditInventory extends EditRecord
 
     public function getTitle(): string
     {
-        return 'Məhsul: ' . $this->record->product?->name;
+        return __('resource.product') .' ' .  $this->record->product?->name;
     }
 }

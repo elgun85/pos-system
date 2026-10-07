@@ -43,7 +43,7 @@ class SalesTable
 
                         $remaining = $items->count() - $shown->count();
                         if ($remaining > 0) {
-                            $text .= " ... (+{$remaining} məhsul)";
+                            $text .= " ... (+{$remaining}  ". __('resource.product') . ')';
                         }
                         return $text;
                     })

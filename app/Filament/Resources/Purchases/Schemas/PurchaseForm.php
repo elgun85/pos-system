@@ -111,7 +111,6 @@ class PurchaseForm
                                             $products = Product::pluck('name', 'id');
                                             $repeaterItems = $get('../../../purchaseItems') ?? $get('purchaseItems') ?? [];
                                             $selectedIds = collect($repeaterItems)->pluck('product_id')->filter()->toArray();
-                                            // Seçilmiş məhsulları siyahıdan çıxarırıq
                                             return $products->forget($selectedIds)->toArray();
                                         })
                                         ->createOptionForm([

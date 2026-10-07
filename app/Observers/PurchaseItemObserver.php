@@ -58,7 +58,6 @@ class PurchaseItemObserver
             $inventory = Inventory::where('product_id', $purchaseItem->product_id)->first();
 
             if ($inventory) {
-                // Silinən malın miqdarı qədər anbarı geri azaldırıq
                 $inventory->decrement('quantity', $purchaseItem->quantity);
             }
         }

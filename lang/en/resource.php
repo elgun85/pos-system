@@ -270,6 +270,9 @@ return [
     "noImage"                          => "No image selected!",
     "startDate"                        => "Start date",
     "endDate"                          => "End date",
+    "back"                             => "Back",
+    "payment"                          => "Payment",
+    "debt"                             => "Debt (Credit)",
 
     "cash_header"                      => "Finance & Inventory",
     "cashChart_header"                 => "Payment Methods",

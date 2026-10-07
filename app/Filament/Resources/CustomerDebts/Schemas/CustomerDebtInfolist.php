@@ -57,8 +57,8 @@ class CustomerDebtInfolist
                                         ->label(__('resource.customer_deb.deb_cat'))
                                         ->badge()
                                         ->formatStateUsing(fn($state) => match ($state) {
-                                            'debt' => 'Borc (Nisyə)',
-                                            'payment' => 'Ödəniş',
+                                            'debt' => __('resource.debt'),
+                                            'payment' => __('resource.payment'),
                                             default => $state,
                                         })
                                         ->color(fn($state) => match ($state) {

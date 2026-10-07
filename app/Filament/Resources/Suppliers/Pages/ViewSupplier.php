@@ -14,7 +14,7 @@ class ViewSupplier extends ViewRecord
     {
         return [
             //EditAction::make(),
-            Action::make('Geri')
+            Action::make(__('resource.back'))
                 ->link()
                 ->icon('heroicon-o-arrow-left')
                 ->url($this->getResource()::getUrl('index')),

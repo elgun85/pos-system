@@ -162,7 +162,6 @@ new class extends Component {
     #[Computed]
     public function actualPaidAmount(): float
     {
-        // Əgər input tamamilə boşdursa (null və ya boş string), deməli tam ödənişdir
         if ($this->paid_amount === '' || $this->paid_amount === null) {
             return (float) $this->total;
         }

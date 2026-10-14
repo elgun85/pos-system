@@ -1,3 +1,25 @@
+1. 
+### 🛡️ Admin İstifadəçinin Yaradılması və Shield Quraşdırma Addımları
+
+Layihənizdə Super Admin istifadəçi yaratmaq və icazələri (permissions) aktivləşdirmək üçün terminalda aşağıdakı ardıcıllığı icra edin:
+
+1. **İstifadəçinin yaradılması:**
+   ```bash
+   php artisan make:filament-user
+   (Sorğuya uyğun olaraq Ad, E-poçt və Şifrə məlumatlarını daxil edin)
+  1. İstifadəçiyə Super Admin rolunun verilməsi:
+   php artisan shield:super-admin
+   (Siyahıdan yaratdığınız istifadəçinin bağlı olduğu paneli seçin)
+   2. Bütün resurslar üçün icazələrin generasiya edilməsi:
+   php artisan shield:generate --all
+(Çıxan suallara müvafiq olaraq yes cavabını verərək siyasətləri və icazələri yaradın)
+3. Keşlərin təmizlənməsi və sistemin yenilənməsi:
+php artisan permission:cache-reset
+php artisan optimize:clear
+
+
+
+
 1.
 php artisan make:model Category -m
 php artisan make:model Product -m

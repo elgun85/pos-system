@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,11 +16,23 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name'     => 'Test User',
-            'email'    => 'test@example.com',
-            'password' => Hash::make('123'),
+/*         app()[PermissionRegistrar::class]->forgetCachedPermissions();
+
+        $role = Role::firstOrCreate([
+            'name' => 'super_admin',
+            'guard_name' => 'web',
         ]);
+
+
+
+        $user =  User::factory()->create([
+            'name'     => 'Admin',
+            'email'    => 'admin@example.com',
+            'password' => 123,
+        ]);
+
+
+        $user->assignRole($role); */
 
         $this->call([PaymentMethodSeeder::class]);
     }

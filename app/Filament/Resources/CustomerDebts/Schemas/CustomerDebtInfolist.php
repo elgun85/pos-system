@@ -49,7 +49,7 @@ class CustomerDebtInfolist
                                 Grid::make(5)->schema([
                                     // 1. Tarix
                                     TextEntry::make('created_at')
-                                        ->label(__('resource.customer_deb.created_at'))
+                                        ->label(__('resource.customer.created_at'))
                                         ->dateTime('d.m.Y H:i'),
 
                                     // 2. Növ (Debitor / Ödəniş)

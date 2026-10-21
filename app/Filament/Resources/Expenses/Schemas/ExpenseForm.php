@@ -39,7 +39,7 @@ class ExpenseForm
                                     ->label(__('resource.sale.price'))
                                     ->numeric()
                                     ->required()
-                                    ->prefix('₼')
+                                    ->prefix(__('resource.prefix'))
                                     ->minValue(0.01),
 
                                 Select::make('payment_method_id')

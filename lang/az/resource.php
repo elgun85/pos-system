@@ -229,7 +229,7 @@ return
         "credit.info"                      =>           "Nisyə satış üçün mütləq müştəri seçilməlidir!",
         "payment_info"                     =>           "Ödəniş növü seçmək vacibdir.",
         "sale_success"                     =>           "Satış uğurla tamamlandı.",
-        "sale_errors"                      =>           "Satış zamanı xəta baş verdi:",
+        "sale_errors"                      =>           "Satış zamanı xəta baş verdi: ",
         "cardEmpty"                        =>           "Səbət boşdur. Satış üçün ən azı bir məhsul əlavə edin.",
         "creditBalance"                    =>           "üzrə nisyə qalıq borc.",
 
@@ -257,6 +257,18 @@ return
         "pay"                              =>           "Ödəniş et",
         "paySuccess"                       =>           "Ödəniş uğurla qəbul edildi.",
         "generalDebtPayment"               =>           "Ümumi borc ödənişi",
+        "quantityZero"                     =>           "Miqdar 0-dan böyük olmalıdır.",
+        "productNotFound"                  =>           "Məhsul tapılmadı və ya satış qiyməti yoxdur.",
+        "customerNotFound"                 =>           "Müştəri tapılmadı.",
+
+        "sale.already_returned"            =>           "Bu satış artıq tam qaytarılıb.",
+        "sale.return_not_in_sale"          =>           "Bu məhsul həmin satışda yoxdur.",
+        "sale.return_qty_error"            =>           "Qaytarıla bilən maksimum miqdar: ",
+        "sale.return_inventory_missing"    =>           "Bu məhsulun anbar qeydi tapılmadı.",
+        "sale.return_refund"               =>           "Nağd qaytarılacaq: ",
+        "sale.return_debt_offset"          =>           "Borcdan silindi: ",
+
+
 
 
         "product_no"                       =>           "Məhsul tapılmadı",
@@ -270,6 +282,7 @@ return
         "companyName"                      =>           "MARKETİNİZİN ADI",
         "product"                          =>           "Məhsul",
         "quantity"                         =>           "Say",
+        "quantity1"                        =>           "Miqdar",
         "price"                            =>           " Qiymət",
         "total"                            =>           "Cəmi",
         "result"                           =>           "Yekun",
@@ -283,6 +296,10 @@ return
         "back"                             =>           "Geri",
         "payment"                          =>           "Ödəniş",
         "debt"                             =>           "Borc (Nisyə)",
+        "sold"                             =>           "Satılıb",
+        "prefix"                           =>           "₼ ",
+
+        
 
 
 

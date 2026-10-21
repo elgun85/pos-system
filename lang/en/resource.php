@@ -220,7 +220,7 @@ return [
     "credit.info"                      => "A customer must be selected for a credit sale.",
     "payment_info"                     => "A payment method must be selected.",
     "sale_success"                     => "Sale completed successfully.",
-    "sale_errors"                      => "An error occurred during the sale:",
+    "sale_errors"                      => "An error occurred during the sale: ",
     "customer_success"                 => "New customer added successfully.",
     "customer_error"                   => "An error occurred:",
     "customerCreditError"              => "A customer must be selected for the remaining credit balance.",
@@ -230,6 +230,12 @@ return [
     "pay"                              => "Pay",
     "paySuccess"                       => "Payment was successfully received.",
     "generalDebtPayment"               => "General debt payment",
+    'sale.already_returned'            => 'This sale has already been fully returned.',
+    'sale.return_not_in_sale'          => 'This product is not included in this sale.',
+    'sale.return_qty_error'            => 'Maximum returnable quantity: ',
+    'sale.return_inventory_missing'    => 'The inventory record for this product was not found.',
+    'sale.return_refund'               => 'Cash refund: ',
+    'sale.return_debt_offset'          => 'Deducted from debt: ',
 
 
     "name_required"                    => "Customer name is required.",
@@ -273,6 +279,13 @@ return [
     "back"                             => "Back",
     "payment"                          => "Payment",
     "debt"                             => "Debt (Credit)",
+    "quantityZero"                     => "The quantity must be greater than zero.",
+    "productNotFound"                  => "Product not found or sale price is missing.",
+    "customerNotFound"                 => "Customer not found.",
+    "quantity1"                        => "Count",
+    "Sold"                             => "Sold",
+    "prefix"                             => "$ ",
+
 
     "cash_header"                      => "Finance & Inventory",
     "cashChart_header"                 => "Payment Methods",

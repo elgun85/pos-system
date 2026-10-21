@@ -27,7 +27,7 @@ class InventoriesTable
 
                 TextColumn::make('product.sale_price')
                     ->label(__('resource.inventory.sale_cost'))
-                    ->prefix('₼')
+                    ->prefix(__('resource.prefix'))
                     ->sortable(),
 
                 TextColumn::make('quantity')

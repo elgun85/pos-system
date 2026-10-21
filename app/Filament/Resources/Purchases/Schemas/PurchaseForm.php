@@ -65,7 +65,7 @@ class PurchaseForm
                                     ->rule('max:99999999')
                                     ->live()
                                     ->numeric()
-                                    ->prefix('₼')
+                                    ->prefix(__('resource.prefix'))
                                     ->disabled()
                                     ->dehydrated(),
 
@@ -180,7 +180,7 @@ class PurchaseForm
                                 Grid::make(2)->schema([
 
                                     TextInput::make('quantity')
-                                       ->label(__('resource.purchase.quantity'))
+                                        ->label(__('resource.purchase.quantity'))
                                         ->numeric()
                                         ->default(1)
                                         ->required()
@@ -190,7 +190,7 @@ class PurchaseForm
                                     TextInput::make('cost_price')
                                         ->label(__('resource.purchase.cost_price'))
                                         ->numeric()
-                                        ->prefix('₼')
+                                        ->prefix(__('resource.prefix'))
                                         ->required()
                                         ->live()
                                         ->placeholder('0.00'),

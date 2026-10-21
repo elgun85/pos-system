@@ -47,8 +47,8 @@ class Customer extends Model
 
                 // Əks halda münasibət üzərindən canlı hesabla
                 $totalDebt = $this->debts()->sum('amount');
-                $totalPayment = $this->payments()->sum('amount');
-
+                $totalPayment = $this->payments()->sum('amount')
+                    + CustomerTransaction::where('customer_id', $this->id)->where('type', 'refund')->sum('amount');
                 return max(0, $totalDebt - $totalPayment);
             }
         );
@@ -65,7 +65,7 @@ class Customer extends Model
                         SUM(
                             CASE
                                 WHEN type = 'debt' THEN amount
-                                WHEN type = 'payment' THEN -amount
+                                WHEN type IN ('payment','refund') THEN -amount
                                 ELSE 0
                             END
                         ), 0

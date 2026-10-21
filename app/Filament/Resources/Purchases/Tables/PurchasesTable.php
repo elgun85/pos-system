@@ -37,7 +37,7 @@ class PurchasesTable
 
                 TextColumn::make('total_price')
                     ->label(__('resource.purchase.total_price'))
-                    ->money()
+                    ->prefix(__('resource.prefix'))
                     ->sortable(),
 
                 IconColumn::make('status')

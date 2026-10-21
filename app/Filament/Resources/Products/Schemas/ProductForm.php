@@ -57,13 +57,13 @@ class ProductForm
                             ->default(0)
                             //->required()
                             ->numeric()
-                            ->prefix('₼'),
+                            ->prefix(__('resource.prefix')),
 
                         TextInput::make('sale_price')
                             ->label(__('resource.product.sale_price'))
                             ->required()
                             ->numeric()
-                            ->prefix('₼'),
+                            ->prefix(__('resource.prefix')),
                         FileUpload::make('image')
                             ->label(__('resource.product.image'))
                             ->disk('public')

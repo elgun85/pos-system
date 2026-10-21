@@ -180,7 +180,7 @@ class DashboardService
             ->when($endDate, fn($q) => $q->whereDate('expenses.created_at', '<=', $endDate))
             ->when(!$startDate && !$endDate, fn($q) => $q->whereDate('expenses.created_at', now()->today()))
             ->groupBy('expense_categories.id', 'expense_categories.name')
-          //  ->whereNotIn('expense_categories.name',['Yeni Mehsul'])
+            //  ->whereNotIn('expense_categories.name',['Yeni Mehsul'])
             ->orderByDesc('total_amount')
             ->get()
             ->pluck('total_amount', 'category_name')
@@ -275,7 +275,7 @@ class DashboardService
                     SUM(
                 CASE
                  WHEN type = 'debt' THEN amount
-                 WHEN type = 'payment' THEN -amount
+                 WHEN type IN ('payment','refund') THEN -amount
                  ELSE 0
                  END
                 ) as total

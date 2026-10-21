@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('returns', function (Blueprint $table) {
             $table->id();
             $table->foreignId('sale_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->decimal('quantity', 10, 2)->nullable();
             $table->decimal('total', 10, 2)->nullable();
             $table->string('reason')->nullable();        

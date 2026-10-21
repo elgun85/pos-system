@@ -17,7 +17,7 @@ use Flux\Flux;
 new class extends Component {
     public $search = '';
     public $cart = [];
-    public $products;
+    // public $products;
     public $customers;
     public $paymentMethods;
 
@@ -35,7 +35,7 @@ new class extends Component {
 
     public function mount()
     {
-        $this->products = Product::where('status', true)->get();
+        // $this->products = Product::where('status', true)->get();
         $this->paymentMethods = PaymentMethod::where('status', true)
             ->orderByRaw('CASE WHEN code = ? THEN 0 ELSE 1 END', [PaymentMethodCode::CASH])
             ->orderBy('name')
@@ -106,6 +106,9 @@ new class extends Component {
     public function addToCart($productId)
     {
         $product = Product::find($productId);
+        if (!$product) {
+            return;
+        }
 
         $inventory = Inventory::where('product_id', $productId)->first();
         if (!$inventory || $inventory->quantity < 0) {
@@ -142,6 +145,43 @@ new class extends Component {
                 ->title($removedItem['name'] . ' ' . __('resource.cart.remove'))
                 ->warning()
                 ->send();
+        }
+    }
+
+    public function updatedCart(): void
+    {
+        $ids = array_keys($this->cart);
+        $products = Product::whereIn('id', $ids)->get()->keyBy('id');
+        $stock = Inventory::whereIn('product_id', $ids)->pluck('quantity', 'product_id');
+        foreach ($this->cart as $id => $item) {
+            if (!isset($products[$id])) {
+                unset($this->cart[$id]);
+                continue;
+            }
+            $qty = max(0, round((float) ($item['quantity'] ?? 0), 2));
+            $max = (float) ($stock[$id] ?? 0);
+
+            if ($qty > $max) {
+                $qty = $max;
+                Notification::make()->title(__('resource.no_inventory.error'))->danger()->send();
+            }
+
+            $this->cart[$id]['product_id'] = $id;
+            $this->cart[$id]['sale_price'] = $products[$id]->sale_price;
+            $this->cart[$id]['name'] = $products[$id]->name;
+            $this->cart[$id]['quantity'] = $qty;
+        }
+    }
+
+    public function updatedDiscountAmount(): void
+    {
+        $this->discount_amount = max(0, min((float) $this->discount_amount, $this->subtotal));
+    }
+
+    public function updatedPaidAmount(): void
+    {
+        if ($this->paid_amount !== '' && (float) $this->paid_amount < 0) {
+            $this->paid_amount = 0;
         }
     }
 
@@ -247,9 +287,10 @@ new class extends Component {
             $this->paid_amount = '';
             $this->discount_amount = 0;
             $this->customer_id = null;
-            $this->total = 0;
-            $this->subtotal = 0;
+            //   $this->total = 0;
+            // $this->subtotal = 0;
             $this->customer_search = '';
+            unset($this->total, $this->subtotal);
 
             // 4. Uğurlu bildiriş göndərilir
             Notification::make()->title(__('resource.sale_success'))->success()->send();
@@ -326,7 +367,8 @@ new class extends Component {
                             {{ count($this->cart) }} {{ __('resource.product') }}
                         </span>
                         <div class="flex justify-between pt-3 text-xl font-bold">
-                            <span class="font-bold text-red-600 text-4xl"> ₼{{ number_format($this->total, 2) }}</span>
+                            <span class="font-bold text-red-600 text-4xl">
+                                {{ __('resource.prefix') }}{{ number_format($this->total, 2) }}</span>
                         </div>
                     </div>
                 </div>
@@ -347,8 +389,9 @@ new class extends Component {
                             </div>
 
                             <div class="w-40 text-right text-sm font-medium text-zinc-600">
-                                {{ $cartItem['quantity'] }} x ₼{{ number_format($cartItem['sale_price'], 2) }} =
-                                ₼{{ number_format(((int) ($cartItem['quantity'] ?: 0)) * ((float) ($cartItem['sale_price'] ?: 0)), 2) }}
+                                {{ $cartItem['quantity'] }} x
+                                {{ __('resource.prefix') }}{{ number_format($cartItem['sale_price'], 2) }} =
+                                {{ __('resource.prefix') }}{{ number_format(((int) ($cartItem['quantity'] ?: 0)) * ((float) ($cartItem['sale_price'] ?: 0)), 2) }}
                             </div>
 
                             <div class="ml-8">
@@ -415,7 +458,7 @@ new class extends Component {
 
                     <div class="flex justify-between">
                         <span> {{ __('resource.total') }}</span>
-                        <span>₼{{ number_format($this->subtotal, 2) }}</span>
+                        <span>{{ __('resource.prefix') }}{{ number_format($this->subtotal, 2) }}</span>
                     </div>
 
                     <div class="flex justify-between text-red-500">
@@ -440,17 +483,18 @@ new class extends Component {
 
                     <div class="flex justify-between border-t pt-3 text-xl font-bold">
                         <span> {{ __('resource.grand_total') }} </span>
-                        <span class="font-bold text-red-600 text-2xl"> ₼{{ number_format($this->total, 2) }}</span>
+                        <span class="font-bold text-red-600 text-2xl">
+                            {{ __('resource.prefix') }}{{ number_format($this->total, 2) }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span>{{ __('resource.change') }}</span>
-                        <span>₼{{ number_format($this->change, 2) }}</span>
+                        <span>{{ __('resource.prefix') }}{{ number_format($this->change, 2) }}</span>
                     </div>
 
                     <div class="flex justify-between">
                         <span>{{ __('resource.amount_due') }}</span>
-                        <span>₼{{ number_format($this->deuAmount(), 2) }}</span>
+                        <span>{{ __('resource.prefix') }}{{ number_format($this->deuAmount(), 2) }}</span>
                     </div>
 
                     <flux:input placeholder="  {{ __('resource.paid_amount') }}"
@@ -496,7 +540,7 @@ new class extends Component {
                                         {{ $product->inventory ? $product->inventory->quantity : __('resource.not') }}
                                     </div>
                                     <div class="text-xs text-zinc-500">{{ $product->sku }}</div>
-                                    <div class="mt-1 text-xm font-bold">₼ {{ number_format($product->sale_price, 2) }}
+                                    <div class="mt-1 text-xm font-bold">{{__('resource.prefix')}} {{ number_format($product->sale_price, 2) }}
                                     </div>
                                 </div>
                             </div>

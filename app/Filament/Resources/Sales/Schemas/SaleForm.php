@@ -22,7 +22,7 @@ class SaleForm
                 TextInput::make('total')
                     ->label(__('resource.sale.total'))
                     ->numeric()
-                    ->suffix('₼')
+                    ->suffix(__('resource.prefix'))
                     ->readOnly()
                     ->disabled(),
 

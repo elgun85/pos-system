@@ -9,6 +9,7 @@ class SaleReturn extends Model
     protected $table = 'returns'; // Cədvəl adı returns qala bilər
     protected $fillable = [
         'sale_id',
+        'user_id',
         'quantity',
         'total',
         'reason',

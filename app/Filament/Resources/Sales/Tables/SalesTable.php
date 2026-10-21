@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Sales\Tables;
 
 use App\Models\Sale;
-use App\Models\SalesItem;
 use App\Services\ReturnService;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
@@ -43,7 +42,7 @@ class SalesTable
 
                         $remaining = $items->count() - $shown->count();
                         if ($remaining > 0) {
-                            $text .= " ... (+{$remaining}  ". __('resource.product') . ')';
+                            $text .= " ... (+{$remaining}  " . __('resource.product') . ')';
                         }
                         return $text;
                     })
@@ -114,7 +113,11 @@ class SalesTable
                                                 ->get()
                                                 ->mapWithKeys(function ($item) {
                                                     return [
-                                                        $item->product->id => $item->product->name . '(' . number_format($item->price, 2) . '₼ )'
+                                                        $item->product_id => ($item->product?->name ?? ('#' . $item->product_id))
+                                                            . ' (' . number_format($item->price, 2) . ' ' .__('resource.prefix').' )'
+                                                            . ' — ' . __('resource.sold') . ': '
+                                                            . rtrim(rtrim(number_format((float) $item->quantity, 2, '.', ''), '0'), '.')
+
                                                     ];
                                                 })
                                             ;
@@ -132,13 +135,9 @@ class SalesTable
                                         ->minValue(1)
                                         ->required(),
 
-                                    TextInput::make('refund_amount')
-                                        ->label(__('resource.sale.price'))
-                                        ->required()
-                                        ->prefix('₼')
 
                                 ])
-                                ->columns(3)
+                                ->columns(4)
                                 ->minItems(1)
                                 ->defaultItems(1),
 
@@ -152,13 +151,19 @@ class SalesTable
                     )
                     ->action(function (Sale $record, array $data, ReturnService $returnService) {
                         try {
-                            $returnService->processReturn(
+                            $return  =  $returnService->processReturn(
                                 sale: $record,
                                 items: $data['items'],
                                 reason: $data['reason'] ?? null
                             );
                             Notification::make()
                                 ->title(__('resource.sale.title'))
+                                ->body(
+                                    __('resource.sale.return_refund') . number_format($return->cash_refund, 2) . __('resource.prefix')
+                                        . ($return->debt_offset > 0
+                                            ? ' | ' . __('resource.sale.return_debt_offset') . number_format($return->debt_offset, 2) . __('resource.prefix')
+                                            : '')
+                                )
                                 ->success()
                                 ->send();
                         } catch (\Exception $e) {
@@ -169,14 +174,10 @@ class SalesTable
                                 ->send();
                         }
                     })
-                    ->hidden(fn(Sale $record) => $record->status === 'cancelled'),
+                    ->hidden(fn(Sale $record) => in_array($record->status, ['cancelled', 'returned', 'draft'], true)),
 
                 ViewAction::make(),
             ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+        ;
     }
 }

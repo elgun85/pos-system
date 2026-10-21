@@ -47,12 +47,13 @@ class ProductInfolist
                     ->label(__('resource.product.cost_price'))
                     ->weight(FontWeight::Bold)
                     ->size('md')
-                    ->money(),
+                    ->prefix(__('resource.prefix'))
+                    ,
                 TextEntry::make('sale_price')
                     ->label(__('resource.product.sale_price'))
                     ->weight(FontWeight::Bold)
                     ->size('md')
-                    ->money(),
+                    ->prefix(__('resource.prefix')),
 
                 TextEntry::make('inventory.quantity')
                     ->label(__('resource.product.inventory.quantity'))

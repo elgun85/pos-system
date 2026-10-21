@@ -2,14 +2,17 @@
 
 namespace App\Filament\Resources\Purchases\Tables;
 
+use App\Models\Purchase;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Actions\DeleteAction;
+use Illuminate\Database\Eloquent\Collection;
 
 class PurchasesTable
 {
@@ -61,11 +64,38 @@ class PurchasesTable
             ])
             ->recordActions([
                 EditAction::make()->iconButton(),
-                DeleteAction::make()->iconButton(),
+                DeleteAction::make()
+                    ->iconButton()
+                    ->before(function (DeleteAction $action, Purchase $record) {
+                        if ($message = $record->stockBlockMessage()) {
+                            Notification::make()
+                                ->danger()
+                                ->title(__('resource.purchase.cannot_delete'))
+                                ->body($message)
+                                ->persistent()
+                                ->send();
+
+                            $action->cancel();
+                        }
+                    }),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->before(function (DeleteBulkAction $action, Collection $records) {
+                            foreach ($records as $record) {
+                                if ($message = $record->stockBlockMessage()) {
+                                    Notification::make()
+                                        ->danger()
+                                        ->title(__('resource.purchase.cannot_delete'))
+                                        ->body(($record->invoice_number ? '#' . $record->invoice_number . ' — ' : '') . $message)
+                                        ->persistent()
+                                        ->send();
+                                    $action->cancel();
+                                    return;
+                                }
+                            }
+                        }),
                 ]),
             ]);
     }

@@ -4,78 +4,64 @@ namespace App\Observers;
 
 use App\Models\Inventory;
 use App\Models\PurchaseItem;
+use App\Services\StockService;
+use Illuminate\Support\Facades\DB;
+
 
 class PurchaseItemObserver
 {
-    /**
-     * Handle the PurchaseItem "created" event.
-     */
-    public function created(PurchaseItem $purchaseItem): void
+    public function __construct(private StockService $stock) {}
+    /** Alış anbara qəbul olunubsa (status = true) stok dəyişir. */
+    private function isReceived(PurchaseItem $item): bool
     {
-        if ($purchaseItem->purchase && $purchaseItem->purchase->status == 1) {
-            $inventory = Inventory::where('product_id', $purchaseItem->product_id)->first();
-            if ($inventory) {
-                $inventory->increment('quantity', $purchaseItem->quantity);
-            }
+        return (bool) $item->purchase?->status;
+    }
 
-            if ($purchaseItem->cost_price > 0) {
-                $purchaseItem->product->update([
-                    'cost_price' => $purchaseItem->cost_price
-                ]);
+    public function created(PurchaseItem $item): void
+    {
+        if (! $this->isReceived($item)) {
+            return;
+        }
+
+        $this->stock->adjust((int) $item->product_id, (float) $item->quantity);
+        $this->stock->syncCostPrice($item);
+    }
+
+    public function updating(PurchaseItem $item): void
+    {
+        if (! $this->isReceived($item)) {
+            return;
+        }
+
+        $oldProductId = (int) $item->getOriginal('product_id');
+        $newProductId = (int) $item->product_id;
+        $oldQty       = (float) $item->getOriginal('quantity');
+        $newQty       = (float) $item->quantity;
+
+        DB::transaction(function () use ($oldProductId, $newProductId, $oldQty, $newQty) {
+            if ($oldProductId !== $newProductId) {
+                // Məhsul dəyişib: köhnədən çıx, yeniyə əlavə et
+                $this->stock->adjust($oldProductId, -$oldQty);
+                $this->stock->adjust($newProductId, $newQty);
+            } elseif ($newQty !== $oldQty) {
+                $this->stock->adjust($newProductId, $newQty - $oldQty);
             }
+        });
+    }
+
+    public function updated(PurchaseItem $item): void
+    {
+        if ($this->isReceived($item) && $item->wasChanged(['cost_price', 'product_id'])) {
+            $this->stock->syncCostPrice($item);
         }
     }
 
-    /**
-     * Handle the PurchaseItem "updated" event.
-     */
-    public function updated(PurchaseItem $purchaseItem): void
+    public function deleting(PurchaseItem $item): void
     {
-        if ($purchaseItem->purchase && $purchaseItem->purchase->status == 1) {
-            $inventory = Inventory::where('product_id', $purchaseItem->product_id)->first();
-
-            if ($inventory) {
-                // Köhnə miqdar ilə yeni miqdar arasındakı fərqi tapırıq (Məs: 60 - 50 = 10)
-                $difference = $purchaseItem->quantity - $purchaseItem->getOriginal('quantity');
-
-                // Fərqi anbara tətbiq edirik
-                $inventory->increment('quantity', $difference);
-            }
-            if ($purchaseItem->cost_price > 0 && $purchaseItem->isDirty('cost_price')) {
-                $purchaseItem->product->update([
-                    'cost_price' => $purchaseItem->cost_price,
-                ]);
-            }
+        if (! $this->isReceived($item)) {
+            return;
         }
-    }
 
-    /**
-     * Handle the PurchaseItem "deleted" event.
-     */
-    public function deleted(PurchaseItem $purchaseItem): void
-    {
-        if ($purchaseItem->purchase && $purchaseItem->purchase->status == 1) {
-            $inventory = Inventory::where('product_id', $purchaseItem->product_id)->first();
-
-            if ($inventory) {
-                $inventory->decrement('quantity', $purchaseItem->quantity);
-            }
-        }
-    }
-
-    /**
-     * Handle the PurchaseItem "restored" event.
-     */
-    public function restored(PurchaseItem $purchaseItem): void
-    {
-        //
-    }
-
-    /**
-     * Handle the PurchaseItem "force deleted" event.
-     */
-    public function forceDeleted(PurchaseItem $purchaseItem): void
-    {
-        //
+        $this->stock->adjust((int) $item->product_id, -(float) $item->quantity);
     }
 }

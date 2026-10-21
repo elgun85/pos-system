@@ -298,8 +298,13 @@ return
         "debt"                             =>           "Borc (Nisyə)",
         "sold"                             =>           "Satılıb",
         "prefix"                           =>           "₼ ",
+        "purchase.inventory_missing"       =>           "Bu məhsulun anbar qeydi tapılmadı.",
+        "purchase.stock_too_low"           =>           "Stok kifayət etmir: bu alışın miqdarı artıq satılıb və ya xərclənib, geri qaytarmaq mümkün deyil.",
+        "purchase.cannot_delete" => "Alışı silmək mümkün deyil",
+        "purchase.cannot_save"   => "Dəyişiklik saxlanmadı",
+        "purchase.stock_detail"  => ":name — alışda: :purchased, anbarda: :available. Mal artıq satılıb və ya xərclənib.",
 
-        
+
 
 
 

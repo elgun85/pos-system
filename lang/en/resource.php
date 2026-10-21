@@ -284,7 +284,12 @@ return [
     "customerNotFound"                 => "Customer not found.",
     "quantity1"                        => "Count",
     "Sold"                             => "Sold",
-    "prefix"                             => "$ ",
+    "prefix"                           => "$ ",
+    "purchase.inventory_missing"       => "The inventory record for this product was not found.",
+    "purchase.stock_too_low"           => "Insufficient stock: the quantity from this purchase has already been sold or used, so it cannot be returned.",
+    "purchase.cannot_delete" => "Unable to delete the purchase",
+    "purchase.cannot_save"   => "Changes could not be saved",
+    "purchase.stock_detail"  => ":name — purchased: :purchased, in stock: :available. The item has already been sold or used.",
 
 
     "cash_header"                      => "Finance & Inventory",

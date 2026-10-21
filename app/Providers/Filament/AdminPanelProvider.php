@@ -33,6 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->maxContentWidth(Width::Full)
             ->sidebarCollapsibleOnDesktop()
+            ->databaseTransactions()
 
 
             ->id('admin')
@@ -61,18 +62,7 @@ class AdminPanelProvider extends PanelProvider
                 __('resource.navigationGroup.system'),
 
 
-                /*                 'ANALİTİKA',
-                'SATIŞ',
-                'KASSA',
-                'MAĞAZA',
 
-                'TƏCHİZAT',
-                'MÜŞTƏRİLƏR',
-                'MÜŞTƏRİ BORCLARI',
-
-                'ANBAR HESABATI',
-
-                'SİSTEM', */
             ])
             ->colors([
                 'primary' => Color::Amber,

@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Models\Product;
+use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Observers\ProductObserver;
 use App\Observers\PurchaseItemObserver;
+use App\Observers\PurchaseObserver;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         $this->configureDefaults();
         Product::observe(ProductObserver::class);
         PurchaseItem::observe(PurchaseItemObserver::class);
+        Purchase::observe(PurchaseObserver::class);
     }
 
     /**

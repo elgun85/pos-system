@@ -25,6 +25,11 @@ class InventoriesTable
                     ->label(__('resource.inventory.brand.name'))
                     ->sortable(),
 
+                TextColumn::make('product.cost_price')
+                    ->label(__('resource.product.cost_price'))
+                    ->prefix(__('resource.prefix'))
+                    ->sortable(),
+
                 TextColumn::make('product.sale_price')
                     ->label(__('resource.inventory.sale_cost'))
                     ->prefix(__('resource.prefix'))

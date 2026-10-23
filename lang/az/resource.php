@@ -300,9 +300,24 @@ return
         "prefix"                           =>           "₼ ",
         "purchase.inventory_missing"       =>           "Bu məhsulun anbar qeydi tapılmadı.",
         "purchase.stock_too_low"           =>           "Stok kifayət etmir: bu alışın miqdarı artıq satılıb və ya xərclənib, geri qaytarmaq mümkün deyil.",
-        "purchase.cannot_delete" => "Alışı silmək mümkün deyil",
-        "purchase.cannot_save"   => "Dəyişiklik saxlanmadı",
-        "purchase.stock_detail"  => ":name — alışda: :purchased, anbarda: :available. Mal artıq satılıb və ya xərclənib.",
+        "purchase.cannot_delete"           =>           "Alışı silmək mümkün deyil",
+        "purchase.cannot_save"             =>           "Dəyişiklik saxlanmadı",
+        "purchase.stock_detail"            =>           ":name — alışda: :purchased, anbarda: :available. Mal artıq satılıb və ya xərclənib.",
+
+        "new_category"                     =>           "Yeni Kateqoriya",
+        "note"                             =>           "Qeyd",
+        "generate_barcode"                 =>           "Unikal barkod generasiya et",
+        "customer_deleted"                 =>           "Müştəri silinib",
+        "return_debt_note"                 =>           "üzrə qaytarma: borcdan silindi",
+        "stok"                             =>           "Stok",
+        "status"                           =>           "Status",
+        "active"                           =>           "Aktiv",
+        "inactive"                         =>           "Passiv",
+
+
+
+
+
 
 
 

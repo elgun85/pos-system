@@ -89,7 +89,7 @@ class CustomerDebtsTable
                                 'user_id'           => auth()->id(),
                                 'type'              => 'payment',
                                 'amount'            => $data['amount'],
-                                'notes'             => $data['notes'] ?? 'Ümumi borc ödənişi',
+                                'notes'             => $data['notes'] ?? __('resource.generalDebtPayment'),
                             ]);
                         });
 

@@ -28,7 +28,7 @@ class CategoryForm
                     ->preload()
                     ->searchable(),
                 Toggle::make('status')
-                    ->label('Status')
+                    ->label(__('resource.status'))
                     ->default(true)
                     ->required(),
             ]);

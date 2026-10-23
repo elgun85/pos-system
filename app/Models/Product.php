@@ -86,7 +86,6 @@ class Product extends Model
         'cost_price' => 'decimal:2',
         'sale_price' => 'decimal:2',
         'is_favorite' => 'boolean',
-        'status' => 'boolean',
     ];
 
     #[Scope]

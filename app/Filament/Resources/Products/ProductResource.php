@@ -61,7 +61,7 @@ class ProductResource extends Resource
         return Cache::remember(
             'product',
             now()->addMinutes(10),
-            fn() => static::getModel()::where('status', true)
+            fn() => static::getModel()::where('status', true)->where('status', 'active')
                 ->count()
 
         );

@@ -53,16 +53,21 @@ new class extends Component {
 
         $this->customerList = Customer::query()
             ->select('id', 'name', 'phone', 'address')
-            ->where('name', 'like', "%{$this->customer_search}%")
-            ->orWhere('phone', 'like', "%{$this->customer_search}%")
-            ->orWhere('address', 'like', "%{$this->customer_search}%")
             ->where('status', true)
+            ->where(function ($q) {
+                $q->where('name', 'like', "%{$this->customer_search}%")
+                    ->orWhere('phone', 'like', "%{$this->customer_search}%")
+                    ->orWhere('address', 'like', "%{$this->customer_search}%");
+            })
             ->limit(20)
             ->get();
     }
 
     public function selectCustomer($id)
     {
+        if (!$customer) {
+            return;
+        }
         $customer = Customer::find($id);
 
         $this->customer_id = $customer->id;
@@ -188,7 +193,7 @@ new class extends Component {
     #[Computed]
     public function subtotal(): float
     {
-        return collect($this->cart)->sum(fn($item) => (float) $item['sale_price'] * (int) $item['quantity']);
+        return collect($this->cart)->sum(fn($item) => (float) $item['sale_price'] * (float) $item['quantity']);
     }
 
     #[Computed]
@@ -536,11 +541,12 @@ new class extends Component {
                                     <div class="font-normal truncate text-base">{{ $product->name }}</div>
                                     <div class="text-xs text-zinc-500">{{ $product->brand?->name }}</div>
                                     <div class="mt-1 text-xs text-zinc-500">
-                                        Stok:
+                                        {{ __('resource.stock') }}:
                                         {{ $product->inventory ? $product->inventory->quantity : __('resource.not') }}
                                     </div>
                                     <div class="text-xs text-zinc-500">{{ $product->sku }}</div>
-                                    <div class="mt-1 text-xm font-bold">{{__('resource.prefix')}} {{ number_format($product->sale_price, 2) }}
+                                    <div class="mt-1 text-xm font-bold">{{ __('resource.prefix') }}
+                                        {{ number_format($product->sale_price, 2) }}
                                     </div>
                                 </div>
                             </div>

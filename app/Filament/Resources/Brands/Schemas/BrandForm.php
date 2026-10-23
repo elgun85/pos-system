@@ -34,7 +34,7 @@ class BrandForm
                     ->placeholder(__('resource.noImage'))
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp']),
                 Toggle::make('status')
-                    ->label('Status')
+                    ->label(__('resource.status'))
                     ->default(true),
             ]);
     }

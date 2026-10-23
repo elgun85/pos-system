@@ -14,17 +14,6 @@ use Illuminate\Support\Facades\DB;
 
 class ReturnService
 {
-/*     private function updateSaleStatusAfterReturn(Sale $sale, float $refundAmount): void
-    {
-
-        $totalRetuned = SaleReturn::where('sale_id', $sale->id)
-            ->sum('total');
-        if ($totalRetuned >= $sale->total) {
-            $sale->update(['status' => 'cancelled']);
-        } else {
-            $sale->update(['status' => 'partially_returned']);
-        }
-    } */
 
     public function processReturn(Sale $sale, array $items, ?string $reason = null): SaleReturn
     {
@@ -170,7 +159,7 @@ class ReturnService
                         'user_id'     => auth()->id(),
                         'type'        => 'refund',
                         'amount'      => $debtOffset,
-                        'notes'       => "Sale #{$sale->sale_number} üzrə qaytarma: borcdan silindi",
+                        'notes'       => "Sale #{$sale->sale_number}" .__('resource.return_debt_note'),
                     ]);
                 }
             }

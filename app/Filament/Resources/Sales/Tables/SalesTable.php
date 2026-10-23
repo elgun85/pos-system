@@ -59,7 +59,7 @@ class SalesTable
                     ->sortable(),
 
                 TextColumn::make('status')
-                    ->label('Status')
+                  ->label(__('resource.status'))
                     ->badge()
                     ->formatStateUsing(fn($state) => match ($state) {
                         'draft'              =>    __('resource.sale.draft'),

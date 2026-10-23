@@ -27,7 +27,7 @@ class SaleForm
                     ->disabled(),
 
                 Select::make('status')
-                    ->label('Status')
+                   ->label(__('resource.status'))
                     ->options([
                         'draft'              =>    __('resource.sale.draft'),
                         'completed'          =>    __('resource.sale.completed'),

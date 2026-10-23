@@ -30,7 +30,7 @@ class ProductForm
                             ->suffixAction(
                                 Action::make('generateBarcode')
                                     ->icon('heroicon-m-arrow-path')
-                                    ->tooltip('Unikal barkod generasiya et')
+                                    ->tooltip(__('resource.generate_barcode'))
                                     ->action(function (Set $set) {
                                         do {
                                             // Məsələn: 200 ilə başlayan 13 rəqəmli daxili barkod formatı
@@ -54,8 +54,6 @@ class ProductForm
 
                         TextInput::make('cost_price')
                             ->label(__('resource.product.cost_price'))
-                            ->default(0)
-                            //->required()
                             ->numeric()
                             ->prefix(__('resource.prefix')),
 
@@ -103,11 +101,11 @@ class ProductForm
                                     ->searchable(),
 
                                 Toggle::make('status')
-                                    ->label('Status')
+                                    ->label(__('resource.status'))
                                     ->default(true)
                             ]),
                         Select::make('brand_id')
-                            ->label('Brend')
+                            ->label(__('resource.product.brand.name'))
                             ->relationship('brand', 'name')
                             ->preload()
                             ->native(false)
@@ -119,13 +117,13 @@ class ProductForm
                                     ->unique('brands', 'name'),
 
                                 Toggle::make('status')
-                                    ->label('Status')
+                                    ->label(__('resource.status'))
                                     ->default(true)
                             ]),
 
                         Select::make('status')
-                            ->label('Status')
-                            ->options(['active' => 'Active', 'inactive' => 'Inactive'])
+                            ->label(__('resource.status'))
+                            ->options(['active' => __('resource.active'), 'inactive' => __('resource.inactive')])
                             ->default('active')
                             ->required(),
 

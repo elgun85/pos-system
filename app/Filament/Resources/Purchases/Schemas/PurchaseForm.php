@@ -51,7 +51,7 @@ class PurchaseForm
                                             ->tel(),
 
                                         Toggle::make('status')
-                                            ->label('Status')
+                                            ->label(__('resource.status'))
                                             ->default(true)
                                     ]),
 
@@ -172,7 +172,7 @@ class PurchaseForm
                                                         ->unique('brands', 'name'),
 
                                                     Toggle::make('status')
-                                                        ->label('Status')
+                                                       ->label(__('resource.status'))
                                                         ->default(true)
                                                 ]),
                                         ]),

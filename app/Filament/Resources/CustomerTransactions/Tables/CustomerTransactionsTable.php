@@ -22,7 +22,7 @@ class CustomerTransactionsTable
                     ->formatStateUsing(function ($state, $record) {
                         return $record->customer
                             ? "{$record->customer->name} ({$record->customer->phone})  {$record->customer->address}"
-                            : 'Müştəri silinib';
+                            : __('resource.customer_deleted');
                     }),
                 TextColumn::make('paymentMethod.name')
                     ->label(__('resource.customer_deb.pay_met'))
@@ -58,8 +58,8 @@ class CustomerTransactionsTable
                 //
             ])
             ->recordActions([
-             //   ViewAction::make()->iconButton(),
-            //    EditAction::make()->iconButton(),
+                //   ViewAction::make()->iconButton(),
+                //    EditAction::make()->iconButton(),
             ])
             ->recordUrl(null)
             ->toolbarActions([

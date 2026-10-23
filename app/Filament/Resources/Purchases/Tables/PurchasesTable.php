@@ -44,7 +44,7 @@ class PurchasesTable
                     ->sortable(),
 
                 IconColumn::make('status')
-                    ->label('Status')
+                    ->label(__('resource.status'))
                     ->boolean(),
 
                 TextColumn::make('created_at')

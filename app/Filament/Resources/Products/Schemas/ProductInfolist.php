@@ -47,8 +47,7 @@ class ProductInfolist
                     ->label(__('resource.product.cost_price'))
                     ->weight(FontWeight::Bold)
                     ->size('md')
-                    ->prefix(__('resource.prefix'))
-                    ,
+                    ->prefix(__('resource.prefix')),
                 TextEntry::make('sale_price')
                     ->label(__('resource.product.sale_price'))
                     ->weight(FontWeight::Bold)
@@ -65,8 +64,10 @@ class ProductInfolist
                     ->weight(FontWeight::Bold)
                     ->size('md'),
                 TextEntry::make('status')
-                    ->label('Status')
-                    ->badge(),
+                    ->label(__('resource.status'))
+                    ->badge()
+                    ->formatStateUsing(fn($state) => __('resource.' . $state))
+                    ->color(fn($state) => $state === 'active' ? 'success' : 'gray'),
                 TextEntry::make('is_favorite')
                     ->label(__('resource.product.favorite'))
                     ->badge()

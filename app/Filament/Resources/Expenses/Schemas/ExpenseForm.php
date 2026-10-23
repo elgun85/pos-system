@@ -30,7 +30,7 @@ class ExpenseForm
                                     ->required()
                                     ->createOptionForm([
                                         TextInput::make('name')
-                                            ->label('Yeni Kateqoriya')
+                                            ->label(__('resource.new_category'))
                                             ->required()
                                             ->maxLength(300)
                                     ]),

@@ -78,8 +78,10 @@ class ProductsTable
                     ->sortable(),
 
                 TextColumn::make('status')
-                    ->label('Status')
-                    ->badge(),
+                    ->label(__('resource.status'))
+                    ->badge()
+                    ->formatStateUsing(fn($state) => __('resource.' . $state))
+                    ->color(fn($state) => $state === 'active' ? 'success' : 'gray'),
 
                 ToggleColumn::make('is_favorite')
                     ->label(__('resource.product.favorite'))

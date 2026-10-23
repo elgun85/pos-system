@@ -17,11 +17,12 @@ class InventoryForm
                     ->label(__('resource.product.name'))
                     ->searchable()
                     ->preload()
-
-
+                    ->disabled(fn(string $operation): bool => $operation === 'edit')
                     ->required(),
+
                 TextInput::make('quantity')
                     ->required()
+                    ->minValue(0)
                     ->label(__('resource.inventory.quantity'))
                     ->placeholder(__('resource.inventory.quantity.placeholder'))
                     ->numeric(),

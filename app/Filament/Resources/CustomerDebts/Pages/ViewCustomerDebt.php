@@ -48,7 +48,7 @@ class ViewCustomerDebt extends ViewRecord
                         ->required(),
 
                     Textarea::make('notes')
-                        ->label('Qeyd'),
+                        ->label(__('resource.note')),
                 ])
                 ->action(function (array $data) {
 

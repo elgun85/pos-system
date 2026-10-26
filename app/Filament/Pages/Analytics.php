@@ -7,18 +7,20 @@ use App\Filament\Widgets\Analytics\ExpenseChart;
 use App\Filament\Widgets\Analytics\PaymentsByDays;
 use App\Filament\Widgets\Analytics\SalesChartWidget;
 use BackedEnum;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\DatePicker;
 use Filament\Pages\Dashboard as BaseDashboard;
 use Filament\Pages\Dashboard\Concerns\HasFiltersForm;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use UnitEnum;
+
 
 
 class Analytics extends BaseDashboard
 {
     use HasFiltersForm;
+    use HasPageShield;
 
     public static function getNavigationGroup(): string
     {

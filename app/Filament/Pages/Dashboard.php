@@ -5,17 +5,39 @@ namespace App\Filament\Pages;
 use App\Filament\Widgets\Dashboard\CashStatsWidget;
 use App\Filament\Widgets\Dashboard\DebtStatsWidget;
 use App\Filament\Widgets\Dashboard\SalesStatsWidget;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\DatePicker;
 use Filament\Pages\Dashboard as BaseDashboard;
 use Filament\Pages\Dashboard\Concerns\HasFiltersForm;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use UnitEnum;
-
+use Illuminate\Support\Facades\Auth;
 
 class Dashboard extends BaseDashboard
 {
     use HasFiltersForm;
+
+    public static function canAccess(): bool
+    {
+        return true;
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::userCanSeeDashboard();
+    }
+
+    public function mount(): void
+    {
+        if (! static::userCanSeeDashboard()) {
+            $this->redirect(POS::getUrl());
+        }
+    }
+
+    protected static function userCanSeeDashboard(): bool
+    {
+        return Auth::user()?->can('View:Dashboard') ?? false;
+    }
 
 
     public function getTitle(): string

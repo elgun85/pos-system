@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use BackedEnum;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Pages\Page;
 use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
@@ -10,6 +11,7 @@ use Filament\Support\Icons\Heroicon;
 
 class POS extends Page
 {
+    use HasPageShield;
     protected Width|string|null $maxContentWidth = Width::Full;
 
     // protected static bool $shouldRegisterNavigation = false;

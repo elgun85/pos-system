@@ -122,22 +122,38 @@ class DashboardService
     public function netProfit($startDate = null, $endDate = null)
     {
         return $this->remember('netProfit', $startDate, $endDate, function () use ($startDate, $endDate) {
-            $salesProfit = SalesItem::query()
+            // 1) Xalis satış gəliri: endirim artıq sales.total-dadır
+            $revenue = $this->allSales($startDate, $endDate);
+
+            // 2) Satılan malın maya dəyəri
+            $soldCost  = SalesItem::query()
                 ->whereHas('sale', function ($q) use ($startDate, $endDate) {
                     $q->whereNotIn('status', ['cancelled', 'draft'])
                         ->when($startDate, fn($sq) => $sq->whereDate('created_at', '>=', $startDate))
                         ->when($endDate, fn($sq) => $sq->whereDate('created_at', '<=', $endDate))
                         ->when(!$startDate && !$endDate, fn($sq) => $sq->whereDate('created_at', now()->today()));
                 })
-                ->selectRaw('SUM((price - cost_price) * quantity) as profit')
-                ->value('profit') ?? 0;
+                ->selectRaw('SUM(cost_price * quantity) as cost')
+                ->value('cost') ?? 0;
+            // 3) Qaytarmalar: gəlir geri qaytarılır, mal anbara qayıdır (maya dəyəri geri gəlir)
+            $returns = $this->totalReturns($startDate, $endDate);
 
-            $returnProfitLoss = $this->totalReturns($startDate, $endDate); // Qaytarılan məbləğ
-            $totalDamages = $this->totalDamages($startDate, $endDate); // xarab mehsul
-            $totalExpenses = $this->totalExpenses($startDate, $endDate); // daxili xercler
+            $returnedCost = ReturnItem::query()
+                ->join('returns', 'returns.id', '=', 'return_items.return_id')
+                ->join('sales_items', function ($join) {
+                    $join->on('sales_items.sale_id', '=', 'returns.sale_id')
+                        ->on('sales_items.product_id', '=', 'return_items.product_id');
+                })
+                ->when($startDate, fn($q) => $q->whereDate('return_items.created_at', '>=', $startDate))
+                ->when($endDate, fn($q) => $q->whereDate('return_items.created_at', '<=', $endDate))
+                ->when(!$startDate && !$endDate, fn($q) => $q->whereDate('return_items.created_at', now()->today()))
+                ->selectRaw('SUM(return_items.quantity * sales_items.cost_price) as cost')
+                ->value('cost') ?? 0;
 
 
-            return $salesProfit - $returnProfitLoss - $totalDamages - $totalExpenses;
+            return $revenue - $soldCost - $returns + $returnedCost
+                - $this->totalDamages($startDate, $endDate)
+                - $this->totalExpenses($startDate, $endDate);
         });
     }
 

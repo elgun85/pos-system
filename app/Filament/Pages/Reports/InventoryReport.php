@@ -4,19 +4,20 @@ namespace App\Filament\Pages\Reports;
 
 use App\Exports\InventoryReportExport;
 use App\Models\Inventory;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Actions\Action;
 use Filament\Pages\Page;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use UnitEnum;
+
 
 class InventoryReport extends Page implements HasTable
 {
     use InteractsWithTable;
+    use HasPageShield;
 
 
     public  static function getNavigationLabel(): string

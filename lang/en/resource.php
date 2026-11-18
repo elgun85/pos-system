@@ -16,6 +16,9 @@ return [
     "sale_pos.navigationLabel"         => "POS",
     "sale_pos.pluralModelLabel"        => "Point of Sale",
 
+    "setting.navigationLabel"          => "Settings",
+    "setting.pluralModelLabel"         => "Settings",
+
     "sale.navigationLabel"             => "Sales",
     "sale.modelLabel"                  => "Sale",
     "sale.pluralModelLabel"            => "Sales",
@@ -296,8 +299,8 @@ return [
     "customer_deleted"                 => "Customer Deleted",
     "return_debt_note"                 => "return: deducted from debt",
     "stok"                             => "Stock",
-    "status"                           => "Status", 
-    "active"                           => "Active", 
+    "status"                           => "Status",
+    "active"                           => "Active",
     "inactive"                         => "Inactive",
 
 
@@ -357,4 +360,34 @@ return [
 
     "cardPayments"                     => "Card Payments",
     "cardPaymentsDesc"                 => "Payments made via POS terminal or bank card",
+
+    "storeInfo" => "General Information",
+    "receiptInfo" => "Receipt Information",
+    "taxInfo" => "Currency & Tax",
+
+    "app_name" => "Application Name",
+    "vat" => "Tax Identification Number (TIN)",
+    "name_store" => "Store Name",
+    "support_email" => "Support Email",
+    "website" => "Website",
+    "address" => "Address",
+
+    "receipt_header" => "Receipt Header Text",
+    "receipt_footer" => "Receipt Footer Text",
+    "receipt_show_logo" => "Show Logo on Receipt",
+    "receipt_show_phone" => "Show Phone on Receipt",
+    "receipt_show_address" => "Show Address on Receipt",
+    "receipt_show_vat" => "Show TIN on Receipt",
+
+    "currency_code" => "Currency Code",
+    "currency_symbol" => "Currency Symbol",
+    "tax_enabled" => "Enable Tax",
+    "tax_rate" => "Tax Rate (%)",
+
+    "receipt_prefix" => "Receipt Number Prefix",
+    "receipt_start_number" => "Starting Receipt Number",
+
+    "phone" => "Phone",
+    "save_success" => "Information saved successfully.",
+
 ];

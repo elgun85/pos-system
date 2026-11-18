@@ -98,6 +98,7 @@ class ProductForm
                                     ->relationship('parent', 'name')
                                     ->nullable()
                                     ->preload()
+                                    ->required()
                                     ->searchable(),
 
                                 Toggle::make('status')

@@ -15,6 +15,9 @@ return
         "sale_pos.navigationLabel"          =>      "Kassa / POS",
         "sale_pos.pluralModelLabel"         =>      "Kassa",
 
+        "setting.navigationLabel"          =>      "Ayarlar",
+        "setting.pluralModelLabel"         =>      "Ayarlar",
+
         "role.navigationLabel"              =>      "Giriş hüquqları",
         "role.modelLabel"                   =>      "İcazə",
         "role.pluralModelLabel"             =>      "Səlahiyyətlər",
@@ -381,6 +384,32 @@ return
 
         "cardPayments"                     =>           "Kart",
         "cardPaymentsDesc"                 =>           "POS-terminal və ya kartla ödənişlər",
+
+        "storeInfo"                        =>           "Ümumi məlumatlar",
+        "receiptInfo"                      =>           "Qəbz məlumatları",
+        "taxInfo"                          =>           "Valyuta və vergi",
+        "app_name" => "Tətbiqin adı",
+        "vat" => "VÖEN",
+        "name_store" => "Mağazanın adı",
+        "support_email" => "Dəstək e-poçtu",
+        "website" => "Veb-sayt",
+        "address" => "Ünvan",
+        "receipt_header" => "Qəbzin başlıq mətni",
+        "receipt_footer" => "Qəbzin altlıq mətni",
+        "receipt_show_logo" => "Qəbzdə loqonu göstər",
+        "receipt_show_phone" => "Qəbzdə telefonu göstər",
+        "receipt_show_address" => "Qəbzdə ünvanı göstər",
+        "receipt_show_vat" => "Qəbzdə VÖEN-i göstər",
+        "currency_code" => "Valyuta kodu",
+        "currency_symbol" => "Valyuta simvolu",
+        "tax_enabled" => "Vergini aktiv et",
+        "tax_rate" => "Vergi dərəcəsi (%)",
+        "receipt_prefix" => "Qəbz nömrəsinin prefiksi",
+        "receipt_start_number" => "Başlanğıc qəbz nömrəsi",
+        "phone" => "Telefon",
+       "save_success" => "Məlumatlar uğurla yadda saxlanıldı.",
+
+
 
 
     ];

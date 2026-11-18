@@ -11,8 +11,8 @@ Layihənizdə Super Admin istifadəçi yaratmaq və icazələri (permissions) ak
    php artisan shield:super-admin
    (Siyahıdan yaratdığınız istifadəçinin bağlı olduğu paneli seçin)
    2. Bütün resurslar üçün icazələrin generasiya edilməsi:
-   php artisan shield:generate --all
-(Çıxan suallara müvafiq olaraq yes cavabını verərək siyasətləri və icazələri yaradın)
+   php artisan shield:generate --all 
+(Çıxan suallara müvafiq olaraq yes cavabını verərək siyasətləri və icazələri yaradın admin(0),yes,policies_and_permissions )
 3. Keşlərin təmizlənməsi və sistemin yenilənməsi:
 php artisan permission:cache-reset
 php artisan optimize:clear
@@ -108,6 +108,7 @@ php artisan make:filament-user
 php artisan route:cache  // route fayllarini kechleyir
 php artisan view:cache     // view fayllarini kechleyir
 php artisan optimize:clear  // kechlenmis fayllari silir
+php artisan cache:clear
 
 php artisan make:filament-resource Supplier
 php artisan make:filament-resource Category

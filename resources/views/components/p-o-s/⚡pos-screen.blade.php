@@ -65,14 +65,14 @@ new class extends Component {
 
     public function selectCustomer($id)
     {
+        $customer = Customer::find($id);
+
         if (!$customer) {
             return;
         }
-        $customer = Customer::find($id);
 
         $this->customer_id = $customer->id;
         $this->customer_search = $customer->name;
-
         $this->customerList = [];
     }
 

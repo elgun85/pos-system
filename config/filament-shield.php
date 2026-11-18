@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+use App\Filament\Resources\CustomerDebts\CustomerDebtResource;
 use BezhanSalleh\FilamentShield\Resources\Roles\RoleResource;
 use Filament\Pages\Dashboard;
 use Filament\Widgets\AccountWidget;
@@ -195,7 +196,7 @@ return [
             ],
         ],
         'exclude' => [
-            //
+            CustomerDebtResource::class,
         ],
     ],
 

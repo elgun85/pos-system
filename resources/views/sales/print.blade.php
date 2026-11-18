@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>{{ __('resource.receipt') }} #{{ $sale->sale_number }}</title>
+    <title>{{ $store->name_store  }} #{{ $sale->sale_number }}</title>
     <style>
         body {
             font-family: 'Courier New', Courier, monospace;
@@ -73,7 +73,22 @@
 
 <body>
     <div class="text-center">
-        <h2 style="margin:0;">{{ __('resource.companyName') }}</h2>
+        @if ($store->receipt_show_logo && $store->logo)
+            <img src="{{ asset('storage/' . $store->logo) }}" style="max-height:60px">
+        @endif
+
+        <h2 style="margin:0;">{{ $store->name_store }}</h2>
+        {!! Str::markdown($store->receipt_header) !!}
+
+        @if ($store->receipt_show_phone)
+            <div>{{__('resource.supplier.phone')}}: {{ $store->phone }}</div>
+        @endif
+        @if ($store->receipt_show_address)
+            <div>{{__('resource.supplier.address')}}: {{ $store->address }}</div>
+        @endif
+        @if ($store->receipt_show_vat)
+            <div>{{__('resource.vat')}}: {{ $store->vat }}</div>
+        @endif
         <p class="text-left">{{ __('resource.created') }}: {{ $sale->created_at?->format('d.m.Y H:i:s') }}</p>
 
         <p class="text-left">{{ __('resource.receipt') }} №: {{ $sale->sale_number }}</p>
@@ -102,7 +117,7 @@
                     </td>
                     <td class="text-center">{{ rtrim(rtrim(number_format($item->quantity, 2, '.', ''), '0'), '.') }}
                     </td>
-                    <td class="text-right">{{ number_format($item->total, 2) }}</td>
+                    <td class="text-right">{{ number_format($item->total, 2) }} {{ $store->currency_symbol }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -112,15 +127,15 @@
 
     <div class="text-right">
         <p>{{ __('resource.total') }}:
-            {{ number_format($sale->total + $sale->discount, 2) }}</p>
+            {{ number_format($sale->total + $sale->discount, 2) }} {{ $store->currency_symbol }}</p>
         @if ($sale->discount > 0)
-            <p>{{ __('resource.discount') }}: -{{ number_format($sale->discount, 2) }}</p>
+            <p>{{ __('resource.discount') }}: -{{ number_format($sale->discount, 2) }} {{ $store->currency_symbol }}</p>
         @endif
-        <p class="bold">{{ __('resource.result') }}: {{ number_format($sale->total, 2) }}</p>
+        <p class="bold">{{ __('resource.result') }}: {{ number_format($sale->total, 2) }} {{ $store->currency_symbol }}</p>
     </div>
 
     <div class="divider"></div>
-    <p class="text-center bold"> {{ __('resource.thank') }}</p>
+    <p class="text-center bold"> {{ $store->receipt_footer }}</p>
 
     {{--     <script>
         window.onload = function() {

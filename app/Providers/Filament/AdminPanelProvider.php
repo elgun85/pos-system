@@ -8,6 +8,9 @@ use App\Filament\Pages\POS;
 use App\Filament\Pages\Reports\InventoryReport;
 use App\Filament\Pages\Reports\ProfitReport;
 use App\Filament\Pages\Reports\SalesReport;
+use App\Filament\Pages\Settings;
+use App\Models\Settings as ModelsSettings;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -21,8 +24,9 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -34,7 +38,18 @@ class AdminPanelProvider extends PanelProvider
             ->maxContentWidth(Width::Full)
             ->sidebarCollapsibleOnDesktop()
             ->databaseTransactions()
+            ->brandName(fn() => Schema::hasTable('settings')
+                ? (ModelsSettings::current()->app_name ?: config('app.name'))
+                : config('app.name'))
+            ->brandLogo(function () {
+                if (! Schema::hasTable('settings')) {
+                    return null;
+                }
+                $logo = ModelsSettings::current()->logo;
 
+                return filled($logo) ? Storage::disk('public')->url($logo) : null;
+            })
+            ->brandLogoHeight('2rem')
 
             ->id('admin')
             ->path('admin')
@@ -74,6 +89,7 @@ class AdminPanelProvider extends PanelProvider
                 Analytics::class,
                 POS::class,
                 InventoryReport::class,
+                Settings::class,
                 //   SalesReport::class,
                 // ProfitReport::class,
             ])
